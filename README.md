@@ -23,7 +23,16 @@ This project is part of the **Chips Master Program (CMP)**, an intensive long-te
 
 *   **[주제 발표 자료(PDF)](CMP_소자공정_송민호(재발표).pdf)**
 
-### 2.2 연구 진행을 위한 작업 현황 (Work In Progress)
+### 2.2 교수 피드백 및 고도화 과제 (Core Feedback & Improvement)
+주제 발표 이후, 소자의 물리적 분석력을 강화하고 시뮬레이션의 정밀도를 높이기 위해 다음과 같은 추가 과제를 부여받았습니다. 본 프로젝트는 해당 피드백을 핵심 개선 사항으로 반영하여 수행합니다.
+
+> **주요 피드백 사항**
+> 1. **변수 확장:** 기존 설계 변수에 GIDL의 주요 변수인 **MEB(Metal-to-Epitaxial/Buried) Depth**를 추가하여 정밀도 향상.
+> 2. **핵심 파라미터 측정:** 설계 최적화의 척도로서 Cov (Gate-to-Si 계면의 Overlap Capacitance)를 시뮬레이션하여 데이터화할 것.
+
+* **고도화 방향:** 위 피드백을 바탕으로 TCAD 시뮬레이션 내에서 $C_{ov}$와 GIDL 특성 간의 상관관계를 정량적으로 도출하고, 이를 바탕으로 최적의 공정 마진을 확보할 계획입니다.
+
+### 2.3 연구 진행을 위한 작업 현황 (Work In Progress)
 본 섹션은 프로젝트가 진행됨에 따라 시뮬레이션 결과와 분석 자료를 순차적으로 업데이트할 예정입니다.
 
 > **[프로젝트 작업 공간]**
