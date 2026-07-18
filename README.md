@@ -7,7 +7,7 @@ This project is part of the **Chips Master Program (CMP)**, an intensive long-te
 
 ## 1. Program Overview (프로그램 개요)
 
-**CMP(Chips Master Program)**는 첨단분야 혁신융합대학사업단과 숭실대 차세대반도체학과가 운영하는 실무 중심의 장기 프로젝트 프로그램입니다.
+CMP(Chips Master Program)는 첨단분야 혁신융합대학사업단과 숭실대 차세대반도체학과가 운영하는 실무 중심의 장기 프로젝트 프로그램입니다.
 
 * **활동 기간:** 2026.04 ~ 2027.01
 * **핵심 목표:** AI 반도체의 기술적 난제(Bottleneck)를 파악하고, 시뮬레이션 기반 소자 설계 프로젝트를 통해 최적화된 설계 결과물 도출.
