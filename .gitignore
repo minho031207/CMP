@@ -1,0 +1,6 @@
+# Sentaurus generated outputs
+*.tdr
+*.plt
+*.log
+*.out
+*.job
