@@ -4,3 +4,10 @@
 *.log
 *.out
 *.job
+
+# Temporary/export files
+*.bak
+*.tmp
+~$*
+.DS_Store
+Thumbs.db

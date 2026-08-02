@@ -1,0 +1,23 @@
+run_id,case_id,artifact_type,file_path,git_tracked,tool,source_node,condition_id,meb_nm,temperature_K,vd_V,vg_condition,mesh_id,physics_id,status,description
+r00,b0,code,code/sde/run00/bcat_baseline_sde_r0_v1.cmd,true,SDE,n2,r00_b0_structure,36,,,,mesh_r00,none,verified,Nominal simplified 2D BCAT structure
+r00,b0,code,code/sdevice/run00/bcat_idvg_r0_verify.cmd,true,SDevice,n5,r00_b0_idvg,36,300,0.05,0to1.5,mesh_r00,dc_r00,verified,Run 0 electrical sanity deck
+r00,b0,csv,data/run00/raw/r00_b0_idvg_meb36nm_vd0p05_vg0to1p5_t300k_raw.csv,true,SVisual,n5,r00_b0_idvg,36,300,0.05,0to1.5,mesh_r00,dc_r00,verified,Raw signed source-current Id-Vg export
+r00,b0,image,assets/images/run00/02_bcat_material_regions.png,true,SVisual,n2,r00_b0_structure,36,,,,mesh_r00,none,verified,Nominal material structure
+r00,b0,image,assets/images/run00/03_bcat_region_contact_proof.png,true,SVisual,n2,r00_b0_structure,36,,,,mesh_r00,none,verified,Region and four-contact verification
+r00,b0,image,assets/images/run00/04_bcat_doping_nominal.png,true,SVisual,n2,r00_b0_structure,36,,,,mesh_r00,none,verified,Nominal abrupt source/drain and body doping
+r00,b0,image,assets/images/run00/06_bcat_mesh_full.png,true,SVisual,n2,r00_b0_structure,36,,,,mesh_r00,none,verified,Full Run 0 reference mesh
+r00,b0,image,assets/images/run00/07_bcat_mesh_gate_zoom.png,true,SVisual,n2,r00_b0_structure,36,,,,mesh_r00,none,verified,Gate/trench/junction mesh zoom
+r00,b0,image,assets/images/run00/08_bcat_edensity_nominal.png,true,SVisual,n5,r00_b0_on,36,300,0.05,1.5,mesh_r00,dc_r00,verified,ON-state electron density
+r00,b0,image,assets/images/run00/10_bcat_idvg_linear.png,true,SVisual,n5,r00_b0_idvg,36,300,0.05,0to1.5,mesh_r00,dc_r00,verified,Run 0 Id-Vg linear sanity curve
+r00,b0,image,assets/images/run00/11_bcat_idvg_semilog.png,true,SVisual,n5,r00_b0_idvg,36,300,0.05,0to1.5,mesh_r00,dc_r00,verified,Run 0 Id-Vg semilog sanity curve
+r00,b0,image,assets/images/run00/12_bcat_electricfield_on.png,true,SVisual,n5,r00_b0_on,36,300,0.05,1.5,mesh_r00,dc_r00,verified,ON-state electric-field magnitude
+r00,b0,image,assets/images/run00/13_bcat_ecurrentdensity_on.png,true,SVisual,n5,r00_b0_on,36,300,0.05,1.5,mesh_r00,dc_r00,verified,ON-state electron-current-density magnitude
+r00,b0,image,assets/images/run00/14_bcat_potential_on.png,true,SVisual,n5,r00_b0_on,36,300,0.05,1.5,mesh_r00,dc_r00,verified,ON-state electrostatic potential
+r00,b0,image,assets/images/run00/15_swb_nominal_b0.png,true,SWB,,r00_b0_workbench,36,,,,mesh_r00,dc_r00,verified,Nominal B0 SWB parameter state
+r00,dev,image,assets/images/run00/01_swb_meb_split.png,true,SWB,,r00_dev_parameterization,31/36/41,,,,mesh_r00,none,development-only,MEB parameterization check; not DOE or optimization
+r00,dev,image,assets/images/run00/05_bcat_meb_split_doping.png,true,SVisual,,r00_dev_parameterization,31/36/41,,,,mesh_r00,none,development-only,Three-level structure/doping parameterization check
+r00,dev,image,assets/images/run00/09_bcat_edensity_split.png,true,SVisual,,r00_dev_parameterization,31/36/41,300,0.05,1.5,mesh_r00,dc_r00,development-only,Three-level eDensity development evidence
+r00,b0,tdr,n2_msh.tdr,false,SDE,n2,r00_b0_structure,36,,,,mesh_r00,none,local-only,Original mesh binary; intentionally not tracked
+r00,b0,tdr,n5_des.tdr,false,SDevice,n5,r00_b0_on,36,300,0.05,1.5,mesh_r00,dc_r00,local-only,Original final-state binary; intentionally not tracked
+r00,b0,plt,IdVg_n5_des.plt,false,SDevice,n5,r00_b0_idvg,36,300,0.05,0to1.5,mesh_r00,dc_r00,local-only,Original terminal-current output; intentionally not tracked
+r00,b0,log,n5_des.log,false,SDevice,n5,r00_b0_idvg,36,300,0.05,0to1.5,mesh_r00,dc_r00,local-only,Full SDevice log; summary only is documented
