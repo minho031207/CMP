@@ -2,14 +2,14 @@
 
 ## 1. Project Status
 
-> **Project status:** Run 0 completed / E0 repository close-out completed<br>
-> **Current step:** Run 1 — DC metric freeze<br>
+> **Project status:** Run 0–2 completed<br>
+> **Current step:** Run 3 — BTBT/GIDL feasibility<br>
 > **Tool:** Synopsys Sentaurus TCAD T-2022.03<br>
 > **Model:** B0 — 20 nm-Class Simplified 2D BCAT Baseline
 
 **최종 연구 제목:** AI 메모리용 DRAM의 고온 Refresh 부담 저감을 위한 20 nm급 BCAT의 MEB–Cov–GIDL 강건 설계
 
-현재 검증 범위는 fixed nominal B0 geometry, contacts, doping, reference mesh, SDE–SDevice linkage, and basic NMOS turn-on입니다. 31/36/41 nm MEB split은 parameterization development check이며 DOE나 성능 최적화 결과가 아닙니다.
+현재 검증 범위는 fixed nominal B0 geometry, contacts, doping, reference mesh, SDE–SDevice linkage, and basic NMOS turn-on입니다. Run 1은 내부 DC 비교 protocol을 동결했고, Run 2는 DC base-mesh convergence를 통해 `Mesh-DC = Medium`을 선택했습니다. 31/36/41 nm MEB split은 parameterization development check이며 DOE나 성능 최적화 결과가 아닙니다.
 
 ## 2. Program Overview
 
@@ -57,19 +57,21 @@ B0는 **20 nm-class simplified 2D BCAT baseline**입니다. Sun et al. (2022)의
 
 세부 가정과 비교 원칙은 [Model Scope](docs/MODEL_SCOPE.md)를 참조하십시오.
 
-## 7. Current Run Sheet
+## 7. [Current Run Sheet v5](docs/RUN_SHEET.md)
 
 | 구간 | 상태 |
 |---|---|
 | Run 0 | Completed |
-| Run 1 | Next |
-| Run 2–3 | Planned |
+| Run 1 | Completed |
+| Run 2 | Completed — Mesh-DC = Medium |
+| Run 3 | Current |
+| G1 | Conditional |
 | M1 | Before September |
 | Run 4–10 | Planned / Conditional |
 
-단계별 목적·통과 조건·실패 시 축소 경로는 [공식 Run Sheet v4](docs/RUN_SHEET.md)에 있습니다.
+단계별 목적·통과 조건·실패 시 축소 경로는 [공식 Run Sheet v5](docs/RUN_SHEET.md)에 있습니다.
 
-## 8. Latest Verified Result — Run 0
+## 8. Verified Result — Run 0
 
 Run 0에서 B0 nominal 36 nm 구조의 geometry/material regions, source/drain/gate/substrate contacts, doping, local mesh placement, SDE–SDevice linkage, 300 K·`VD=0.05 V`·`VG=0→1.5 V` 기본 Id–Vg turn-on, ON-state eDensity/eCurrentDensity/ElectricField/Potential sanity contour를 확인했습니다. BTBT는 비활성화되어 있으며 GIDL·Cov·retention·refresh 결과는 아직 없습니다.
 
@@ -81,30 +83,51 @@ Run 0에서 B0 nominal 36 nm 구조의 geometry/material regions, source/drain/g
 
 전체 evidence, 조건, 로그 검증 요약과 미완료 항목은 [Run 0 baseline record](docs/progress/run00_baseline.md)에 있습니다.
 
-## 9. Repository Structure
+## 9. Latest Verified Result — Run 2
+
+Run 2에서는 B0 geometry와 Run 1 DC protocol을 고정한 채 Coarse / Medium / Fine-local mesh를 비교했습니다. 각 mesh에서 `VD=0.05 V`와 `1.0 V`, `VG=0→1.5 V` 조건으로 총 6개의 Id–Vg run을 수행했습니다.
+
+| Mesh | Points | Elements |
+|---|---:|---:|
+| Coarse | 1,456 | 3,187 |
+| Medium | 4,571 | 9,657 |
+| Fine-local | 4,993 | 10,513 |
+
+Medium과 Fine-local의 차이는 Vth `<0.06 mV`, SS `<0.02 mV/dec`, Ion `≈0.07%`, DIBL `≈0.006 mV/V`였습니다. `Y=0.116 um`, `Y=0.131 um`, `X=0.121 um`의 retained E-field cut도 비교했으며, Run 2는 **PASS**, DC base-mesh는 **`Mesh-DC = Medium`**으로 결정했습니다.
+
+| Mesh comparison | High-VD Id–Vg comparison |
+|---|---|
+| ![Run 2 mesh comparison](assets/images/run02/06_mesh_comparison.png) | ![Run 2 high-VD Id-Vg mesh comparison](assets/images/run02/05_idvg_mesh_compare_vd1p0_semilog.png) |
+
+이 결정은 현재 DC protocol에만 적용됩니다. Medium은 BTBT/GIDL, Cov, retention을 위한 최종 mesh가 아니며, 이 Run 2 커밋 시점에 BTBT/GIDL은 아직 검증된 결과가 아닙니다. 전체 수치, field cut, evidence와 제한사항은 [Run 2 mesh-convergence record](docs/progress/run02_mesh_convergence.md)에 있습니다.
+
+## 10. Repository Structure
 
 ```text
 CMP/
 ├─ README.md
 ├─ CMP_소자공정_송민호(재발표).pdf
 ├─ docs/                 # scope, decisions, run sheet, references, templates, progress
-├─ code/                 # run별 SDE/SDevice deck과 후속 extraction/plotting script
-├─ data/run00/           # raw CSV, processed-data placeholder, artifact manifest
-└─ assets/images/run00/  # Run 0 key evidence
+├─ code/sde/run02/       # Run 2 mesh-parameterized SDE deck
+├─ code/sdevice/run02/   # Run 2 reproducible DC SDevice deck
+├─ data/run00/           # Run 0 raw CSV and artifact manifest
+├─ data/run02/           # Run 2 raw CSV, processed metrics, artifact manifest
+├─ assets/images/run00/  # Run 0 key evidence
+└─ assets/images/run02/  # Run 2 mesh-convergence evidence
 ```
 
-핵심 Run 0 입력은 [SDE deck](code/sde/run00/bcat_baseline_sde_r0_v1.cmd), [SDevice deck](code/sdevice/run00/bcat_idvg_r0_verify.cmd)이며 데이터 목록은 [manifest](data/run00/manifest.csv)에 기록합니다. `.tdr`, `.plt`, 전체 `.log`, `.out`, `.job`은 로컬 archive에만 둡니다.
+핵심 Run 0 입력은 [SDE deck](code/sde/run00/bcat_baseline_sde_r0_v1.cmd), [SDevice deck](code/sdevice/run00/bcat_idvg_r0_verify.cmd)이며 데이터 목록은 [Run 0 manifest](data/run00/manifest.csv)와 [Run 2 manifest](data/run02/manifest.csv)에 기록합니다. `.tdr`, `.plt`, 전체 `.log`, `.out`, `.job`은 로컬 archive에만 둡니다.
 
-## 10. References
+## 11. References
 
 - M. Sun, H. W. Baac, and C. Shin, “Simulation Study: The Impact of Structural Variations on the Characteristics of a Buried-Channel-Array Transistor (BCAT) in DRAM,” *Micromachines*, 2022. [DOI](https://doi.org/10.3390/mi13091476)
 - S. K. Jang and S. Y. Kim, “Impact of Metal and Poly Gate Thickness on GIDL in DRAM Dual Work-Function Structures,” *ICEIC*, 2026. [DOI](https://doi.org/10.1109/ICEIC69189.2026.11386251)
 
 역할별 전체 목록과 향후 확인할 문헌은 [References](docs/REFERENCES.md)를 참조하십시오.
 
-## 11. Current Next Step
+## 12. Current Next Step
 
-**Run 1 — DC metric freeze**에서 low/high `VD` Id–Vg, Id–Vd, bias 조건과 Vth/SS/Ion/Ioff/DIBL 추출 정의를 먼저 동결합니다. Run 0 raw CSV를 변환하거나 공식 metric으로 재해석하지 않습니다.
+**Run 3 — BTBT/GIDL feasibility** starts from B0 + `Mesh-DC=Medium`. First batch compares identical high-drain/negative-gate sweeps with BTBT OFF vs NonlocalPath ON. MEB sweep, corner rounding, Cov, temperature, retention, and refresh remain out of scope for the first R3 batch.
 
 ## License / Usage Note
 

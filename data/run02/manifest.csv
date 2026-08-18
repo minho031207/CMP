@@ -1,0 +1,25 @@
+run_id,case_id,artifact_type,file_path,git_tracked,tool,source_node,condition_id,meb_nm,temperature_K,vd_V,vg_condition,mesh_id,physics_id,status,description
+r02,b0,code,code/sde/run02/bcat_baseline_sde_r2_meshdc.cmd,true,SDE,n2/n29/n37,r02_mesh_generation,36,,,,mesh_c/m/f,none,verified,B0 geometry unchanged; Mesh_Code parameterizes Coarse/Medium/Fine-local
+r02,b0,code,code/sdevice/run02/bcat_idvg_r2_meshdc.cmd,true,SDevice,n5/n20/n32/n35/n40/n43,r02_idvg,36,,,0to1.5,mesh_c/m/f,dc_r1_protocol,verified,Run 1 DC deck reused for mesh-convergence matrix
+r02,b0,csv,data/run02/raw/r02_b0_coarse_idvg_vd0p05_raw.csv,true,SVisual,n5,r02_idvg_coarse_vd0.05,36,300,0.05,0to1.5,mesh_coarse,dc_r1_protocol,verified,Raw signed drain-current Id-Vg export
+r02,b0,csv,data/run02/raw/r02_b0_medium_idvg_vd0p05_raw.csv,true,SVisual,n32,r02_idvg_medium_vd0.05,36,300,0.05,0to1.5,mesh_medium,dc_r1_protocol,verified,Raw signed drain-current Id-Vg export
+r02,b0,csv,data/run02/raw/r02_b0_fine_idvg_vd0p05_raw.csv,true,SVisual,n40,r02_idvg_fine_vd0.05,36,300,0.05,0to1.5,mesh_fine,dc_r1_protocol,verified,Raw signed drain-current Id-Vg export
+r02,b0,csv,data/run02/raw/r02_b0_coarse_idvg_vd1p0_raw.csv,true,SVisual,n20,r02_idvg_coarse_vd1.0,36,300,1.0,0to1.5,mesh_coarse,dc_r1_protocol,verified,Raw signed drain-current Id-Vg export
+r02,b0,csv,data/run02/raw/r02_b0_medium_idvg_vd1p0_raw.csv,true,SVisual,n35,r02_idvg_medium_vd1.0,36,300,1.0,0to1.5,mesh_medium,dc_r1_protocol,verified,Raw signed drain-current Id-Vg export
+r02,b0,csv,data/run02/raw/r02_b0_fine_idvg_vd1p0_raw.csv,true,SVisual,n43,r02_idvg_fine_vd1.0,36,300,1.0,0to1.5,mesh_fine,dc_r1_protocol,verified,Raw signed drain-current Id-Vg export
+r02,b0,image,assets/images/run02/00_swb_mesh_matrix.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Run 2 SWB matrix: Mesh_Code 0/1/2 and VD 0.05/1.0
+r02,b0,image,assets/images/run02/01_mesh_coarse.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Coarse mesh
+r02,b0,image,assets/images/run02/02_mesh_medium.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Medium reference mesh
+r02,b0,image,assets/images/run02/03_mesh_fine.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Fine-local mesh
+r02,b0,image,assets/images/run02/04_idvg_mesh_compare_vd0p05_semilog.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Low-VD mesh comparison from raw CSV
+r02,b0,image,assets/images/run02/05_idvg_mesh_compare_vd1p0_semilog.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,High-VD mesh comparison from raw CSV
+r02,b0,image,assets/images/run02/07_efield_medium_vd1p0_vg1p5.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Medium ElectricField at VD=1.0 VG=1.5
+r02,b0,image,assets/images/run02/08_efield_fine_vd1p0_vg1p5.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Fine ElectricField at VD=1.0 VG=1.5
+r02,b0,image,assets/images/run02/09_efield_cut_wall_y0p116.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Medium/Fine field cut at Y=0.116 um
+r02,b0,image,assets/images/run02/10_efield_cut_junction_y0p131.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Medium/Fine field cut at Y=0.131 um
+r02,b0,image,assets/images/run02/11_efield_cut_bottom_x0p121.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Medium/Fine field cut at X=0.121 um
+r02,b0,image,assets/images/run02/06_mesh_comparison.png,true,SVisual,,r02_mesh_evidence,36,,,,mesh_c/m/f,dc_r1_protocol,verified,Composite Coarse/Medium/Fine mesh comparison
+r02,b0,tdr,n*_msh.tdr,false,Sentaurus,,r02_local_archive,36,,,,mesh_c/m/f,dc_r1_protocol,local-only,Original SDE mesh binaries; local-only
+r02,b0,tdr,n*_des.tdr,false,Sentaurus,,r02_local_archive,36,,,,mesh_c/m/f,dc_r1_protocol,local-only,Original SDevice final-state binaries; local-only
+r02,b0,plt,IdVg_R1_n*_des.plt,false,Sentaurus,,r02_local_archive,36,,,,mesh_c/m/f,dc_r1_protocol,local-only,Original terminal-current outputs; local-only
+r02,b0,log,n*_des.log,false,Sentaurus,,r02_local_archive,36,,,,mesh_c/m/f,dc_r1_protocol,local-only,Full SDevice logs; local-only

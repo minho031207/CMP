@@ -1,0 +1,2 @@
+comparison,delta_Vth_low_mV,delta_Vth_high_mV,delta_SS_low_mVdec,delta_SS_high_mVdec,delta_Ion_pct,delta_DIBL_mV_per_V,points_increase_pct,elements_increase_pct
+medium_to_fine,0.05286156667938524,0.05848242920958313,-0.014847581692265521,-0.010318923421223758,-0.06870721343641417,-0.005916697400209614,9.232115510829143,8.86403645024334
