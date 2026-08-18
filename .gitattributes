@@ -1,0 +1,2 @@
+# Preserve exported Run 3 raw CSV bytes, including source EOF whitespace.
+data/run03/raw/*.csv -whitespace

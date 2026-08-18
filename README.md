@@ -2,14 +2,14 @@
 
 ## 1. Project Status
 
-> **Project status:** Run 0–2 completed<br>
-> **Current step:** Run 3 — BTBT/GIDL feasibility<br>
+> **Project status:** Run 0–3 completed<br>
+> **Current step:** Run 4 — Single-WF MEB 3-level screening<br>
 > **Tool:** Synopsys Sentaurus TCAD T-2022.03<br>
 > **Model:** B0 — 20 nm-Class Simplified 2D BCAT Baseline
 
 **최종 연구 제목:** AI 메모리용 DRAM의 고온 Refresh 부담 저감을 위한 20 nm급 BCAT의 MEB–Cov–GIDL 강건 설계
 
-현재 검증 범위는 fixed nominal B0 geometry, contacts, doping, reference mesh, SDE–SDevice linkage, and basic NMOS turn-on입니다. Run 1은 내부 DC 비교 protocol을 동결했고, Run 2는 DC base-mesh convergence를 통해 `Mesh-DC = Medium`을 선택했습니다. 31/36/41 nm MEB split은 parameterization development check이며 DOE나 성능 최적화 결과가 아닙니다.
+현재 검증 범위는 fixed nominal B0 geometry, contacts, doping, SDE–SDevice linkage, basic NMOS turn-on, DC mesh convergence, and internal NonlocalPath BTBT/GIDL mechanism attribution입니다. Run 1은 내부 DC 비교 protocol을 동결했고, Run 2는 `Mesh-DC = Medium`을 선택했으며, Run 3는 `Mesh-GIDL = Mesh_Code 3`과 내부 상대 GIDL 비교 protocol을 동결했습니다. 31/36/41 nm MEB split은 parameterization development check이며 DOE나 성능 최적화 결과가 아닙니다.
 
 ## 2. Program Overview
 
@@ -36,7 +36,7 @@ CMP(Chips Master Program)는 첨단분야 혁신융합대학사업단과 숭실�
 
 MEB 공정 편차가 Cov와 drain-side 전계를 통해 BTBT/GIDL, 저장전하 유지, refresh 부담에 어떤 영향을 주며, 구동 성능·온도·공정 편차를 함께 고려할 때 어떤 feasible design range가 남는지를 단계적으로 검증합니다.
 
-가설은 `MEB depth → effective overlap/Cov → drain-side Emax → BTBT/GIDL → charge loss → retention margin → normalized refresh burden`의 인과 경로입니다. 동시에 MEB 변화가 gate controllability와 Ion·Vth·SS에 만드는 trade-off도 검토합니다. 이 경로와 robust process window는 연구 가설과 목표이며 현재 완료된 결과가 아닙니다.
+가설은 `MEB depth → effective overlap/Cov → drain-side Emax → BTBT/GIDL → charge loss → retention margin → normalized refresh burden`의 인과 경로입니다. 동시에 MEB 변화가 gate controllability와 Ion·Vth·SS에 만드는 trade-off도 검토합니다. Run 3는 이 경로 중 내부 BTBT/GIDL feasibility와 drain-side mechanism attribution만 확인했으며, 전체 인과 경로와 robust process window는 아직 연구 가설과 목표입니다.
 
 ## 5. Key Concepts
 
@@ -46,7 +46,7 @@ MEB 공정 편차가 Cov와 drain-side 전계를 통해 BTBT/GIDL, 저장전하 
 | MEB | Metal-gate top 위치에 영향을 주는 etch-back 개념. 현재 SDE에서는 공정 자체가 아니라 결과 형상을 기하학적으로 표현 |
 | Cov | Gate와 인접 Si/drain 사이 overlap·fringing 기반 결합. 후속 단계에서 추출 정의를 검증 |
 | Emax | Drain-side gate/oxide/Si 인접 영역의 국부 최대 전계 후보 지표 |
-| BTBT/GIDL | 후속 Run에서 물리모델·bias·mesh 안정성을 확인할 누설 메커니즘과 현상 |
+| BTBT/GIDL | Run 3에서 내부 NonlocalPath feasibility protocol과 drain-side mechanism attribution을 확립. 절대 production-cell GIDL은 보정되지 않음 |
 | Retention/refresh burden | 신뢰 가능한 누설·charge-loss 경로가 확보된 뒤에만 직접값 또는 명시적 proxy로 평가할 지표 |
 
 ## 6. Model Scope
@@ -64,10 +64,11 @@ B0는 **20 nm-class simplified 2D BCAT baseline**입니다. Sun et al. (2022)의
 | Run 0 | Completed |
 | Run 1 | Completed |
 | Run 2 | Completed — Mesh-DC = Medium |
-| Run 3 | Current |
-| G1 | Conditional |
+| Run 3 | Completed — Mesh-GIDL selected; internal comparison protocol frozen |
+| G1 | Reviewed — not activated |
 | M1 | Before September |
-| Run 4–10 | Planned / Conditional |
+| Run 4 | Next — Single-WF MEB 3-level screening |
+| Run 5–10 | Planned / Conditional |
 
 단계별 목적·통과 조건·실패 시 축소 경로는 [공식 Run Sheet v5](docs/RUN_SHEET.md)에 있습니다.
 
@@ -83,7 +84,7 @@ Run 0에서 B0 nominal 36 nm 구조의 geometry/material regions, source/drain/g
 
 전체 evidence, 조건, 로그 검증 요약과 미완료 항목은 [Run 0 baseline record](docs/progress/run00_baseline.md)에 있습니다.
 
-## 9. Latest Verified Result — Run 2
+## 9. Verified Result — Run 2
 
 Run 2에서는 B0 geometry와 Run 1 DC protocol을 고정한 채 Coarse / Medium / Fine-local mesh를 비교했습니다. 각 mesh에서 `VD=0.05 V`와 `1.0 V`, `VG=0→1.5 V` 조건으로 총 6개의 Id–Vg run을 수행했습니다.
 
@@ -101,33 +102,47 @@ Medium과 Fine-local의 차이는 Vth `<0.06 mV`, SS `<0.02 mV/dec`, Ion `≈0.0
 
 이 결정은 현재 DC protocol에만 적용됩니다. Medium은 BTBT/GIDL, Cov, retention을 위한 최종 mesh가 아니며, 이 Run 2 커밋 시점에 BTBT/GIDL은 아직 검증된 결과가 아닙니다. 전체 수치, field cut, evidence와 제한사항은 [Run 2 mesh-convergence record](docs/progress/run02_mesh_convergence.md)에 있습니다.
 
-## 10. Repository Structure
+## 10. Latest Verified Result — Run 3
+
+Run 3는 B0 geometry를 고정한 채 BTBT-OFF numerical-floor reference, NonlocalPath feasibility, drain-side `Band2BandGeneration` 위치 확인, physics-specific Mesh-GIDL refinement, 그리고 최종 ON/OFF attribution을 완료했습니다.
+
+최종 내부 protocol은 `Mesh_Code=3`, `T=300 K`, `VD=1.2 V`, `VG=0→-0.7 V`, 5 mV requested output grid입니다. `VG=-0.700 V`에서 raw drain current는 BTBT ON `+1.3777737e-14 A`, OFF `-4.2880983e-16 A`이며 magnitude ratio는 약 `32.13018`입니다. 이 값은 simplified-2D 내부 상대 비교용이며 calibrated production-cell GIDL이 아닙니다.
+
+| Final ON/OFF attribution | Drain-side generation |
+|---|---|
+| ![Run 3 BTBT ON/OFF overlay](assets/images/run03/12_r3d_btbt_on_off_overlay.png) | ![Run 3 Band2BandGeneration zoom](assets/images/run03/14_r3d_btbt_generation_zoom.png) |
+
+`Mesh-GIDL = Mesh_Code 3`은 Medium base에 `X=0.032–0.070 um`, `Y=0.112–0.133 um`, max/min `1.0/0.25 nm`의 국부 refinement를 추가합니다. G1은 reviewed — not activated이며 rectangular B0를 Run 4에 유지합니다. 전체 단계, 수치, evidence, source-provenance 제한은 [Run 3 close-out record](docs/progress/run03_btbt_gidl_feasibility.md)에 있습니다.
+
+## 11. Repository Structure
 
 ```text
 CMP/
 ├─ README.md
 ├─ CMP_소자공정_송민호(재발표).pdf
 ├─ docs/                 # scope, decisions, run sheet, references, templates, progress
-├─ code/sde/run02/       # Run 2 mesh-parameterized SDE deck
-├─ code/sdevice/run02/   # Run 2 reproducible DC SDevice deck
+├─ code/sde/run02,run03/ # Mesh-DC and Mesh-GIDL SDE decks
+├─ code/sdevice/run02,run03/ # Run 2 DC and verified Run 3 A/B decks
 ├─ data/run00/           # Run 0 raw CSV and artifact manifest
 ├─ data/run02/           # Run 2 raw CSV, processed metrics, artifact manifest
+├─ data/run03/           # Run 3 raw CSV, ON/OFF summary, artifact manifest
 ├─ assets/images/run00/  # Run 0 key evidence
-└─ assets/images/run02/  # Run 2 mesh-convergence evidence
+├─ assets/images/run02/  # Run 2 mesh-convergence evidence
+└─ assets/images/run03/  # Run 3 BTBT/GIDL and Mesh-GIDL evidence
 ```
 
-핵심 Run 0 입력은 [SDE deck](code/sde/run00/bcat_baseline_sde_r0_v1.cmd), [SDevice deck](code/sdevice/run00/bcat_idvg_r0_verify.cmd)이며 데이터 목록은 [Run 0 manifest](data/run00/manifest.csv)와 [Run 2 manifest](data/run02/manifest.csv)에 기록합니다. `.tdr`, `.plt`, 전체 `.log`, `.out`, `.job`은 로컬 archive에만 둡니다.
+핵심 Run 0 입력은 [SDE deck](code/sde/run00/bcat_baseline_sde_r0_v1.cmd), [SDevice deck](code/sdevice/run00/bcat_idvg_r0_verify.cmd)이며 데이터 목록은 [Run 0 manifest](data/run00/manifest.csv), [Run 2 manifest](data/run02/manifest.csv), [Run 3 manifest](data/run03/manifest.csv)에 기록합니다. `.tdr`, `.plt`, 전체 `.log`, `.out`, `.job`은 로컬 archive에만 둡니다.
 
-## 11. References
+## 12. References
 
 - M. Sun, H. W. Baac, and C. Shin, “Simulation Study: The Impact of Structural Variations on the Characteristics of a Buried-Channel-Array Transistor (BCAT) in DRAM,” *Micromachines*, 2022. [DOI](https://doi.org/10.3390/mi13091476)
 - S. K. Jang and S. Y. Kim, “Impact of Metal and Poly Gate Thickness on GIDL in DRAM Dual Work-Function Structures,” *ICEIC*, 2026. [DOI](https://doi.org/10.1109/ICEIC69189.2026.11386251)
 
 역할별 전체 목록과 향후 확인할 문헌은 [References](docs/REFERENCES.md)를 참조하십시오.
 
-## 12. Current Next Step
+## 13. Current Next Step
 
-**Run 3 — BTBT/GIDL feasibility** starts from B0 + `Mesh-DC=Medium`. First batch compares identical high-drain/negative-gate sweeps with BTBT OFF vs NonlocalPath ON. MEB sweep, corner rounding, Cov, temperature, retention, and refresh remain out of scope for the first R3 batch.
+**Run 4 — Single-WF MEB 3-level screening** is next. It uses the frozen DC and internal GIDL comparison definitions to compare the formal MEB levels without claiming results in advance. Cov, temperature, retention, refresh, and corner rounding remain outside the completed Run 3 scope.
 
 ## License / Usage Note
 

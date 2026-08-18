@@ -8,9 +8,9 @@ This is the official project run sheet. Status and pass criteria must be updated
 | E0 | Run 0 close-out | model scope, data policy, 문서·파일 동결 | GitHub 구조와 B0 evidence 정리 | Completed |
 | Run 1 | DC metric freeze | low/high VD Id–Vg, Id–Vd, Vth/SS/Ion/DC-Ioff/DIBL 내부 정의 | 동일 bias·추출법과 목표 bias 수렴 | Completed |
 | Run 2 | DC base-mesh convergence | Coarse/Medium/Fine-local 및 E-field cut 비교 | Medium–Fine DC metric 및 주요 field profile 수렴 | **Completed — Mesh-DC = Medium** |
-| Run 3 | BTBT/GIDL feasibility + Mesh-GIDL | BTBT-OFF reference → NonlocalPath ON → generation/hotspot 및 mesh 안정성 확인 | drain-side leakage/generation의 bias response와 mechanism attribution 확인 | **Current** |
-| G1 | Corner geometry decision | rectangular bottom의 E-field/BTBT hotspot 확인 | corner-dominated evidence가 있을 때만 fillet sensitivity 활성화 | Conditional |
-| Run 4 | Single-WF MEB 3-level screening | baseline B0와 MEB low/high 비교 | DC·Emax·GIDL 변화가 numerical noise보다 큼 | Planned |
+| Run 3 | BTBT/GIDL feasibility + Mesh-GIDL | BTBT-OFF reference → NonlocalPath ON → generation/hotspot 및 mesh 안정성 확인 | drain-side leakage/generation의 bias response와 mechanism attribution 확인 | **Completed — Mesh-GIDL selected; internal BTBT/GIDL comparison protocol frozen** |
+| G1 | Corner geometry decision | rectangular bottom의 E-field/BTBT hotspot 확인 | corner-dominated evidence가 있을 때만 fillet sensitivity 활성화 | **Reviewed — not activated** |
+| Run 4 | Single-WF MEB 3-level screening | baseline B0와 MEB low/high 비교 | DC·Emax·GIDL 변화가 numerical noise보다 큼 | **Next** |
 | M1 | September milestone | B0 vs provisional P1 비교 | 구조·DC·Emax·가능하면 GIDL 정량 비교 | Target before semester |
 | D1 | Single-WF vs Dual-WF decision | 효과 크기·교수 의도·일정 검토 | 확장 여부 명시 | Conditional |
 | Run 5A | Cov/Cgd feasibility | nominal에서 AC 또는 Q–V 추출 검증 | 재현성·bias·frequency·normalization 고정 | Planned |
@@ -31,4 +31,4 @@ MixedMode failure → device-level charge-loss transient → leakage-based proxy
 통계 분포 부족 → robust process window 대신 variation-aware feasible window
 ```
 
-Run 3 is the current entry point. MEB DOE must not begin until the BTBT/GIDL feasibility and mechanism-attribution gate is passed.
+Run 4 is the current entry point. Run 3 passed the BTBT/GIDL feasibility and mechanism-attribution gate; formal single-WF MEB 3-level screening is next.

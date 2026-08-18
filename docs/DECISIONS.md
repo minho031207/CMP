@@ -71,3 +71,28 @@ Decision date: 2026-08-18
 - Medium and Fine-local were numerically consistent under the frozen Run 1 DC protocol and retained E-field cut checks.
 - `Mesh-DC = Medium` is selected for subsequent baseline simulations.
 - This decision applies to the current DC protocol only; Run 3 must still validate physics-specific Mesh-GIDL stability.
+
+## D-010 — Mesh-GIDL Selection
+
+- `Mesh-DC = Medium / Mesh_Code 1` remains the DC mesh.
+- `Mesh-GIDL = Mesh_Code 3` is selected as the physics-specific mesh for relative GIDL comparisons.
+- Mesh_Code 3 keeps the Medium base and adds local refinement at `X=0.032–0.070 um`, `Y=0.112–0.133 um`, with max/min `1.0/0.25 nm` around the observed drain-side BTBT-sensitive region.
+- Geometry, contacts, and doping are unchanged.
+- The selection does not establish absolute BTBT mesh independence or calibrated absolute GIDL.
+
+## D-011 — Internal GIDL Comparison Protocol
+
+- The Run 4 nominal reference is `MEB=36 nm`, `Mesh-GIDL / Mesh_Code 3`, and `T=300 K`.
+- Drain bias is `VD=1.2 V`.
+- Gate sweep is `VG=0 to -0.7 V` with a 5 mV requested output grid.
+- BTBT uses `Band2Band(Model=NonlocalPath)`.
+- The primary internal leakage metric is `|Idrain|` at `VG=-0.7 V`.
+- The B0 nominal reference is approximately `1.3778e-14 A` (`1.3777737e-14 A` in the final raw CSV).
+- This is an internal relative simplified-2D metric, not a calibrated production-cell leakage value.
+- The exact standalone final R3-D ON and OFF executed decks were not available for archival; the final raw CSVs are the source of truth for the frozen endpoint result.
+
+## D-012 — G1 Review after Run 3
+
+- G1 is reviewed and not activated.
+- Rectangular B0 is retained for Run 4.
+- Corner rounding remains available as a conditional sensitivity branch if later field or BTBT evidence becomes corner-dominated.

@@ -17,6 +17,8 @@ Nominal MEB/Gate-Top Depth: 36 nm
 - SDE to SDevice linkage
 - Basic 300 K Id–Vg turn-on at `VD=0.05 V`, `VG=0→1.5 V`
 - ON-state spatial sanity contours: eDensity, eCurrentDensity, ElectricField, Potential
+- Internal NonlocalPath BTBT/GIDL feasibility and drain-side mechanism attribution under the frozen Run 3 off-state protocol
+- Physics-specific `Mesh-GIDL = Mesh_Code 3` for subsequent relative GIDL comparisons
 
 ## Assumptions and Limitations
 
@@ -29,8 +31,11 @@ Nominal MEB/Gate-Top Depth: 36 nm
 - The 15 nm lateral setback is a simplified user-defined assumption.
 - No 3D saddle-fin width is represented.
 - Terminal current is raw simplified 2D current with no production-cell calibration.
-- Run 0 does not establish BTBT, GIDL, Cov/Cgd, retention, refresh burden, robust process window, or Dual-WF superiority.
+- Run 3 establishes only an internal NonlocalPath BTBT/GIDL feasibility and mechanism-attribution path; absolute GIDL remains uncalibrated.
+- Raw simplified-2D terminal current is used for internal comparison and is not a calibrated production-cell current.
+- Cov/Cgd, temperature dependence, retention, refresh burden, robust process window, and Dual-WF superiority remain unverified.
 - The Run 0 mesh is reference evidence only; formal mesh convergence belongs to Run 2.
+- `Mesh-GIDL` is physics-specific. Future Cov, temperature, retention, or other physics may require separate mesh validation.
 - The 31/36/41 nm split is a parameterization development check, not DOE, performance comparison, or optimization.
 
 ## Comparison Principle
