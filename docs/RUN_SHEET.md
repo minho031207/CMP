@@ -10,10 +10,10 @@ This is the official project run sheet. Status and pass criteria must be updated
 | Run 2 | DC base-mesh convergence | Coarse/Medium/Fine-local 및 E-field cut 비교 | Medium–Fine DC metric 및 주요 field profile 수렴 | **Completed — Mesh-DC = Medium** |
 | Run 3 | BTBT/GIDL feasibility + Mesh-GIDL | BTBT-OFF reference → NonlocalPath ON → generation/hotspot 및 mesh 안정성 확인 | drain-side leakage/generation의 bias response와 mechanism attribution 확인 | **Completed — Mesh-GIDL selected; internal BTBT/GIDL comparison protocol frozen** |
 | G1 | Corner geometry decision | rectangular bottom의 E-field/BTBT hotspot 확인 | corner-dominated evidence가 있을 때만 fillet sensitivity 활성화 | **Reviewed — not activated** |
-| Run 4 | Single-WF MEB 3-level screening | baseline B0와 MEB low/high 비교 | DC·Emax·GIDL 변화가 numerical noise보다 큼 | **Next** |
+| Run 4 | Single-WF MEB 3-level screening | fresh 31/36/41 nm formal rerun; GIDL + DC guardrail 비교 | MEB-dependent GIDL trend와 corresponding DC trade-off 정량화 | **Completed — deeper-MEB direction reduced internal GIDL over 31–41 nm; DC guardrails stable** |
 | M1 | September milestone | B0 vs provisional P1 비교 | 구조·DC·Emax·가능하면 GIDL 정량 비교 | Target before semester |
 | D1 | Single-WF vs Dual-WF decision | 효과 크기·교수 의도·일정 검토 | 확장 여부 명시 | Conditional |
-| Run 5A | Cov/Cgd feasibility | nominal에서 AC 또는 Q–V 추출 검증 | 재현성·bias·frequency·normalization 고정 | Planned |
+| Run 5A | Cov/Cgd feasibility | nominal에서 AC 또는 Q–V 추출 검증 | 재현성·bias·frequency·normalization 고정 | **Next** |
 | Run 5B | MEB–Cov–Emax–GIDL correlation | 유효하면 3→5 level 확대 | 상관성·trade-off·후보 선택 | Conditional |
 | Run 6 | Selected temperature split | B0와 후보 2–3개, 300/340/380 K | leakage component와 성능 경향 분리 | Planned |
 | Run 7 | Retention feasibility | BL/SN mapping, capacitor, write/hold/read 기준 | 실행 경로와 pass criterion 확정 | Planned |
@@ -31,4 +31,4 @@ MixedMode failure → device-level charge-loss transient → leakage-based proxy
 통계 분포 부족 → robust process window 대신 variation-aware feasible window
 ```
 
-Run 4 is the current entry point. Run 3 passed the BTBT/GIDL feasibility and mechanism-attribution gate; formal single-WF MEB 3-level screening is next.
+Run 4 passed the first formal single-WF MEB screening gate. The 31–41 nm result establishes a project-internal deeper-MEB/ lower-GIDL direction without declaring 41 nm a global optimum. The next technical entry is **Run 5A — Cov/Cgd feasibility** at nominal B0; Run 5B 3→5-level expansion remains conditional on a repeatable Cov extraction path.

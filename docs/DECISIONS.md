@@ -96,3 +96,27 @@ Decision date: 2026-08-18
 - G1 is reviewed and not activated.
 - Rectangular B0 is retained for Run 4.
 - Corner rounding remains available as a conditional sensitivity branch if later field or BTBT evidence becomes corner-dominated.
+
+Decision date: 2026-08-19
+
+## D-013 — Run 4 Formal MEB Screening
+
+- The 31/36/41 nm MEB levels were freshly rerun in the formal Run 4 projects and are the first official MEB DOE data for this project.
+- Earlier Run 0/1 31/36/41 nm cases remain development-only parameterization checks and are not reused as formal optimization evidence.
+- Formal GIDL comparison uses `Mesh_Code=3`, `T=300 K`, `VD=1.2 V`, `VG=0 to -0.7 V`, 5 mV requested output spacing, and NonlocalPath BTBT ON.
+- Formal DC guardrail comparison uses `Mesh_Code=1`, `VD=0.05/1.0 V`, `VG=0 to 1.5 V`, and `VG_MaxStep=0.005 V` with BTBT disabled.
+
+## D-014 — Run 4 GIDL Direction
+
+- The formal endpoint `|Idrain|` values at `VG=-0.7 V` are `1.9624468e-14 A`, `1.3777737e-14 A`, and `7.7683012e-15 A` for MEB 31, 36, and 41 nm respectively.
+- Normalized to 36 nm, the values are `1.424361`, `1.000000`, and `0.563830`.
+- Within the screened 31–41 nm range, deeper MEB reduces the project-internal GIDL metric.
+- 41 nm is recorded as the lowest-GIDL screened boundary case, not a final/global optimum.
+- These are raw simplified-2D internal comparison values, not calibrated production-cell leakage.
+
+## D-015 — Run 4 DC Guardrail
+
+- Under the frozen Run 1 extraction definitions, no material Vth/SS/Ion/DIBL penalty is resolved across 31–41 nm.
+- The largest observed deviations relative to nominal are on the order of `0.024 mV` in Vth, `0.04 mV/dec` in SS, `0.027 mV/V` in DIBL, and `0.021%` in Ion.
+- Run 4 therefore passes the coarse MEB screening gate without declaring a final optimum.
+- Cov/Cgd, formal Emax, temperature, retention, refresh burden, and robust process-window claims remain outside the completed Run 4 scope.
