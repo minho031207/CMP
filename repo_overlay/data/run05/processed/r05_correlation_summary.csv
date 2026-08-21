@@ -1,0 +1,7 @@
+metric_x,metric_y,pearson_r,spearman_rho,n,interpretation
+MEB_nm,Cgd_raw,-0.9999682906079037,-0.9999999999999999,5,internal five-level association; not causal proof
+MEB_nm,E_wall_max_V_per_cm,-0.9658289927956465,-0.9999999999999999,5,internal five-level association; not causal proof
+MEB_nm,GIDL_A,-0.9995444435526112,-0.9999999999999999,5,internal five-level association; not causal proof
+Cgd_raw,E_wall_max_V_per_cm,0.9677571332440787,0.9999999999999999,5,internal five-level association; not causal proof
+Cgd_raw,GIDL_A,0.999585610682079,0.9999999999999999,5,internal five-level association; not causal proof
+E_wall_max_V_per_cm,GIDL_A,0.965409610191825,0.9999999999999999,5,internal five-level association; not causal proof

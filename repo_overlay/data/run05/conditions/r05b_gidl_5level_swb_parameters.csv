@@ -1,0 +1,6 @@
+case_id,MEB_Depth,Mesh_Code,VD_Target1,VG_Min1,temperature_K,description
+R5B_GIDL_MEB31,0.031,3,1.2,-0.7,300,formal 31 nm MEB GIDL
+R5B_GIDL_MEB33p5,0.0335,3,1.2,-0.7,300,formal 33.5 nm MEB GIDL
+R5B_GIDL_MEB36,0.036,3,1.2,-0.7,300,formal nominal 36 nm MEB GIDL
+R5B_GIDL_MEB38p5,0.0385,3,1.2,-0.7,300,formal 38.5 nm MEB GIDL
+R5B_GIDL_MEB41,0.041,3,1.2,-0.7,300,formal 41 nm MEB GIDL

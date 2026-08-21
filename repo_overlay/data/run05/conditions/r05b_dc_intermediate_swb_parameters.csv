@@ -1,0 +1,5 @@
+case_id,MEB_Depth,Mesh_Code,VD_Target,VG_MaxStep,temperature_K,description
+R5B_DC_MEB33p5_LOW,0.0335,1,0.05,0.005,300,33.5 nm low-VD DC guardrail
+R5B_DC_MEB33p5_HIGH,0.0335,1,1.0,0.005,300,33.5 nm high-VD DC guardrail
+R5B_DC_MEB38p5_LOW,0.0385,1,0.05,0.005,300,38.5 nm low-VD DC guardrail
+R5B_DC_MEB38p5_HIGH,0.0385,1,1.0,0.005,300,38.5 nm high-VD DC guardrail

@@ -1,0 +1,4 @@
+case_id,MEB_Depth,Mesh_Code,VD_AC,VG_START,VG_END,AC_Freq,description
+R5B_MEB31,0.031,1,1.2,-0.71,-0.69,1e6,formal 31 nm MEB Cgd extraction
+R5B_MEB36,0.036,1,1.2,-0.71,-0.69,1e6,nominal 36 nm reference
+R5B_MEB41,0.041,1,1.2,-0.71,-0.69,1e6,formal 41 nm MEB Cgd extraction
