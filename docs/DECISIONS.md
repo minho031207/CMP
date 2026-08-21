@@ -44,8 +44,6 @@ Decision date: 2026-08-02
 - If both methods fail, use Emax only as an intermediate explanatory indicator without a Cov predictor claim in the title.
 - If MixedMode fails, reduce scope to a clearly labeled retention proxy; do not overstate it as direct `retention`.
 
-## Decisions to append for Run 1 / Run 2 close-out
-
 Decision date: 2026-08-18
 
 ## D-008 — Run 1 Internal DC Protocol
@@ -60,6 +58,7 @@ Decision date: 2026-08-18
 - DIBL = (Vth_low - Vth_high) / 0.95.
 - DC Ioff at VG=0, VD=1.0 is retained only as a BTBT-off numerical-floor-sensitive diagnostic and is not called GIDL.
 - Currents remain raw simplified-2D terminal currents, not calibrated production-cell currents.
+- Clarification: Run 1 froze the bias/output/extraction definitions, not a unique solver `VG_MaxStep`. Run 2 mesh convergence used `VG_MaxStep=0.010`; formal Run 4+ DC DOE tightened it to `0.005` without changing the metric definitions.
 
 ## D-009 — Run 2 Mesh-DC Selection
 
@@ -120,3 +119,51 @@ Decision date: 2026-08-19
 - The largest observed deviations relative to nominal are on the order of `0.024 mV` in Vth, `0.04 mV/dec` in SS, `0.027 mV/V` in DIBL, and `0.021%` in Ion.
 - Run 4 therefore passes the coarse MEB screening gate without declaring a final optimum.
 - Cov/Cgd, formal Emax, temperature, retention, refresh burden, and robust process-window claims remain outside the completed Run 4 scope.
+
+Decision date: 2026-08-21
+
+## D-016 — Run 5A Internal Cgd Protocol
+
+- Sentaurus Device `ACCoupled` and `ACExtract` are used for the B0 four-terminal small-signal matrix.
+- The primary project-internal coupling metric is `|c(g,d)|`; `|c(d,g)|` is retained as a reciprocity cross-check.
+- Formal comparison bias is `T=300 K`, `VD=1.2 V`, `VG=-0.70 V`.
+- Representative frequency is `1 MHz`.
+- BTBT is disabled for the Cgd extraction branch.
+- The nominal 36 nm reference is approximately `1.6829627524e-16`.
+- The value is a raw AC matrix element for internal comparison, not calibrated production-cell Cov.
+
+## D-017 — Run 5A Frequency and Mesh Validation
+
+- Cgd at 100 kHz, 1 MHz, and 10 MHz is effectively invariant under the nominal GIDL-relevant bias.
+- The 100 kHz–10 MHz variation is approximately `1.68e-7 %`.
+- Mesh_Code 1 versus Mesh_Code 2 changes nominal `|Cgd|` by approximately `0.2665%`.
+- `Mesh_Code=1 / Medium` is retained for the current Run 5 Cgd comparison path.
+- No separate Mesh-Cgd refinement is activated.
+
+## D-018 — Run 5B Formal Five-Level MEB Correlation
+
+- The formal MEB set is expanded to `31 / 33.5 / 36 / 38.5 / 41 nm`.
+- All five levels are rerun in the Cgd formal batch under the frozen Run 5A protocol.
+- All five levels are run in the GIDL formal batch under the frozen Run 3/4 NonlocalPath protocol.
+- The 31/36/41 nm GIDL endpoints reproduce the formal Run 4 values exactly.
+- Across 31→41 nm, the project-internal Cgd metric decreases by approximately `17.15%` and the GIDL endpoint decreases by approximately `60.42%`.
+- Five-point correlation coefficients are descriptive internal trend evidence only and are not causal proof.
+
+## D-019 — Fixed Drain-Side Wall Field Metric
+
+- Run 5 replaces automatic SVisual color-bar maxima with a reproducible fixed-cut metric.
+- Quantity: `Abs(ElectricField-V)`.
+- Source: final GIDL TDR at `VD=1.2 V`, `VG=-0.7 V`.
+- Cutline: `Y=0.116 um`.
+- Formal interval: `X=0.032–0.070 um`.
+- Metric: `E_wall,max`, the maximum field within that interval.
+- `E_wall,max` is not called global Emax.
+- All five formal peak positions remain inside the fixed interval and the peak value decreases monotonically with MEB.
+
+## D-020 — Provisional P1 Selection after Run 5
+
+- `P1 = 41 nm` is selected for the temperature stage as the provisional low-GIDL screened-window candidate.
+- Within the tested 31–41 nm window, 41 nm has the lowest project-internal Cgd, E_wall,max, and GIDL values.
+- No material Vth/SS/Ion/DIBL penalty is resolved at the current internal metric resolution.
+- `P1=41 nm` is not a global, final, or production optimum.
+- Temperature dependence, retention, refresh burden, and variation-aware process-window claims remain future work.
