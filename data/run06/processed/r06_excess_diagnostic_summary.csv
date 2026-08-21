@@ -1,0 +1,4 @@
+Temperature_K,formal_signed_excess_ratio_41_to_36,magnitude_excess_ratio_41_to_36_supplemental,formal_signed_excess_valid,note
+300,,0.5744482258644311,False,300 K BTBT-OFF terminal-current polarity differs; magnitude-only ratio is supplemental
+340,0.5516214468946832,0.5516214468946832,True,formal same-sign diagnostic available
+380,0.5453886637554449,0.5453886637554449,True,formal same-sign diagnostic available

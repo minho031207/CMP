@@ -167,3 +167,55 @@ Decision date: 2026-08-21
 - No material Vth/SS/Ion/DIBL penalty is resolved at the current internal metric resolution.
 - `P1=41 nm` is not a global, final, or production optimum.
 - Temperature dependence, retention, refresh burden, and variation-aware process-window claims remain future work.
+
+Decision date: 2026-08-21
+
+## D-021 — Run 6 Elevated-Temperature Protocol
+
+- Run 6 uses fixed lattice temperatures `300 / 340 / 380 K`.
+- The Run 5 geometry, mesh standards, bias definitions, and base physics are retained.
+- R6A changes the GIDL deck only by replacing fixed `Temperature=300` with `Temperature=@Temp_K@`.
+- Run 6 is an isothermal device robustness comparison and does not simulate electrothermal self-heating or heat transport.
+- Temperature values are project comparison conditions and are not claimed as universal AI-memory operating temperatures.
+
+## D-022 — R6A Temperature-Dependent GIDL
+
+- Formal MEB cases are `31 / 36 / 41 nm`.
+- `Mesh_Code=3`, `VD=1.2 V`, `VG=0 to -0.7 V`, and NonlocalPath ON remain unchanged.
+- All three 300 K endpoints reproduce the formal Run 5 values exactly.
+- The total-current ranking remains `31 > 36 > 41 nm` at 300, 340, and 380 K.
+- P1=41 nm reduces the endpoint relative to B0=36 nm by approximately `43.62%`, `44.25%`, and `16.91%` at 300, 340, and 380 K respectively.
+
+## D-023 — R6B BTBT-OFF Background Control
+
+- R6B compares B0=36 nm and P1=41 nm at 300/340/380 K with the same geometry, mesh, bias, and base physics as R6A but with NonlocalPath removed.
+- The BTBT-OFF endpoint is only about `3.21%` of the 36 nm ON endpoint and `4.23%` of the 41 nm ON endpoint at 340 K.
+- At 380 K the corresponding fractions increase to approximately `62.49%` and `75.38%`.
+- This supports a large change in the total-current leakage balance at 380 K.
+- R6B is a BTBT-off background reference under frozen project physics; it is not a complete physical decomposition of every thermal leakage mechanism.
+- A single signed ON−OFF excess metric is not promoted across all temperatures because the 300 K OFF terminal-current polarity differs from the ON endpoint.
+- Same-sign ON−OFF diagnostics at 340/380 K are retained only as project-internal supporting evidence and are not called calibrated pure-BTBT current.
+
+## D-024 — R6C DC Thermal Guardrail
+
+- R6C evaluates B0=36 nm and P1=41 nm at 340/380 K using `Mesh_Code=1`, `VD=0.05/1.0 V`, `VG=0 to 1.5 V`, `VG_MaxStep=0.005 V`, and BTBT OFF.
+- Formal 300 K DC values are reused from Run 4/5 under the same extraction definitions.
+- Temperature materially shifts Vth, SS, Ion, and DIBL, but 36 and 41 nm show nearly identical thermal changes.
+- No material additional thermal DC penalty attributable to P1=41 nm is resolved.
+- The 380 K SS fit shows reduced linearity (`R²≈0.9923`) relative to 340 K but remains usable for the internal trend comparison.
+
+## D-025 — Run 6 Temperature-Dependent Fixed-Wall Field
+
+- The Run 5 formal field definition is reused without change: `Abs(ElectricField-V)`, `Y=0.116 um`, `X=0.032–0.070 um`, final GIDL ON state at `VD=1.2 V`, `VG=-0.7 V`.
+- The metric remains `E_wall,max`, not global Emax.
+- Run 6 300 K field values reproduce Run 5 exactly.
+- From 300 to 380 K, `E_wall,max` decreases slightly by about `0.89%` for 36 nm and `0.92%` for 41 nm.
+- The 41 nm fixed-wall field remains approximately `1.24–1.27%` below 36 nm across 300–380 K.
+- All formal peak positions remain inside the predefined ROI.
+
+## D-026 — Run 6 Candidate Handoff
+
+- `P1 = 41 nm` remains the provisional candidate entering Run 7 retention feasibility.
+- The reason is the retained lowest total GIDL ranking, preserved fixed-wall field advantage, and absence of a resolved additional DC thermal penalty.
+- The total-current advantage weakens at 380 K because a large BTBT-OFF background contribution is present.
+- Run 6 does not establish retention time, refresh reduction, a full 3D result, or a global/final/production optimum.

@@ -1,0 +1,44 @@
+branch,case_id,artifact_type,repo_path,git_tracked,source_node,source_uploaded_file,MEB_nm,Temperature_K,VD_V,VG_range,Mesh_Code,physics,status,note
+R6A,R6A_ON_MEB31_T300,raw-csv,data/run06/raw/gidl_on/r06a_gidl_on_meb31_t300_n36.csv,yes,n36,R6A_GIDL_ON_2.csv,31,300,1.2,0:-0.7,3,NonlocalPath_ON,PASS,141-point formal GIDL ON sweep
+R6A,R6A_ON_MEB36_T300,raw-csv,data/run06/raw/gidl_on/r06a_gidl_on_meb36_t300_n35.csv,yes,n35,R6A_GIDL_ON_1.csv,36,300,1.2,0:-0.7,3,NonlocalPath_ON,PASS,141-point formal GIDL ON sweep
+R6A,R6A_ON_MEB41_T300,raw-csv,data/run06/raw/gidl_on/r06a_gidl_on_meb41_t300_n37.csv,yes,n37,R6A_GIDL_ON_3.csv,41,300,1.2,0:-0.7,3,NonlocalPath_ON,PASS,141-point formal GIDL ON sweep
+R6A,R6A_ON_MEB31_T340,raw-csv,data/run06/raw/gidl_on/r06a_gidl_on_meb31_t340_n79.csv,yes,n79,R6A_GIDL_ON_5.csv,31,340,1.2,0:-0.7,3,NonlocalPath_ON,PASS,141-point formal GIDL ON sweep
+R6A,R6A_ON_MEB36_T340,raw-csv,data/run06/raw/gidl_on/r06a_gidl_on_meb36_t340_n76.csv,yes,n76,R6A_GIDL_ON_4.csv,36,340,1.2,0:-0.7,3,NonlocalPath_ON,PASS,141-point formal GIDL ON sweep
+R6A,R6A_ON_MEB41_T340,raw-csv,data/run06/raw/gidl_on/r06a_gidl_on_meb41_t340_n82.csv,yes,n82,R6A_GIDL_ON_6.csv,41,340,1.2,0:-0.7,3,NonlocalPath_ON,PASS,141-point formal GIDL ON sweep
+R6A,R6A_ON_MEB31_T380,raw-csv,data/run06/raw/gidl_on/r06a_gidl_on_meb31_t380_n88.csv,yes,n88,R6A_GIDL_ON_8.csv,31,380,1.2,0:-0.7,3,NonlocalPath_ON,PASS,141-point formal GIDL ON sweep
+R6A,R6A_ON_MEB36_T380,raw-csv,data/run06/raw/gidl_on/r06a_gidl_on_meb36_t380_n85.csv,yes,n85,R6A_GIDL_ON_7.csv,36,380,1.2,0:-0.7,3,NonlocalPath_ON,PASS,141-point formal GIDL ON sweep
+R6A,R6A_ON_MEB41_T380,raw-csv,data/run06/raw/gidl_on/r06a_gidl_on_meb41_t380_n91.csv,yes,n91,R6A_GIDL_ON_9.csv,41,380,1.2,0:-0.7,3,NonlocalPath_ON,PASS,141-point formal GIDL ON sweep
+R6B,R6B_OFF_MEB36_T300,raw-csv,data/run06/raw/gidl_off/r06b_gidl_off_meb36_t300_n35.csv,yes,n35,R6A_GIDL_OFF_1.csv,36,300,1.2,0:-0.7,3,BTBT_OFF,PASS,source export filename says R6A; actual project is R6B_GIDL_OFF
+R6B,R6B_OFF_MEB41_T300,raw-csv,data/run06/raw/gidl_off/r06b_gidl_off_meb41_t300_n37.csv,yes,n37,R6A_GIDL_OFF_2.csv,41,300,1.2,0:-0.7,3,BTBT_OFF,PASS,source export filename says R6A; actual project is R6B_GIDL_OFF
+R6B,R6B_OFF_MEB36_T340,raw-csv,data/run06/raw/gidl_off/r06b_gidl_off_meb36_t340_n75.csv,yes,n75,R6A_GIDL_OFF_3.csv,36,340,1.2,0:-0.7,3,BTBT_OFF,PASS,source export filename says R6A; actual project is R6B_GIDL_OFF
+R6B,R6B_OFF_MEB41_T340,raw-csv,data/run06/raw/gidl_off/r06b_gidl_off_meb41_t340_n78.csv,yes,n78,R6A_GIDL_OFF_4.csv,41,340,1.2,0:-0.7,3,BTBT_OFF,PASS,source export filename says R6A; actual project is R6B_GIDL_OFF
+R6B,R6B_OFF_MEB36_T380,raw-csv,data/run06/raw/gidl_off/r06b_gidl_off_meb36_t380_n81.csv,yes,n81,R6A_GIDL_OFF_5.csv,36,380,1.2,0:-0.7,3,BTBT_OFF,PASS,source export filename says R6A; actual project is R6B_GIDL_OFF
+R6B,R6B_OFF_MEB41_T380,raw-csv,data/run06/raw/gidl_off/r06b_gidl_off_meb41_t380_n84.csv,yes,n84,R6A_GIDL_OFF_6.csv,41,380,1.2,0:-0.7,3,BTBT_OFF,PASS,source export filename says R6A; actual project is R6B_GIDL_OFF
+R6C,R6C_DC_MEB36_T340_VD0.05,raw-csv,data/run06/raw/dc/r06c_dc_meb36_t340_vd0p05_n73.csv,yes,n73,R6C_DC_1.csv,36,340,0.05,0:1.5,1,BTBT_OFF,PASS,301-point formal DC thermal sweep
+R6C,R6C_DC_MEB41_T340_VD0.05,raw-csv,data/run06/raw/dc/r06c_dc_meb41_t340_vd0p05_n76.csv,yes,n76,R6C_DC_2.csv,41,340,0.05,0:1.5,1,BTBT_OFF,PASS,301-point formal DC thermal sweep
+R6C,R6C_DC_MEB36_T340_VD1.0,raw-csv,data/run06/raw/dc/r06c_dc_meb36_t340_vd1p0_n95.csv,yes,n95,R6C_DC_5.csv,36,340,1.0,0:1.5,1,BTBT_OFF,PASS,301-point formal DC thermal sweep
+R6C,R6C_DC_MEB41_T340_VD1.0,raw-csv,data/run06/raw/dc/r06c_dc_meb41_t340_vd1p0_n96.csv,yes,n96,R6C_DC_6.csv,41,340,1.0,0:1.5,1,BTBT_OFF,PASS,301-point formal DC thermal sweep
+R6C,R6C_DC_MEB36_T380_VD0.05,raw-csv,data/run06/raw/dc/r06c_dc_meb36_t380_vd0p05_n85.csv,yes,n85,R6C_DC_3.csv,36,380,0.05,0:1.5,1,BTBT_OFF,PASS,301-point formal DC thermal sweep
+R6C,R6C_DC_MEB41_T380_VD0.05,raw-csv,data/run06/raw/dc/r06c_dc_meb41_t380_vd0p05_n88.csv,yes,n88,R6C_DC_4.csv,41,380,0.05,0:1.5,1,BTBT_OFF,PASS,301-point formal DC thermal sweep
+R6C,R6C_DC_MEB36_T380_VD1.0,raw-csv,data/run06/raw/dc/r06c_dc_meb36_t380_vd1p0_n97.csv,yes,n97,R6C_DC_7.csv,36,380,1.0,0:1.5,1,BTBT_OFF,PASS,301-point formal DC thermal sweep
+R6C,R6C_DC_MEB41_T380_VD1.0,raw-csv,data/run06/raw/dc/r06c_dc_meb41_t380_vd1p0_n98.csv,yes,n98,R6C_DC_8.csv,41,380,1.0,0:1.5,1,BTBT_OFF,PASS,301-point formal DC thermal sweep
+R6D,MEB36_T300,field-cut-csv,data/run06/raw/field/r06d_ewall_meb36_t300_n35.csv,yes,n35,R6A_TDR.csv,36,300,1.2,-0.7 final,3,NonlocalPath_ON,PASS,fixed Y=0.116 um cut; formal ROI X=0.032-0.070 um
+R6D,MEB36_T300,tdr-local-only,n35_des.tdr,no,n35,,36,300,1.2,-0.7 final,3,NonlocalPath_ON,LOCAL_ONLY,source TDR for field cut
+R6D,MEB41_T300,field-cut-csv,data/run06/raw/field/r06d_ewall_meb41_t300_n37.csv,yes,n37,R6A_TDR_2.csv,41,300,1.2,-0.7 final,3,NonlocalPath_ON,PASS,fixed Y=0.116 um cut; formal ROI X=0.032-0.070 um
+R6D,MEB41_T300,tdr-local-only,n37_des.tdr,no,n37,,41,300,1.2,-0.7 final,3,NonlocalPath_ON,LOCAL_ONLY,source TDR for field cut
+R6D,MEB36_T340,field-cut-csv,data/run06/raw/field/r06d_ewall_meb36_t340_n76.csv,yes,n76,R6A_TDR_3.csv,36,340,1.2,-0.7 final,3,NonlocalPath_ON,PASS,fixed Y=0.116 um cut; formal ROI X=0.032-0.070 um
+R6D,MEB36_T340,tdr-local-only,n76_des.tdr,no,n76,,36,340,1.2,-0.7 final,3,NonlocalPath_ON,LOCAL_ONLY,source TDR for field cut
+R6D,MEB41_T340,field-cut-csv,data/run06/raw/field/r06d_ewall_meb41_t340_n82.csv,yes,n82,R6A_TDR_4.csv,41,340,1.2,-0.7 final,3,NonlocalPath_ON,PASS,fixed Y=0.116 um cut; formal ROI X=0.032-0.070 um
+R6D,MEB41_T340,tdr-local-only,n82_des.tdr,no,n82,,41,340,1.2,-0.7 final,3,NonlocalPath_ON,LOCAL_ONLY,source TDR for field cut
+R6D,MEB36_T380,field-cut-csv,data/run06/raw/field/r06d_ewall_meb36_t380_n85.csv,yes,n85,R6A_TDR_5.csv,36,380,1.2,-0.7 final,3,NonlocalPath_ON,PASS,fixed Y=0.116 um cut; formal ROI X=0.032-0.070 um
+R6D,MEB36_T380,tdr-local-only,n85_des.tdr,no,n85,,36,380,1.2,-0.7 final,3,NonlocalPath_ON,LOCAL_ONLY,source TDR for field cut
+R6D,MEB41_T380,field-cut-csv,data/run06/raw/field/r06d_ewall_meb41_t380_n91.csv,yes,n91,R6A_TDR_6.csv,41,380,1.2,-0.7 final,3,NonlocalPath_ON,PASS,fixed Y=0.116 um cut; formal ROI X=0.032-0.070 um
+R6D,MEB41_T380,tdr-local-only,n91_des.tdr,no,n91,,41,380,1.2,-0.7 final,3,NonlocalPath_ON,LOCAL_ONLY,source TDR for field cut
+R6,processed,processed-csv,data/run06/processed/r06_380k_curve_minima.csv,yes,,,,,,,,,PASS,reproducible processed result
+R6,processed,processed-csv,data/run06/processed/r06_dc_thermal_summary.csv,yes,,,,,,,,,PASS,reproducible processed result
+R6,processed,processed-csv,data/run06/processed/r06_excess_diagnostic_summary.csv,yes,,,,,,,,,PASS,reproducible processed result
+R6,processed,processed-csv,data/run06/processed/r06_extraction_diagnostics.csv,yes,,,,,,,,,PASS,reproducible processed result
+R6,processed,processed-csv,data/run06/processed/r06_field_temperature_summary.csv,yes,,,,,,,,,PASS,reproducible processed result
+R6,processed,processed-csv,data/run06/processed/r06_gidl_temperature_summary.csv,yes,,,,,,,,,PASS,reproducible processed result
+R6,processed,processed-csv,data/run06/processed/r06_master_summary.csv,yes,,,,,,,,,PASS,reproducible processed result
+R6,processed,processed-csv,data/run06/processed/r06_on_off_summary.csv,yes,,,,,,,,,PASS,reproducible processed result

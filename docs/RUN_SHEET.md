@@ -1,4 +1,4 @@
-# TCAD Virtual Run Sheet v5
+# TCAD Virtual Run Sheet v6
 
 This is the official project run sheet. Status and pass criteria must be updated through recorded decisions, not inferred from exploratory plots.
 
@@ -15,8 +15,8 @@ This is the official project run sheet. Status and pass criteria must be updated
 | D1 | Single-WF vs Dual-WF decision | 효과 크기·교수 의도·일정 검토 | 확장 여부 명시 | Conditional |
 | Run 5A | Cov/Cgd feasibility | nominal AC extraction, bias/frequency/mesh validation | repeatable raw Cgd metric과 representative protocol 동결 | **Completed — 1 MHz, Mesh_Code 1 internal Cgd protocol frozen** |
 | Run 5B | MEB–Cgd–field–GIDL correlation | formal 31/33.5/36/38.5/41 nm Cgd + GIDL + field + DC guardrail | five-level trend·trade-off·후보 선택 | **Completed — P1=41 nm provisional screened-window candidate** |
-| Run 6 | Selected temperature split | B0/P1 중심 300/340/380 K 비교 | leakage component와 성능 경향 분리 | **Next** |
-| Run 7 | Retention feasibility | BL/SN mapping, capacitor, write/hold/read 기준 | 실행 경로와 pass criterion 확정 | Planned |
+| Run 6 | Selected temperature split | 31/36/41 nm GIDL ON + 36/41 nm BTBT-OFF/DC/field, 300/340/380 K | ranking·background contribution·thermal DC/field robustness 분리 | **Completed — P1 ranking retained; 380 K background contribution increased; no resolved additional P1 DC penalty** |
+| Run 7 | Retention feasibility | BL/SN mapping, capacitor, write/hold/read 기준 | direct retention 또는 명시적 proxy 실행 경로와 pass criterion 확정 | **Next** |
 | Run 8 | 1T1C or retention proxy | selected case charge-loss 비교 | 직접 retention 또는 명시적 proxy | Conditional |
 | Run 9 | Refresh translation | normalized relative burden | 신뢰 가능한 retention 결과가 있을 때만 | Conditional |
 | Run 10 | Variation-aware design window | 성능·누설·온도·variation 제약 | feasible range와 worst-case 명시 | Planned |
@@ -31,9 +31,12 @@ MixedMode failure → device-level charge-loss transient → leakage-based proxy
 통계 분포 부족 → robust process window 대신 variation-aware feasible window
 ```
 
-Run 5 passes the coupling/correlation gate. The formal five-level screening shows the
-same monotonic direction in the project-internal Cgd metric, fixed drain-side wall peak
-field, and GIDL while the DC guardrail remains essentially unchanged. `41 nm` is carried
-forward only as **P1, a provisional low-GIDL candidate inside the screened 31–41 nm window**.
+Run 6 passes the elevated-temperature robustness gate. The `31 > 36 > 41 nm` GIDL
+ranking remains through 380 K. P1=41 nm retains about 44.2% total-current
+reduction vs B0 at 340 K and about 16.9% at 380 K. The reduced 380 K
+separation is consistent with a large BTBT-OFF background contribution, while the fixed
+`E_wall,max` advantage and DC guardrail remain stable.
 
-The next technical entry is **Run 6 — Selected temperature split (300/340/380 K)**.
+`41 nm` remains **P1, a provisional screened-window candidate**, not a global/final optimum.
+
+The next technical entry is **Run 7 — Retention feasibility**.

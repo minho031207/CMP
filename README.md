@@ -1,7 +1,7 @@
 # CMP: 20 nm-Class BCAT DRAM Reliability Design
 
-> **Project status:** Run 0–5 completed  
-> **Current step:** Run 6 — Temperature split preparation  
+> **Project status:** Run 0–6 completed  
+> **Current step:** Run 7 — Retention feasibility preparation  
 > **Tool:** Synopsys Sentaurus TCAD T-2022.03  
 > **Baseline model:** B0 — 20 nm-Class Simplified 2D BCAT
 
@@ -9,7 +9,7 @@
 **AI 메모리용 DRAM의 고온 Refresh 부담 저감을 위한 20 nm급 BCAT의 MEB–Cov–GIDL 강건 설계**
 
 현재까지 B0 baseline 구축, DC metric freeze, mesh convergence, NonlocalPath BTBT/GIDL 검증,
-formal MEB screening, Cgd extraction, 그리고 5-level MEB–Cgd–field–GIDL correlation까지 완료했습니다.
+formal MEB screening, 5-level MEB–Cgd–field–GIDL correlation, 그리고 300/340/380 K elevated-temperature robustness 검증까지 완료했습니다.
 
 현재 screened window인 31–41 nm 안에서는 **41 nm를 P1 provisional candidate**로 선정했으며,
 이는 global/final optimum을 의미하지 않습니다.
@@ -25,7 +25,7 @@ CMP(Chips Master Program)는 첨단분야 혁신융합대학사업단과 숭실�
 - **Main area:** DRAM cell transistor / BCAT / TCAD / GIDL / retention
 - **Goal:** 구조 및 공정 변수 변화가 DRAM leakage와 reliability에 미치는 영향을 TCAD로 분석하고,
   물리적으로 설명 가능한 design direction과 variation-aware design window를 제시
-- **Current focus:** MEB 변화에 따른 gate–drain coupling, drain-side field, BTBT/GIDL의 연계성 검증
+- **Current focus:** Run 6 temperature robustness 결과를 기반으로 retention feasibility와 charge-loss evaluation path를 정의
 
 초기에는 HBM4·Hybrid Bonding 대응 DRAM 관점에서 프로젝트를 시작했지만,
 소자 단위에서 더 명확한 물리적 인과관계와 검증 가능한 변수를 확보하기 위해
@@ -62,8 +62,8 @@ refresh burden
 variation-aware design window
 ```
 
-Run 5까지는 이 중 **MEB → Cgd → drain-side field → GIDL** 구간을
-project-internal metric으로 정량화했습니다.
+Run 6까지는 **MEB → Cgd → drain-side field → GIDL → temperature robustness** 구간을
+project-internal metric으로 정량화했습니다. 다음 단계는 retention feasibility입니다.
 
 ---
 
@@ -118,8 +118,9 @@ B0는 양산 DRAM cell의 완전한 3D reproduction이 아니라,
 | **Run 4** | Formal MEB screening | 31/36/41 nm에서 deeper-MEB → lower GIDL | Completed |
 | **Run 5A** | Cgd extraction feasibility | 1 MHz / Mesh1 internal Cgd protocol 동결 | Completed |
 | **Run 5B** | 5-level correlation | MEB–Cgd–field–GIDL 단조 경향 + P1=41 nm | Completed |
-| **Run 6** | Temperature split | 300 / 340 / 380 K 검증 | **Next** |
-| **Run 7–10** | Retention → refresh → design window | 후속 검증 | Planned / Conditional |
+| **Run 6** | Temperature robustness | 300 / 340 / 380 K GIDL + background + DC/field 검증 | Completed |
+| **Run 7** | Retention feasibility | storage-node / capacitor / write-hold-read 기준 정의 | **Next** |
+| **Run 8–10** | Retention → refresh → design window | 후속 검증 | Planned / Conditional |
 
 전체 기준과 exit gate는 [Current Run Sheet](docs/RUN_SHEET.md)에서 관리합니다.
 
@@ -356,6 +357,47 @@ cross-check = |c(d,g)|
 
 ---
 
+## Run 6 — Elevated-Temperature Robustness
+
+**Purpose:** Run 5에서 선정한 `P1=41 nm`의 low-GIDL direction이
+300 / 340 / 380 K fixed-temperature condition에서도 유지되는지 확인했습니다.
+
+Run 6는 self-heating이나 heat transport를 직접 계산한 electrothermal simulation이 아니라,
+동일한 frozen device physics에서 lattice temperature만 변경한 **isothermal robustness evaluation**입니다.
+
+### GIDL temperature result
+
+| Temperature | 36 nm ON | 41 nm ON | 41 nm reduction vs 36 nm |
+|---:|---:|---:|---:|
+| 300 K | `1.378e-14` | `7.768e-15` | `43.6%` |
+| 340 K | `2.060e-14` | `1.148e-14` | `44.2%` |
+| 380 K | `7.279e-14` | `6.049e-14` | `16.9%` |
+
+`31 > 36 > 41 nm` ranking은 세 temperature에서 모두 유지됐습니다.
+41 nm의 total-current advantage는 340 K까지 약 44% 수준으로 유지되지만,
+380 K에서는 약 17%로 감소합니다.
+
+![Run 6 GIDL endpoint](assets/images/run06/01_gidl_endpoint_vs_temperature.png)
+
+R6B BTBT-OFF control에서는 380 K에서 background fraction이
+36 nm 약 **62.5%**, 41 nm 약 **75.4%**까지 증가했습니다.
+따라서 380 K의 total-current separation 감소는 fixed-wall field advantage가 사라져서라기보다,
+BTBT-OFF background contribution이 커지면서 total leakage balance가 변한 결과와 일치합니다.
+
+한편 `E_wall,max`는 300→380 K에서 약 0.9% 정도만 감소했고,
+41 nm는 36 nm보다 약 1.24–1.27% 낮은 field를 계속 유지했습니다.
+DC thermal guardrail에서도 Vth / SS / Ion / DIBL의 temperature shift는 크지만,
+36 nm와 41 nm의 변화는 거의 동일해 **P1에 의한 추가 thermal DC penalty는 확인되지 않았습니다.**
+
+![Run 6 background fraction](assets/images/run06/04_btbt_off_fraction_vs_temperature.png)
+
+**Result:** `P1=41 nm`는 Run 7 retention feasibility로 넘길 provisional candidate로 유지합니다.
+단, Run 6은 retention time이나 refresh reduction 자체를 검증한 단계가 아닙니다.
+
+→ [Run 6 detailed record](docs/progress/run06_temperature_robustness.md)
+
+---
+
 ## 7. Current Evidence Status
 
 ### Verified
@@ -368,7 +410,10 @@ cross-check = |c(d,g)|
 - 31–41 nm에서 MEB 증가에 따른 GIDL 감소
 - Run 5 internal Cgd extraction
 - 5-level MEB–Cgd–fixed field–GIDL monotonic trend
-- 현재 screened range에서 DC guardrail의 큰 penalty 없음
+- 300 / 340 / 380 K에서 31 > 36 > 41 nm GIDL ranking 유지
+- 380 K에서 BTBT-OFF background contribution의 큰 증가
+- temperature-dependent fixed `E_wall,max` 및 B0/P1 DC thermal guardrail
+- 현재 screened range에서 P1의 추가 DC thermal penalty 미확인
 
 ### Supported Interpretation
 
@@ -384,8 +429,8 @@ Cgd 변화가 GIDL 변화를 직접적으로 일으켰다는 causality를 증명
 
 ### Not Yet Verified
 
-- 340 / 380 K에서 동일 direction이 유지되는지
-- absolute production-cell Cov / GIDL
+- electrothermal self-heating / heat transport
+- calibrated production-cell temperature-dependent Cov / GIDL
 - full 3D saddle-fin DRAM cell
 - direct retention time
 - refresh burden reduction
@@ -394,26 +439,19 @@ Cgd 변화가 GIDL 변화를 직접적으로 일으켰다는 causality를 증명
 
 ---
 
-## 8. Next Step — Run 6 Temperature Split
+## 8. Next Step — Run 7 Retention Feasibility
 
-Run 6에서는 Run 5에서 선정한 candidate가 **고온에서도 유리한지** 확인합니다.
-
-```text
-Temperature = 300 / 340 / 380 K
-
-B0 = 36 nm
-P1 = 41 nm
-31 nm = high-GIDL screened reference when useful
-```
+Run 7에서는 Run 6에서 유지된 `P1=41 nm` candidate를 실제 retention 관점으로 연결할 수 있는지 검토합니다.
 
 Main questions:
 
-1. 41 nm의 low-GIDL direction이 340 / 380 K에서도 유지되는가?
-2. 고온 leakage 증가에서 BTBT와 background leakage를 어떻게 분리할 것인가?
-3. Vth / SS / Ion / DIBL의 thermal penalty는 어느 정도인가?
-4. P1을 retention stage로 넘길 수 있는가?
+1. storage node와 bit line을 어떤 terminal / circuit node로 정의할 것인가?
+2. capacitor를 포함한 direct 1T1C MixedMode가 가능한가?
+3. write / hold / read sequence와 retention 또는 charge-loss metric을 어떻게 정의할 것인가?
+4. direct retention 구현이 어려우면 어떤 명시적 proxy까지 허용할 것인가?
+5. 어떤 결과가 확보되어야 refresh burden 해석으로 넘어갈 수 있는가?
 
-Run 6 결과가 확보된 이후 retention / refresh interpretation으로 넘어갑니다.
+Run 6의 leakage 결과만으로 retention 또는 refresh improvement를 주장하지 않습니다.
 
 ---
 

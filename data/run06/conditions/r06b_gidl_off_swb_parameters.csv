@@ -1,0 +1,7 @@
+case_id,source_node,source_uploaded_file,source_filename_note,MEB_Depth_um,Mesh_Code,Temp_K,VD_Target1,VG_Min1,BTBT
+R6B_OFF_MEB36_T300,n35,R6A_GIDL_OFF_1.csv,"uploaded filename says R6A_GIDL_OFF, actual SWB project is R6B_GIDL_OFF",0.036,3,300,1.2,-0.7,OFF
+R6B_OFF_MEB41_T300,n37,R6A_GIDL_OFF_2.csv,"uploaded filename says R6A_GIDL_OFF, actual SWB project is R6B_GIDL_OFF",0.041,3,300,1.2,-0.7,OFF
+R6B_OFF_MEB36_T340,n75,R6A_GIDL_OFF_3.csv,"uploaded filename says R6A_GIDL_OFF, actual SWB project is R6B_GIDL_OFF",0.036,3,340,1.2,-0.7,OFF
+R6B_OFF_MEB41_T340,n78,R6A_GIDL_OFF_4.csv,"uploaded filename says R6A_GIDL_OFF, actual SWB project is R6B_GIDL_OFF",0.041,3,340,1.2,-0.7,OFF
+R6B_OFF_MEB36_T380,n81,R6A_GIDL_OFF_5.csv,"uploaded filename says R6A_GIDL_OFF, actual SWB project is R6B_GIDL_OFF",0.036,3,380,1.2,-0.7,OFF
+R6B_OFF_MEB41_T380,n84,R6A_GIDL_OFF_6.csv,"uploaded filename says R6A_GIDL_OFF, actual SWB project is R6B_GIDL_OFF",0.041,3,380,1.2,-0.7,OFF
