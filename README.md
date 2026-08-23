@@ -525,33 +525,3 @@ GitHub에는 source code, conditions, CSV, processed summary, selected evidence�
 본 저장소는 학술 목적의 TCAD 연구 진행 과정을 기록합니다.
 Synopsys Sentaurus input deck은 교육·연구용 문서화 목적으로 포함되며,
 Synopsys software 및 proprietary model implementation은 각 라이선스 정책을 따릅니다.
----
-
-## Run 6.5 ??Extended MEB Boundary Closure
-
-**Purpose:** Run 5/6?먯꽌 `P1=41 nm`媛 媛????? GIDL??蹂댁?吏留??숈떆??湲곗〈 sweep??boundary?湲??뚮Ц??
-MEB瑜?43/45/47/48/49/51 nm源뚯? ?뺤옣?섏뿬 search-boundary artifact ?щ?瑜??뺤씤?덉뒿?덈떎.
-
-**Main findings:**
-
-- project-internal `|Cgd|`??51 nm源뚯? ?⑥“ 媛먯냼
-- formal `E_wall,max`??51 nm源뚯? ?⑥“ 媛먯냼
-- terminal GIDL? 47??9 nm??high-confidence low-current ?곸뿭源뚯? ?덉젙?곸쑝濡?媛먯냼
-- 51 nm endpoint??low-current/background-sensitive?섏뿬 optimum ranking?먯꽌 ?쒖쇅
-- 48/49 nm?먯꽌 異붽??곸씤 material DC/thermal-DC penalty???꾩옱 紐⑤뜽?먯꽌 ?뺤씤?섏? ?딆쓬
-- 380 K?먯꽌??BTBT-OFF/background contribution??total leakage???遺遺꾩쓣 李⑥??섏뿬 48/49 total-current 李⑥씠媛 ?ш쾶 ?뺤텞??- simplified 2D geometry?먯꽌 `MEB=48 nm`??`GateTop?뉺depth`???댁꽍 媛?ν븳 structural boundary
-
-**Candidate freeze:**
-
-```text
-B0 = 36 nm
-P1 = 41 nm ??historical initial screened-window candidate
-P2 = 48 nm ??extended-MEB structural-boundary knee candidate for retention handoff
-49 nm = challenger / sensitivity point
-51 nm = low-current/background-sensitive boundary reference
-```
-
-48 nm??absolute minimum Cgd/Ewall/current?닿린 ?뚮Ц???좏깮??寃껋씠 ?꾨땲硫?
-global/final/production optimum?쇰줈 二쇱옣?섏? ?딆뒿?덈떎.
-
-??[Run 6.5 detailed record](docs/progress/run06_5_deeper_meb_boundary.md)
