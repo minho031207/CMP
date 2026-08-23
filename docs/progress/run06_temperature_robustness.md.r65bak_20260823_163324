@@ -263,14 +263,3 @@ The next gate should define:
 - whether direct 1T1C MixedMode is feasible or a clearly labeled proxy is necessary.
 
 Run 6 does **not** itself claim retention or refresh improvement.
-
-## R6.5 follow-up note ??2026-08-23
-
-Run 6 remains the formal 31/36/41 nm elevated-temperature robustness record. R6.5 was
-added afterward to close the unresolved 41 nm search-boundary question. The extended study
-selected P2=48 nm as the primary retention-handoff candidate while preserving P1=41 nm as
-the historical initial screened-window candidate.
-
-The Run 6 high-temperature conclusion is not invalidated: 380 K total-current separation
-remains strongly influenced by BTBT-OFF background current. R6.5 observed the same
-background-dominance issue for 48/49 nm.
