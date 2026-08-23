@@ -204,6 +204,10 @@ Medium → Fine-local 차이:
 
 ![Run 2 mesh comparison](assets/images/run02/06_mesh_comparison.png)
 
+**Selected Mesh-DC — Medium / Mesh_Code 1**
+
+![Selected Run 2 Medium mesh](assets/images/run02/02_mesh_medium.png)
+
 추가로 drain-side wall, junction, trench-bottom E-field cut을 비교해
 주요 field profile과 peak 위치도 Medium/Fine-local에서 큰 차이가 없는지 확인했습니다.
 
@@ -243,6 +247,12 @@ X = 0.032–0.070 um
 Y = 0.112–0.133 um
 local max/min = 1.0 / 0.25 nm
 ```
+
+| Final Mesh-GIDL full structure | Band2BandGeneration location |
+|---|---|
+| ![Run 3 final Mesh-GIDL full structure](assets/images/run03/05_r3c_mesh_gidl_full.png) | ![Run 3 Band2BandGeneration full view](assets/images/run03/03_r3b_btbt_generation_full.png) |
+
+위 이미지는 **hotspot이 어디에 형성되고, 왜 해당 drain-side 영역에 local refinement를 추가했는지**를 시각적으로 보여줍니다.
 
 Final internal GIDL protocol:
 
@@ -353,6 +363,8 @@ cross-check = |c(d,g)|
 
 ![Run 5 GIDL 5-level](assets/images/run05/01_gidl_5level_semilog.png)
 
+![Run 5 fixed-wall extraction layout](assets/images/run05/12_svisual_efield_5level_cut_layout.png)
+
 **Interpretation:** MEB 증가에 따라 Cgd, fixed drain-side wall field, GIDL이 같은 단조 감소 방향을 보였습니다.
 이는 MEB-dependent coupling/electrostatics가 GIDL 저감 방향과 일치한다는 해석을 지지합니다.
 
@@ -410,6 +422,13 @@ Run 6 자체는 retention time이나 refresh reduction을 검증한 단계가 �
 
 **Purpose:** Run 5/6의 `P1=41 nm`가 이전 sweep의 최저-GIDL point이면서 동시에 search boundary였기 때문에,
 MEB를 더 깊은 영역까지 확장해 41 nm 이후의 trend와 `Jdepth=48 nm` 근처 구조적 boundary를 검증했습니다.
+
+| P2 = 48 nm full geometry | P2 = 48 nm Band2BandGeneration hotspot |
+|---|---|
+| ![P2 48 nm full geometry](assets/images/run06_5/22_geometry_48nm_full.png) | ![P2 48 nm BTBT hotspot](assets/images/run06_5/51_btbtgen_48nm_hotspot_zoom.png) |
+
+48 nm는 simplified 2D geometry에서 `GateTop≈Jdepth`가 되는 해석 가능한 structural boundary이며,
+drain-side gate/junction 부근의 BTBT hotspot은 기존 Mesh-GIDL refinement 영역 안에 유지됩니다.
 
 Extended set:
 

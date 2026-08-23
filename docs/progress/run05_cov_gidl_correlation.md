@@ -159,6 +159,11 @@ metric   = E_wall,max = maximum |E| within that interval
 
 This is **not global Emax**.
 
+The SVisual layout below shows where the fixed wall cut is placed on the device,
+so the numerical definition can be interpreted directly on the BCAT structure.
+
+![Run 5 SVisual fixed-wall cut layout](../../assets/images/run05/12_svisual_efield_5level_cut_layout.png)
+
 | MEB | `E_wall,max` (V/cm) | Peak X (um) | Normalized |
 |---:|---:|---:|---:|
 | 31.0 | `871969.09` | `0.03396875` | `1.004646` |

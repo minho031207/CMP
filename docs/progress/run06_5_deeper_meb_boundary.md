@@ -115,6 +115,19 @@ geometry, gate metal occupies approximately `Y=90–110 nm` while the drain star
 At `MEB=48 nm`, `GateTop≈Jdepth` in the simplified geometry. This is an interpretable
 model-internal structural boundary, not a production-process optimum.
 
+
+### 5.1 Structural visual comparison
+
+The 41/48/51 nm junction zooms make the geometry change visible.
+The junction reference stays near `X=0.048 um`, while GateTop moves deeper with MEB.
+
+| 41 nm | 48 nm | 51 nm |
+|---|---|---|
+| ![41 nm geometry/junction](../../assets/images/run06_5/21_geometry_41nm_junction_zoom.png) | ![48 nm geometry/junction](../../assets/images/run06_5/23_geometry_48nm_junction_zoom.png) | ![51 nm geometry/junction](../../assets/images/run06_5/25_geometry_51nm_junction_zoom.png) |
+
+The 48 nm case is the model-internal `GateTop≈Jdepth` alignment point.
+These images are structural evidence only; they do not by themselves establish an electrical optimum.
+
 ## 6. Extended 300 K GIDL
 
 | MEB | GIDL ON endpoint |
@@ -277,14 +290,31 @@ penalty distinguishing the two is resolved.
 
 Curated SVisual evidence is committed under `assets/images/run06_5/`.
 
-The evidence demonstrates:
+### 13.1 P2 structure and Mesh-GIDL
+
+| P2 = 48 nm full geometry | P2 = 48 nm Mesh-GIDL hotspot |
+|---|---|
+| ![48 nm full geometry](../../assets/images/run06_5/22_geometry_48nm_full.png) | ![48 nm Mesh-GIDL hotspot](../../assets/images/run06_5/31_mesh_48nm_hotspot_zoom.png) |
+
+The mesh image shows that refinement is concentrated around the drain-side gate/junction region
+rather than uniformly refining the full silicon body.
+
+### 13.2 P2 ElectricField and Band2BandGeneration
+
+| ElectricField hotspot | Band2BandGeneration hotspot |
+|---|---|
+| ![48 nm ElectricField hotspot](../../assets/images/run06_5/41_efield_48nm_hotspot_zoom.png) | ![48 nm Band2BandGeneration hotspot](../../assets/images/run06_5/51_btbtgen_48nm_hotspot_zoom.png) |
+
+These images show that the relevant field/BTBT morphology remains localized near the
+drain-side gate/junction region for P2 and remains inside the Mesh-GIDL refinement area.
+
+The visual evidence therefore demonstrates:
 
 - 41→48→51 nm geometry movement of GateTop;
 - `GateTop≈Jdepth` at 48 nm in the simplified 2D structure;
 - local Mesh-GIDL refinement around the drain-side hotspot;
 - ElectricField hotspot morphology;
-- localized Band2BandGeneration on the drain-side gate/junction region;
-- 48 nm doping/junction geometry.
+- localized Band2BandGeneration on the drain-side gate/junction region.
 
 Automatic contour color scales differ between captures, so the screenshots are used for
 **location/morphology evidence only**, not cross-case amplitude ranking.
