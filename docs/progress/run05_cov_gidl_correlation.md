@@ -284,3 +284,16 @@ T = 300 / 340 / 380 K
 The main comparison starts from B0 = 36 nm and P1 = 41 nm, with 31 nm retained as a
 high-GIDL screened reference when useful. Temperature-dependent leakage-component
 separation remains a Run 6 task.
+
+## R6.5 follow-up note — 2026-08-23
+
+Run 5 remains the formal five-point 31–41 nm correlation record. R6.5 subsequently extended
+the MEB range to 51 nm and confirmed that both the project-internal Cgd metric and formal
+`E_wall,max` continue decreasing beyond 41 and 48 nm.
+
+Accordingly, the Run 5 Pearson/Spearman coefficients remain descriptive evidence for the
+declared five-point range and are not extrapolated as a universal linear Cgd→GIDL predictor.
+
+`P1=41 nm` remains the historical initial screened-window candidate.
+R6.5 adds `P2=48 nm` as the extended-MEB retention-handoff candidate, while 49 nm is retained
+as a challenger/sensitivity point.

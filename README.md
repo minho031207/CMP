@@ -1,6 +1,6 @@
 # CMP: 20 nm-Class BCAT DRAM Reliability Design
 
-> **Project status:** Run 0–6 completed  
+> **Project status:** Run 0–6.5 completed  
 > **Current step:** Run 7 — Retention feasibility preparation  
 > **Tool:** Synopsys Sentaurus TCAD T-2022.03  
 > **Baseline model:** B0 — 20 nm-Class Simplified 2D BCAT
@@ -9,10 +9,15 @@
 **AI 메모리용 DRAM의 고온 Refresh 부담 저감을 위한 20 nm급 BCAT의 MEB–Cov–GIDL 강건 설계**
 
 현재까지 B0 baseline 구축, DC metric freeze, mesh convergence, NonlocalPath BTBT/GIDL 검증,
-formal MEB screening, 5-level MEB–Cgd–field–GIDL correlation, 그리고 300/340/380 K elevated-temperature robustness 검증까지 완료했습니다.
+formal MEB screening, 5-level MEB–Cgd–field–GIDL correlation, 300/340/380 K elevated-temperature robustness,
+그리고 **Run 6.5 extended-MEB boundary closure**까지 완료했습니다.
 
-현재 screened window인 31–41 nm 안에서는 **41 nm를 P1 provisional candidate**로 선정했으며,
-이는 global/final optimum을 의미하지 않습니다.
+- **P1 = 41 nm**: historical initial screened-window candidate
+- **P2 = 48 nm**: extended-MEB structural-boundary knee candidate for retention handoff
+- **49 nm**: challenger / sensitivity point
+- **51 nm**: low-current/background-sensitive boundary reference
+
+P2는 global/final/production optimum을 의미하지 않습니다.
 
 ---
 
@@ -25,7 +30,7 @@ CMP(Chips Master Program)는 첨단분야 혁신융합대학사업단과 숭실�
 - **Main area:** DRAM cell transistor / BCAT / TCAD / GIDL / retention
 - **Goal:** 구조 및 공정 변수 변화가 DRAM leakage와 reliability에 미치는 영향을 TCAD로 분석하고,
   물리적으로 설명 가능한 design direction과 variation-aware design window를 제시
-- **Current focus:** Run 6 temperature robustness 결과를 기반으로 retention feasibility와 charge-loss evaluation path를 정의
+- **Current focus:** Run 6.5에서 동결한 P2=48 nm를 중심으로 B0/P1/P2 retention feasibility와 charge-loss evaluation path 정의
 
 초기에는 HBM4·Hybrid Bonding 대응 DRAM 관점에서 프로젝트를 시작했지만,
 소자 단위에서 더 명확한 물리적 인과관계와 검증 가능한 변수를 확보하기 위해
@@ -42,7 +47,7 @@ CMP(Chips Master Program)는 첨단분야 혁신융합대학사업단과 숭실�
 > **MEB 변화가 gate–drain coupling과 drain-side electrostatics를 어떻게 바꾸고,
 > 그 변화가 BTBT/GIDL 및 이후 retention/refresh burden과 어떤 관계를 가지는가?**
 
-현재 연구 flow는 다음과 같이 단계적으로 검증하고 있습니다.
+현재 연구 flow:
 
 ```text
 MEB
@@ -55,6 +60,8 @@ BTBT / GIDL
  ↓
 temperature dependence
  ↓
+extended-MEB boundary closure
+ ↓
 retention / charge loss
  ↓
 refresh burden
@@ -62,8 +69,8 @@ refresh burden
 variation-aware design window
 ```
 
-Run 6까지는 **MEB → Cgd → drain-side field → GIDL → temperature robustness** 구간을
-project-internal metric으로 정량화했습니다. 다음 단계는 retention feasibility입니다.
+Run 6.5까지는 **MEB → Cgd → drain-side field → GIDL → temperature robustness → boundary closure**
+구간을 project-internal metric으로 정량화했습니다. 다음 단계는 retention feasibility입니다.
 
 ---
 
@@ -98,12 +105,14 @@ B0는 양산 DRAM cell의 완전한 3D reproduction이 아니라,
 |---|---|
 | **BCAT** | Silicon trench 내부에 gate/word line을 매립한 DRAM cell transistor |
 | **MEB** | Metal Etch-Back. 현재 모델에서는 결과 형상인 gate-top depth로 표현 |
-| **Cgd / Cov** | Run 5에서 `ACExtract |c(g,d)|`를 project-internal gate–drain coupling metric으로 사용 |
+| **Cgd / Cov** | `ACExtract |c(g,d)|`를 project-internal gate–drain coupling metric으로 사용. calibrated production Cov는 아님 |
 | **Mesh-DC** | DC metric 비교에 선택된 Medium mesh (`Mesh_Code=1`) |
 | **Mesh-GIDL** | drain-side BTBT hotspot을 추가 refinement한 mesh (`Mesh_Code=3`) |
 | **E_wall,max** | `Y=0.116 um`, `X=0.032–0.070 um` fixed wall cut에서의 peak `|ElectricField|` |
 | **GIDL** | NonlocalPath BTBT 기반 project-internal relative leakage metric |
-| **P1** | 현재 31–41 nm screened window에서 선정한 provisional candidate = 41 nm |
+| **P1** | historical initial screened-window candidate = 41 nm |
+| **P2** | extended-MEB structural-boundary knee candidate for retention handoff = 48 nm |
+| **Lproj** | `max(Jdepth-MEB,0)` depth-projection helper. physical lateral overlap length가 아님 |
 
 ---
 
@@ -119,6 +128,7 @@ B0는 양산 DRAM cell의 완전한 3D reproduction이 아니라,
 | **Run 5A** | Cgd extraction feasibility | 1 MHz / Mesh1 internal Cgd protocol 동결 | Completed |
 | **Run 5B** | 5-level correlation | MEB–Cgd–field–GIDL 단조 경향 + P1=41 nm | Completed |
 | **Run 6** | Temperature robustness | 300 / 340 / 380 K GIDL + background + DC/field 검증 | Completed |
+| **Run 6.5** | Extended MEB boundary closure | 43/45/47/48/49/51 nm 확장, P2=48 nm 선정 | Completed |
 | **Run 7** | Retention feasibility | storage-node / capacitor / write-hold-read 기준 정의 | **Next** |
 | **Run 8–10** | Retention → refresh → design window | 후속 검증 | Planned / Conditional |
 
@@ -209,8 +219,6 @@ Medium → Fine-local 차이:
 
 **Purpose:** simplified B0 구조에서 NonlocalPath BTBT를 이용한
 project-internal GIDL 비교 path가 실제로 usable한지 검증했습니다.
-
-진행 순서:
 
 ```text
 BTBT OFF numerical-floor check
@@ -391,10 +399,82 @@ DC thermal guardrail에서도 Vth / SS / Ion / DIBL의 temperature shift는 크�
 
 ![Run 6 background fraction](assets/images/run06/04_btbt_off_fraction_vs_temperature.png)
 
-**Result:** `P1=41 nm`는 Run 7 retention feasibility로 넘길 provisional candidate로 유지합니다.
-단, Run 6은 retention time이나 refresh reduction 자체를 검증한 단계가 아닙니다.
+**Result:** `P1=41 nm`는 Run 6 당시 31–41 nm screened window의 provisional candidate로 유지되었습니다.
+Run 6 자체는 retention time이나 refresh reduction을 검증한 단계가 아닙니다.
 
 → [Run 6 detailed record](docs/progress/run06_temperature_robustness.md)
+
+---
+
+## Run 6.5 — Extended MEB Boundary Closure
+
+**Purpose:** Run 5/6의 `P1=41 nm`가 이전 sweep의 최저-GIDL point이면서 동시에 search boundary였기 때문에,
+MEB를 더 깊은 영역까지 확장해 41 nm 이후의 trend와 `Jdepth=48 nm` 근처 구조적 boundary를 검증했습니다.
+
+Extended set:
+
+```text
+36 / 41 / 43 / 45 / 47 / 48 / 49 / 51 nm
+```
+
+### 300 K endpoint summary
+
+| MEB | GIDL ON (A) | `|Cgd|` | `E_wall,max` (V/cm) |
+|---:|---:|---:|---:|
+| 36 | `1.3777737e-14` | `1.6829628e-16` | 867936.60 |
+| 41 | `7.7683012e-15` | `1.5230092e-16` | 857194.93 |
+| 43 | `5.6821e-15` | `1.4596929e-16` | 850925.62 |
+| 45 | `3.9345e-15` | `1.3975704e-16` | 842971.43 |
+| 47 | `2.0128e-15` | `1.3367808e-16` | 832607.27 |
+| 48 | `1.9375e-15` | `1.3065280e-16` | 825733.44 |
+| 49 | `1.8860e-15` | `1.2768057e-16` | 818162.50 |
+| 51 | `3.2571e-16` | `1.2192450e-16` | 802740.97 |
+
+![Run 6.5 extended GIDL](assets/images/run06_5/01_extended_gidl_endpoint_semilog.png)
+
+![Run 6.5 normalized metrics](assets/images/run06_5/02_extended_normalized_cgd_ewall_gidl.png)
+
+**Verified:**
+
+- project-internal Cgd는 51 nm까지 단조 감소
+- formal `E_wall,max`도 51 nm까지 단조 감소
+- field peak X는 MEB 증가와 함께 deeper direction으로 이동
+- stable terminal GIDL suppression은 47–49 nm 영역까지 확인
+- 48/49/51 nm의 300 K DC guardrail에서 material penalty는 현재 모델 기준으로 확인되지 않음
+- 48/49 nm의 thermal DC 역시 차이가 매우 작음
+- 380 K에서는 BTBT-OFF/background contribution이 total leakage의 대부분을 차지
+
+**Important interpretation update:**
+
+48 nm에서 Cgd나 field가 saturation한다는 주장은 사용하지 않습니다.
+`GateTop≈Jdepth=48 nm`는 **model-internal structural boundary**이지,
+Cgd/field minimum이나 production-process optimum이 아닙니다.
+
+51 nm의 terminal endpoint는 low-current/background-sensitive 영역에 접근하므로
+단독 endpoint만으로 “best design”을 주장하지 않습니다.
+
+### Candidate freeze
+
+```text
+P1 = 41 nm
+historical initial screened-window candidate
+
+P2 = 48 nm
+extended-MEB structural-boundary knee candidate for retention handoff
+
+49 nm
+primary challenger / sensitivity point
+
+51 nm
+low-current/background-sensitive boundary reference
+```
+
+48 nm는 absolute minimum Cgd/Ewall/current라서 선택한 것이 아니라,
+강한 GIDL suppression, 47–49 nm low-current region 진입, no material DC penalty,
+300 K ON/OFF separation, 그리고 `GateTop≈Jdepth`라는 해석 가능한 structural boundary를
+동시에 만족하는 **retention handoff point**이기 때문에 선택했습니다.
+
+→ [Run 6.5 detailed record](docs/progress/run06_5_deeper_meb_boundary.md)
 
 ---
 
@@ -407,41 +487,54 @@ DC thermal guardrail에서도 Vth / SS / Ion / DIBL의 temperature shift는 크�
 - DC Mesh-DC convergence
 - NonlocalPath BTBT/GIDL feasibility
 - drain-side BTBT-sensitive hotspot과 Mesh-GIDL
-- 31–41 nm에서 MEB 증가에 따른 GIDL 감소
+- 31–41 nm formal MEB screening
 - Run 5 internal Cgd extraction
 - 5-level MEB–Cgd–fixed field–GIDL monotonic trend
 - 300 / 340 / 380 K에서 31 > 36 > 41 nm GIDL ranking 유지
-- 380 K에서 BTBT-OFF background contribution의 큰 증가
-- temperature-dependent fixed `E_wall,max` 및 B0/P1 DC thermal guardrail
-- 현재 screened range에서 P1의 추가 DC thermal penalty 미확인
+- 380 K에서 BTBT-OFF background contribution 증가
+- Run 6 temperature-dependent fixed `E_wall,max` 및 B0/P1 DC thermal guardrail
+- Run 6.5 extended 36/41/43/45/47/48/49/51 nm Cgd/Ewall/GIDL
+- 47/48/49/51 nm BTBT-OFF diagnostic
+- 48/49 nm high-temperature GIDL/OFF/DC/field check
+- 41/48/51 nm geometry / mesh / ElectricField / Band2BandGeneration spatial evidence
+- P2=48 nm retention-handoff candidate selection
 
 ### Supported Interpretation
 
 ```text
 MEB increase
- → gate–drain coupling decrease
+ → project-internal gate–drain coupling decrease
  → drain-side field reduction / redistribution
- → GIDL decrease
+ → GIDL suppression
 ```
 
-현재 데이터는 이 방향성과 일치하지만,
-Cgd 변화가 GIDL 변화를 직접적으로 일으켰다는 causality를 증명한 것은 아닙니다.
+Run 5의 31–41 nm five-point correlation은 해당 범위의 descriptive evidence로 유지합니다.
+R6.5 extended range에서는 Cgd와 Ewall을 useful electrostatic indicator로 사용하지만,
+**broad MEB range의 universal linear GIDL predictor로 취급하지 않습니다.**
 
 ### Not Yet Verified
 
 - electrothermal self-heating / heat transport
 - calibrated production-cell temperature-dependent Cov / GIDL
 - full 3D saddle-fin DRAM cell
-- direct retention time
+- direct retention time / stored-charge decay
 - refresh burden reduction
+- Dual-WF superiority
 - variation-aware final design window
-- 41 nm보다 깊은 범위를 포함한 global optimum
+- global/final/production optimum
 
 ---
 
 ## 8. Next Step — Run 7 Retention Feasibility
 
-Run 7에서는 Run 6에서 유지된 `P1=41 nm` candidate를 실제 retention 관점으로 연결할 수 있는지 검토합니다.
+Run 7에서는 다음 handoff를 사용합니다.
+
+```text
+B0 = 36 nm
+P1 = 41 nm historical reference
+P2 = 48 nm primary extended-MEB candidate
+49 nm = optional challenger
+```
 
 Main questions:
 
@@ -450,8 +543,9 @@ Main questions:
 3. write / hold / read sequence와 retention 또는 charge-loss metric을 어떻게 정의할 것인가?
 4. direct retention 구현이 어려우면 어떤 명시적 proxy까지 허용할 것인가?
 5. 어떤 결과가 확보되어야 refresh burden 해석으로 넘어갈 수 있는가?
+6. 49 nm challenger를 retention sensitivity에 포함할 필요가 있는가?
 
-Run 6의 leakage 결과만으로 retention 또는 refresh improvement를 주장하지 않습니다.
+Run 6.5까지의 leakage 결과만으로 retention 또는 refresh improvement를 주장하지 않습니다.
 
 ---
 
@@ -466,6 +560,9 @@ CMP/
 │  ├─ MODEL_SCOPE.md
 │  ├─ DECISIONS.md
 │  ├─ REFERENCES.md
+│  ├─ evidence/
+│  ├─ archive/
+│  ├─ research/
 │  └─ progress/
 ├─ code/
 │  ├─ sde/
@@ -476,13 +573,17 @@ CMP/
 │  ├─ run02/
 │  ├─ run03/
 │  ├─ run04/
-│  └─ run05/
+│  ├─ run05/
+│  ├─ run06/
+│  └─ run06_5/
 └─ assets/images/
    ├─ run00/
    ├─ run02/
    ├─ run03/
    ├─ run04/
-   └─ run05/
+   ├─ run05/
+   ├─ run06/
+   └─ run06_5/
 ```
 
 `.tdr`, `.plt`, full `.log`, `.out`, `.job`은 local archive에 보관하고,
@@ -499,8 +600,12 @@ GitHub에는 source code, conditions, CSV, processed summary, selected evidence�
 - Cgd는 raw project-internal AC matrix element입니다.
 - NonlocalPath GIDL은 relative internal metric입니다.
 - `E_wall,max`는 fixed-cut metric이며 global Emax가 아닙니다.
-- five-point correlation은 causality proof가 아닙니다.
-- `P1 = 41 nm`는 현재 31–41 nm 범위에서의 provisional candidate입니다.
+- Run 5 five-point correlation은 causality proof가 아닙니다.
+- `Lproj`는 physical lateral overlap length가 아닙니다.
+- `GateTop=Jdepth`는 model-internal structural boundary입니다.
+- `P1=41 nm`는 historical initial screened-window candidate입니다.
+- `P2=48 nm`는 retention handoff용 extended-MEB candidate이며 global/final/production optimum이 아닙니다.
+- 51 nm terminal endpoint는 optimum ranking에서 low confidence입니다.
 
 상세 기준은 [Model Scope](docs/MODEL_SCOPE.md)와 [Decisions](docs/DECISIONS.md)를 참고합니다.
 
@@ -516,7 +621,8 @@ GitHub에는 source code, conditions, CSV, processed summary, selected evidence�
   “Impact of Metal and Poly Gate Thickness on GIDL in DRAM Dual Work-Function Structures,”  
   *ICEIC*, 2026. [DOI](https://doi.org/10.1109/ICEIC69189.2026.11386251)
 
-역할별 참고문헌과 후속 조사 대상은 [References](docs/REFERENCES.md)를 확인합니다.
+Retention / 1T1C / Dual-WF / process-variation 관련 확장 참고문헌은
+[References](docs/REFERENCES.md)를 확인합니다.
 
 ---
 

@@ -1,4 +1,3 @@
-
 # Run 06 — Elevated-Temperature Robustness
 
 ## 1. Status
@@ -201,8 +200,7 @@ Run 5 value exactly, so no re-export is required.
 
 - Run 6A reproduces all 31/36/41 nm Run 5 GIDL endpoints exactly at 300 K.
 - `31 > 36 > 41 nm` total-current ranking remains at 300/340/380 K.
-- P1 total-current reduction vs B0 is about `43.6%`,
-  `44.2%`, and `16.9%`.
+- P1 total-current reduction vs B0 is about `43.6%`, `44.2%`, and `16.9%`.
 - The BTBT-OFF fraction becomes much larger at 380 K.
 - The fixed `E_wall,max` advantage of 41 nm remains nearly constant with temperature.
 - B0 and P1 show nearly identical DC thermal shifts.
@@ -263,3 +261,19 @@ The next gate should define:
 - whether direct 1T1C MixedMode is feasible or a clearly labeled proxy is necessary.
 
 Run 6 does **not** itself claim retention or refresh improvement.
+
+## R6.5 follow-up note — 2026-08-23
+
+Run 6 remains the formal 31/36/41 nm elevated-temperature robustness record.
+R6.5 was added afterward to close the unresolved 41 nm search-boundary question.
+
+The extended study selected **P2=48 nm** as the primary retention-handoff candidate while
+preserving **P1=41 nm** as the historical initial screened-window candidate.
+**49 nm** is retained as the primary challenger/sensitivity point.
+
+The Run 6 high-temperature conclusion is not invalidated:
+380 K total-current separation remains strongly influenced by BTBT-OFF background current.
+R6.5 observed the same background-dominance issue for 48/49 nm.
+
+Run 7 should therefore use B0=36 nm, P1=41 nm, and P2=48 nm as the primary retention set,
+with 49 nm included only as an optional sensitivity comparator.
