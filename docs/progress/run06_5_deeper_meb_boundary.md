@@ -425,3 +425,29 @@ Priority path:
 6. use 49 nm only if one additional challenger point is affordable;
 7. proceed to refresh translation only after a direct or clearly labeled retention metric exists.
 
+
+## 18. Post-R6.5 Research Direction Note — 2026-08-27
+
+The R6.5 decision itself is unchanged.
+
+`P2=48 nm` remains the extended-MEB structural/electrostatic handoff candidate selected from the completed transistor-level study.
+For the post-R6.5 mainline, its role is further specified as:
+
+> **transistor-level electrostatic/GIDL candidate selected for cell-level retention validation**
+
+No cell-level, global, production, or robust optimum is frozen at this stage.
+
+Run 7+ will determine whether the transistor-level GIDL advantage translates into storage-node retention improvement and whether that translation changes as elevated-temperature background leakage becomes significant.
+`49 nm` remains the primary challenger and may modify the final candidate interpretation if the cell-level evidence supports it.
+
+The revised post-R6.5 mainline is:
+
+```text
+Run 7  1T1C / retention feasibility & metric freeze
+Run 8  MEB-to-cell retention translation @ 300 K
+Run 9  temperature-dependent retention translation
+Run 9.5 alternate-leakage diagnostic, conditional
+Run 10 local MEB sensitivity / optional robustness extension
+```
+
+Refresh and robust-window interpretations remain downstream/conditional and are not claimed from R6.5.

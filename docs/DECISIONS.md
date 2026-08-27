@@ -278,3 +278,46 @@ Decision date: 2026-08-23
 - The raw binary archive remains local/external by default and is not committed.
 - Run 7 retention feasibility uses B0=36 nm, P1=41 nm, and P2=48 nm.
 - 49 nm is an optional challenger if one additional retention sensitivity point is affordable.
+
+
+Decision date: 2026-08-27
+
+## D-034 — Post-R6.5 Research Direction Reframing
+
+- R0–R6.5 transistor-level results and historical interpretations remain unchanged.
+- The post-R6.5 mainline is reframed from a pre-declared robust-process-window target to **transistor-to-cell retention translation**.
+- The central question is whether MEB-induced reductions in project-internal Cgd, drain-side field, and GIDL translate into measurable 1T1C storage-node retention improvement.
+- The current research title is updated to emphasize temperature-dependent translation of MEB-induced GIDL suppression into 1T1C retention.
+- Refresh and robust-window claims remain downstream and conditional rather than pre-frozen outcomes.
+
+## D-035 — P2 Cell-Level Validation Role
+
+- `P1=41 nm` remains the historical initial screened-window candidate.
+- `P2=48 nm` preserves its R6.5 structural/electrostatic handoff meaning.
+- For R7+, P2 is explicitly classified as the **transistor-level electrostatic/GIDL candidate selected for cell-level retention validation**.
+- `49 nm` remains the primary cell-level challenger/sensitivity point.
+- No final/global/production/robust optimum is frozen before cell-level validation.
+- The final interpretation may change if 49 nm or another retained comparator is favored by cell-level evidence.
+
+## D-036 — Temperature-to-Retention Translation Mainline
+
+- The 300/340/380 K Run 6/6.5 results remain isothermal transistor-level evidence.
+- The strong growth of the BTBT-OFF/background contribution at 380 K motivates a cell-level question: whether the relative retention benefit of MEB-based GIDL suppression compresses as temperature increases.
+- Run 7+ therefore treats temperature as a **translation stress variable**, not merely as a completed robustness label.
+- `ON−OFF` is not treated as calibrated pure BTBT, and the exact dominant high-temperature leakage mechanism is not pre-assigned.
+
+## D-037 — Revised R7+ Cell-Level Run Plan
+
+- Run 7 freezes the 1T1C / retention simulation protocol using B0=36 nm at 300 K.
+- Run 8 evaluates 300 K MEB-to-retention translation for 36/41/48 nm, with 49 nm optional as the primary challenger.
+- Run 9 evaluates temperature-dependent retention translation; the minimum matrix is 36/48 nm at 300/380 K, with a preferred expanded matrix of 36/41/48/49 nm at 300/340/380 K.
+- Run 9.5 is conditional and activates only if retention does not follow the transistor-level GIDL trend strongly enough to require alternate-leakage diagnosis.
+- Run 10 is a local MEB sensitivity / optional robustness extension rather than a mandatory variation-aware design-window stage.
+
+## D-038 — Robust-Design and Extended-Scope Deferral
+
+- A robust process/design window is not a current completed or mandatory contribution.
+- Robust-window wording may be promoted only after sufficient variation evidence and explicit pass/fail constraints exist.
+- Refresh remains a downstream implication after a defensible retention metric is demonstrated.
+- Distributed RWL/RC, PEB, Dual-WF, full 3D BCAT, explicit trap statistics, LER, PBTI, and Monte Carlo remain optional/future branches unless later evidence makes one of them necessary.
+- The immediate mainline remains single-WF and focused on MEB → Cgd → field → GIDL → temperature-dependent leakage balance → 1T1C retention.

@@ -1,4 +1,4 @@
-# TCAD Virtual Run Sheet v7
+# TCAD Virtual Run Sheet v8
 
 This is the official project run sheet. Status and pass criteria must be updated through
 recorded decisions, not inferred from exploratory plots.
@@ -18,10 +18,11 @@ recorded decisions, not inferred from exploratory plots.
 | **Run 6.5** | **Extended MEB boundary closure** | **43/45/47/48/49/51 + 36/41 reproduction; Cgd/Ewall/GIDL/OFF/DC/thermal/spatial audit** | **remove 41-nm search-boundary ambiguity and select retention handoff candidate** | **Completed — P2=48 nm; 49 nm challenger; 51 nm floor-sensitive** |
 | M1 | Semester milestone | B0 vs P1 vs P2 | structure + DC + field + GIDL + temperature story | Ready after R6.5 |
 | D1 | Single-WF vs Dual-WF decision | literature + retention result + schedule | interaction branch 필요성 명시 | Deferred / Conditional |
-| Run 7 | Retention feasibility | BL/SN mapping, capacitor, write/hold/read, metric | direct retention or explicit proxy path frozen | **Next** |
-| Run 8 | 1T1C / retention comparison | B0=36, P1=41, P2=48; optional 49 challenger | charge-loss / retention metric | Conditional |
-| Run 9 | Refresh translation | normalized relative burden | reliable retention result required | Conditional |
-| Run 10 | Variation-aware design window | MEB/process variation + leakage/retention/temp constraints | feasible range + worst case | Planned |
+| Run 7 | **1T1C / Retention Feasibility & Metric Freeze** | B0=36 nm, 300 K; BL/SN mapping, Ccell, WL pulse, write/hold/read, VSN(t), retention criterion, transient/mesh check | repeatable cell-operation + storage-node decay protocol | **Next** |
+| Run 8 | **MEB-to-Cell Retention Translation** | 36/41/48 nm at 300 K; optional 49 challenger | GIDL ranking vs retention/charge-loss ranking + write/read guardrail | Planned |
+| Run 9 | **Temperature-Dependent Retention Translation** | minimum 36/48 × 300/380 K; preferred 36/41/48/49 × 300/340/380 K | temperature-dependent GIDL benefit ↔ retention benefit relation quantified | Planned |
+| Run 9.5 | **Alternate Leakage Diagnostic** | GIJL-like / bottom / junction / background path if retention deviates from GIDL trend | identify plausible alternate leakage bottleneck without pre-assigning a trade-off | Conditional |
+| Run 10 | **Local MEB Sensitivity / Optional Robustness Extension** | 47/48/49 or small MEB variation | distinguish sharp optimum from broad usable plateau | Optional |
 
 ## Failure Paths
 
@@ -30,8 +31,9 @@ NonlocalPath failure → verify installed T-2022.03 syntax before fallback
 AC Cgd failure → Q–V derivative → field-only explanatory path
 high-T background dominance → keep ON/OFF diagnostic separate from pure-BTBT claims
 MixedMode failure → device-level charge-loss transient → clearly labeled proxy
-retention metric unstable → re-check transient mesh/time-step/circuit mapping before refresh translation
-statistics insufficient → variation-aware feasible window, not probabilistic robust-process claim
+retention metric unstable → re-check transient mesh/time-step/circuit mapping before any downstream implication
+retention trend does not follow GIDL → activate Run 9.5 alternate-leakage diagnostic
+local sensitivity insufficient → do not promote robust-window wording
 ```
 
 ## Frozen handoff after R6.5
@@ -39,11 +41,11 @@ statistics insufficient → variation-aware feasible window, not probabilistic r
 ```text
 B0 = 36 nm
 P1 = 41 nm historical initial screened-window candidate
-P2 = 48 nm extended-MEB structural-boundary knee candidate
-49 nm = optional challenger/sensitivity point
+P2 = 48 nm transistor-level electrostatic/GIDL candidate for cell-level retention validation
+49 nm = primary cell-level challenger/sensitivity point
 51 nm = low-current/background-sensitive boundary reference
 ```
 
 R6.5 closes the MEB search-boundary question. The next technical entry is **Run 7 —
-Retention feasibility**. Direct retention/refresh claims remain blocked until Run 7/8
-establish a defensible storage-node metric.
+1T1C / Retention Feasibility & Metric Freeze**. Direct retention claims remain blocked until a defensible
+storage-node metric exists. Refresh and robust-window interpretations are downstream/conditional and are not pre-frozen outcomes.

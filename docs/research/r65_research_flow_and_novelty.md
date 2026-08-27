@@ -1,8 +1,9 @@
 # R6.5 Research-Flow and Literature/Novelty Audit
 
-## 1. Updated research flow
+## 1. Updated post-R6.5 research flow
 
-The R6.5 insertion improves the logic of the project:
+R6.5 remains the bridge between the completed transistor-level study and the next cell-level validation stage.
+The historical R0–R6.5 results are unchanged; only the post-R6.5 main question is reframed.
 
 ```text
 R0  B0 baseline
@@ -17,22 +18,27 @@ R4  formal 3-level MEB screening
  ↓
 R5  Cgd / fixed-wall field / GIDL mechanism evidence
  ↓
-R6  300/340/380 K robustness and BTBT-OFF background audit
+R6  300/340/380 K leakage-balance and thermal guardrail
  ↓
 R6.5 extended MEB boundary closure + P2 selection
  ↓
-R7  retention feasibility
+R7  1T1C / retention feasibility & metric freeze
  ↓
-R8  direct 1T1C or clearly labeled retention proxy
+R8  MEB-to-cell retention translation @ 300 K
  ↓
-R9  normalized refresh translation
+R9  temperature-dependent retention translation
  ↓
-R10 variation-aware feasible/design window
+R9.5 alternate-leakage diagnostic, if needed
+ ↓
+R10 local MEB sensitivity / optional robustness extension
 ```
 
-R6.5 should remain a bridge between temperature robustness and retention. It closes the
-“41 nm was only the sweep boundary” weakness before additional circuit/retention complexity
-is introduced.
+The main scientific question after R6.5 is:
+
+> Does MEB-induced transistor-level GIDL suppression translate into measurable 1T1C storage-node retention improvement, and how does that translation change when elevated-temperature background leakage becomes significant?
+
+Refresh is retained as a downstream system implication, not as a pre-declared Run 9 outcome.
+Variation-aware robust-window wording is deferred until sufficient variation evidence and pass/fail constraints exist.
 
 ## 2. What changed scientifically after R6.5
 
@@ -40,13 +46,15 @@ is introduced.
 - Run 5's five-point 31–41 nm monotonic result remains valid inside that range.
 - P1=41 nm remains a correct historical screened-window selection.
 - Run 6's temperature/background conclusions remain valid for 31/36/41 nm.
+- R6.5 remains the formal extended-MEB boundary study and P2 selection record.
 
-### Revised
-- 41 nm is no longer the deepest explored candidate.
-- Cgd does not saturate at `GateTop=Jdepth`.
-- fixed `E_wall,max` does not saturate at 48 nm.
-- the extended study should not use a single linear Cgd→GIDL predictor across all MEB.
-- P2=48 nm is a new retention-handoff candidate; 49 nm is retained as challenger.
+### Revised for the post-R6.5 mainline
+- Cgd is an intermediate project-internal electrostatic coupling metric, not the final optimization objective.
+- Temperature is promoted from a completed robustness check to a stress variable for transistor-to-cell translation.
+- P2=48 nm is carried forward as the transistor-level electrostatic/GIDL candidate for cell-level retention validation.
+- 49 nm is retained as the primary cell-level challenger.
+- 1T1C is both required DRAM validation and the platform for the main scientific contribution; “implementing 1T1C” alone is not claimed as novelty.
+- Robust process-window, refresh reduction, RWL/RC trade-off, GIJL trade-off, Dual-WF superiority, and 3D behavior remain unverified/conditional.
 
 ## 3. Literature roles
 
@@ -115,37 +123,36 @@ context; the present R6.5 does not include an explicit trap-distribution DOE.
 
 ## 4. Current novelty assessment
 
-A weak novelty statement would be:
+A weak novelty statement remains:
 
 > “Increasing MEB reduces GIDL.”
 
 That space is already substantially occupied by recent DRAM/BCAT work.
 
-A more defensible project contribution is the **connected, auditable design workflow**:
+The post-R6.5 contribution candidate is instead the **connected transistor-to-cell translation workflow** within one consistent single-WF MEB structure family:
 
 ```text
 geometric MEB sweep
-→ validated internal Cgd
-→ fixed-location field metric
+→ validated project-internal Cgd
+→ fixed-location drain-side field metric
 → NonlocalPath GIDL
 → high-temperature ON/OFF leakage-balance audit
-→ boundary extension beyond the original search limit
-→ retention handoff
-→ later variation-aware feasible window
+→ 1T1C storage-node charge loss / retention
+→ temperature-dependent GIDL-to-retention translation
 ```
 
-The value is strongest if R7–R10 are completed because the project then connects a
-transistor-level electrostatic knob to retention/refresh and robust-window decisions under a
-strict claim boundary.
+The central distinction is not that each individual metric is new. The value is in testing whether a transistor-level electrostatic/GIDL improvement remains an effective **cell-retention design lever** when temperature-dependent background leakage becomes significant.
 
-## 5. Mainline decisions after literature review
+This claim must remain conservative: CMP should not state that no prior work has ever connected these topics, and it should not promote retention, refresh, or robust-window conclusions before those stages are directly simulated.
+
+## 5. Mainline decisions after the post-R6.5 review
 
 - keep **single-WF** for the immediate retention mainline;
-- use **P2=48 nm** for the primary retention handoff;
-- retain **49 nm** as a challenger, not a discarded point;
-- defer **Dual-WF** to a small portability/interaction matrix after retention feasibility;
-- defer **3D** to future validation unless the 2D result becomes dependent on a geometry
-  feature that the present cross-section cannot represent;
-- treat defect statistics / PBTI / random variation as later robustness extensions, not as
-  completed R6.5 evidence.
-
+- use **B0=36 nm / P1=41 nm / P2=48 nm** as the primary cell-level comparison set;
+- retain **49 nm** as the primary challenger rather than a discarded point;
+- make **direct 1T1C retention / clearly labeled charge-loss fallback** the immediate mainline;
+- make **temperature-dependent retention translation** the main post-R6.5 scientific contribution candidate;
+- activate **GIJL/alternate-leakage diagnosis** only if retention does not follow the GIDL trend;
+- keep **local MEB variation** as an optional finishing layer rather than a pre-declared robust-window outcome;
+- treat **refresh** as a downstream implication after a defensible retention metric exists;
+- keep **RWL/distributed RC, Dual-WF, PEB, 3D, trap statistics, LER, and PBTI** outside the immediate mainline unless later evidence requires them.

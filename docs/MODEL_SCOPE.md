@@ -33,7 +33,7 @@ Nominal MEB/Gate-Top Depth: 36 nm
 - Run 6.5 stable low-GIDL region is resolved around 47–49 nm
 - Run 6.5 51 nm endpoint is recorded as low-current/background-sensitive for ranking
 - `P1=41 nm` is preserved as the historical initial screened-window candidate
-- `P2=48 nm` is selected as the extended-MEB structural-boundary knee candidate for retention handoff
+- `P2=48 nm` is selected from R6.5 as the extended-MEB structural/electrostatic handoff point and is carried forward as the transistor-level electrostatic/GIDL candidate for cell-level retention validation
 - 49 nm is retained as the primary challenger/sensitivity point
 - R6.5 spatial evidence: geometry, junction alignment, hotspot mesh, ElectricField morphology,
   Band2BandGeneration morphology, and doping/junction evidence
@@ -65,6 +65,41 @@ Nominal MEB/Gate-Top Depth: 36 nm
   window, aging-aware optimization, and Dual-WF superiority remain unverified.
 - Mesh decisions are physics-specific; retention/transient physics may require new convergence checks.
 - P2=48 nm is not called global, final, 3D, process, or production optimum.
+
+## Post-R6.5 Current Mainline
+
+R0–R6.5 establishes the transistor-level path:
+
+```text
+MEB
+→ project-internal Cgd
+→ fixed drain-side E_wall,max
+→ NonlocalPath GIDL
+→ temperature-dependent leakage balance
+```
+
+The next mainline does **not** assume that this transistor-level benefit automatically translates into DRAM retention.
+R7+ will test:
+
+1. direct 1T1C write/hold/read or a clearly labeled storage-node charge-loss fallback;
+2. MEB-dependent retention ranking at 300 K;
+3. temperature-dependent GIDL-to-retention translation.
+
+`P2=48 nm` is therefore a **cell-level validation candidate**, not a final optimum.
+`49 nm` remains the primary challenger and may alter the final candidate interpretation if the cell-level evidence supports it.
+
+### Not Yet Verified in the Current Mainline
+
+- direct 1T1C write/hold/read operation;
+- storage-node `VSN(t)` / `Q(t)` behavior;
+- MEB-dependent retention improvement;
+- temperature-dependent GIDL-to-retention translation;
+- refresh-burden reduction;
+- GIJL/alternate-leakage trade-off;
+- RWL/distributed-RC trade-off;
+- variation-aware robust design window.
+
+Refresh is treated as a downstream system implication, while robust-window wording is deferred until sufficient variation data and pass/fail constraints exist.
 
 ## Comparison Principle
 
