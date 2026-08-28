@@ -22,6 +22,11 @@ formal MEB screening, 5-level MEB–Cgd–field–GIDL correlation, 300/340/380 
 
 P2는 global/final/production optimum을 의미하지 않습니다.
 
+## Execution Reference
+
+- [TCAD CMD / Parameter Hub](CMD_HUB.md)
+- [Current Run Sheet](docs/RUN_SHEET.md)
+
 ---
 
 ## 1. Project Overview
@@ -600,6 +605,7 @@ Run 6.5까지의 leakage 결과만으로 retention, refresh reduction, robust pr
 ```text
 CMP/
 ├─ README.md
+├─ CMD_HUB.md
 ├─ CMP_소자공정_송민호(재발표).pdf
 ├─ docs/
 │  ├─ RUN_SHEET.md
