@@ -1,4 +1,4 @@
-# CMP: 20 nm-Class BCAT DRAM Reliability Design
+# CMP: MEB-Induced GIDL Suppression and 1T1C Retention in 20 nm-Class BCAT DRAM
 
 > **Project status:** Run 0–6.5 completed  
 > **Current step:** Run 7 — Retention feasibility preparation  
