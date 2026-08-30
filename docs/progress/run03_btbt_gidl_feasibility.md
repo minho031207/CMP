@@ -72,7 +72,12 @@ Using `Mesh_Code=3`, `MEB=36 nm`, `T=300 K`, and `VD=1.2 V`, the enabled-Nonloca
 
 The final raw ON and OFF CSVs directly verify the 141-point grid. The OFF CSV header still contains the internal dataset label `GIDL_ON_R3_n46_des`; this is a source naming artifact, and the raw file is intentionally preserved without editing.
 
-The exact standalone final R3-D ON deck after the `-0.7 V`/141-point adjustment and the exact final OFF deck were not found in the supplied package or local CMP working tree. They are therefore not reconstructed or archived as executed source. The final protocol and result are supported by the raw CSVs and retained screenshots.
+At the original Run 3 close-out, the exact standalone final R3-D ON/OFF decks were not present in the supplied package and the raw CSVs/screenshots remained the final quantitative source of truth. During the 2026-08-28 TCAD archive recovery, representative final ON/OFF executed snapshots were recovered and committed for provenance:
+
+- [`bcat_gidl_r3_final_nonlocal_on_executed_snapshot.cmd`](../../code/sdevice/run03/bcat_gidl_r3_final_nonlocal_on_executed_snapshot.cmd)
+- [`bcat_gidl_r3_final_nonlocal_off_executed_snapshot.cmd`](../../code/sdevice/run03/bcat_gidl_r3_final_nonlocal_off_executed_snapshot.cmd)
+
+These recovered snapshots improve source traceability; they do not change the Run 3 quantitative result, which remains anchored to the committed raw CSVs.
 
 ## 7. Quantitative ON/OFF Comparison
 
@@ -114,7 +119,7 @@ The ElectricField views are retained only as qualitative location evidence. Thei
 
 - Absolute production-cell GIDL and experimental BTBT calibration are not established.
 - The signed current is raw simplified-2D terminal current used for internal relative comparison.
-- The exact standalone final R3-D ON and OFF executed decks are unavailable; raw CSV and screenshots are the final-result source of truth.
+- Final R3-D ON/OFF representative executed snapshots are now archived for provenance, while the committed raw CSVs remain the quantitative source of truth.
 - No final R3-D four-terminal export is available, so no numerical KCL error is claimed.
 - Cov/Cgd, temperature dependence, retention, refresh burden, and a robust process window remain unverified.
 - The 31/36/41 nm development cases are not a Run 3 DOE, and no formal MEB optimization is claimed.
