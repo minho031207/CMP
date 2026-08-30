@@ -1,4 +1,4 @@
-# TCAD Virtual Run Sheet v8
+# TCAD Virtual Run Sheet v9
 
 This is the official project run sheet. Status and pass criteria must be updated through
 recorded decisions, not inferred from exploratory plots.
@@ -18,11 +18,83 @@ recorded decisions, not inferred from exploratory plots.
 | **Run 6.5** | **Extended MEB boundary closure** | **43/45/47/48/49/51 + 36/41 reproduction; Cgd/Ewall/GIDL/OFF/DC/thermal/spatial audit** | **remove 41-nm search-boundary ambiguity and select retention handoff candidate** | **Completed — P2=48 nm; 49 nm challenger; 51 nm floor-sensitive** |
 | M1 | Semester milestone | B0 vs P1 vs P2 | structure + DC + field + GIDL + temperature story | Ready after R6.5 |
 | D1 | Single-WF vs Dual-WF decision | literature + retention result + schedule | interaction branch 필요성 명시 | Deferred / Conditional |
-| Run 7 | **1T1C / Retention Feasibility & Metric Freeze** | B0=36 nm, 300 K; BL/SN mapping, Ccell, WL pulse, write/hold/read, VSN(t), retention criterion, transient/mesh check | repeatable cell-operation + storage-node decay protocol | **Next** |
+| Run 7 | **1T1C / Retention Feasibility & Metric Freeze** | **B0=36 nm, 300 K only; AreaFactor, 1T1C mapping, 10 fF baseline, write/hold/read, direct VSN(t), Ileak(VSN) integral, read guardrail, mesh/BTBT checks** | **repeatable protocol + `RT_1p0_0p8` + R8 handoff values frozen** | **Next — protocol v1 prepared, simulation not started** |
 | Run 8 | **MEB-to-Cell Retention Translation** | 36/41/48 nm at 300 K; optional 49 challenger | GIDL ranking vs retention/charge-loss ranking + write/read guardrail | Planned |
 | Run 9 | **Temperature-Dependent Retention Translation** | minimum 36/48 × 300/380 K; preferred 36/41/48/49 × 300/340/380 K | temperature-dependent GIDL benefit ↔ retention benefit relation quantified | Planned |
 | Run 9.5 | **Alternate Leakage Diagnostic** | GIJL-like / bottom / junction / background path if retention deviates from GIDL trend | identify plausible alternate leakage bottleneck without pre-assigning a trade-off | Conditional |
 | Run 10 | **Local MEB Sensitivity / Optional Robustness Extension** | 47/48/49 or small MEB variation | distinguish sharp optimum from broad usable plateau | Optional |
+
+## Run 7 Protocol v1 — Pre-Execution Freeze
+
+Run 7 is a **measurement-framework Run**, not an MEB optimization Run. The only formal geometry is B0=`MEB_Depth=0.036 um` at 300 K.
+
+```text
+R7A  2D-to-cell scaling
+     AreaFactor = 0.011 / 0.017 / 0.023 one-time check
+     nominal candidate = 0.017
+
+R7B  write feasibility
+     Ccell = 10 fF
+     VBL_WRITE = 1.2 V candidate
+     VWL_ON = 1.5 / 2.0 / 2.5 / 3.0 V screening
+     Twrite = 10 ns initial candidate
+
+R7C  direct floating-SN hold
+     source/BL -> 0 V after write
+     drain/SN -> floating
+     gate/WL -> -0.7 V GIDL-consistent project stress candidate
+     staged short transient before any long-time extension
+
+R7D  retention estimate / attribution
+     common voltage window = VSN 1.0 -> 0.8 V
+     NonlocalPath ON/OFF paired diagnostic
+     RT_1p0_0p8,int = integral(Ccell / |Ileak(VSN)| dVSN)
+
+R7E  read guardrail
+     CBL = 45 fF reference-only candidate
+     VBL,pre = 0.5 V candidate
+     VSN initial = 0.0 / 0.8 / 1.0 V
+     charge-sharing DeltaVBL; no full sense-amplifier model
+
+R7F  numerical close-out
+     Mesh_Code 1 smoke -> Mesh_Code 3 final retention check
+     repeatability + direct dVSN/dt vs |I|/C consistency audit
+```
+
+### Run 7 parameter status before execution
+
+| Item | Status | Current value / role |
+|---|---|---|
+| `MEB_Depth` | Frozen for R7 | `0.036 um` |
+| Temperature | Frozen for R7 | `300 K` |
+| Gate WF | Frozen | `4.8 eV` |
+| Base physics | Frozen | existing CMP Fermi / OldSlotboom / mobility / SRH / Auger / NonlocalPath path |
+| `AreaFactor` | Candidate | `0.017`; `0.011/0.023` diagnostic only |
+| `Ccell` | Candidate baseline | `10 fF`, project-internal feasibility value |
+| `VBL_WRITE` | Candidate | `1.2 V` |
+| `VWL_ON` | Screening | `1.5/2.0/2.5/3.0 V` |
+| `Twrite` | Candidate | `10 ns` initial |
+| `VWL_HOLD` | Candidate | `-0.7 V`, GIDL-consistent project stress; not production standby bias |
+| `CBL` / `VBL_READ` | Read diagnostic | `45 fF` / `0.5 V` candidates |
+| `0.698 V` | Literature reference only | not a calibrated CMP sense threshold |
+| `1.0 -> 0.8 V` | Primary retention-window candidate | common cross-case window |
+
+## Run 7 Exit Gate
+
+Required before Run 8:
+
+1. AreaFactor rule documented and nominal value frozen.
+2. B0 MixedMode 1T1C connection converges.
+3. A reasonable write condition reaches the chosen D1 storage level without simply maximizing WL voltage.
+4. Storage node can be released to a stable floating hold state and `VSN(t)` is exported.
+5. `Ileak(VSN)` is reproducibly extracted over 0.8–1.0 V.
+6. `RT_1p0_0p8,int` can be computed with traceable CSV/provenance.
+7. Direct transient slope and `|I|/Ccell` agree sufficiently in an overlapping short-time region; a large disagreement triggers timestep/current-definition review rather than downstream interpretation.
+8. Read charge-sharing produces reproducible `DeltaVBL` for the defined project guardrail states.
+9. Mesh_Code 1/3 and NonlocalPath ON/OFF diagnostics are completed.
+10. Final nominal deck is repeatable and all R8 handoff parameters are recorded.
+
+Recommended numerical review targets are `VSN_write <=1%`, short-hold `DeltaVSN <=5%`, integral retention `<=10%`, and read `DeltaVBL <=5%` difference between the compared numerical settings. These are project-internal R7 convergence targets, not production specifications.
 
 ## Failure Paths
 
@@ -32,6 +104,7 @@ AC Cgd failure → Q–V derivative → field-only explanatory path
 high-T background dominance → keep ON/OFF diagnostic separate from pure-BTBT claims
 MixedMode failure → device-level charge-loss transient → clearly labeled proxy
 retention metric unstable → re-check transient mesh/time-step/circuit mapping before any downstream implication
+direct-vs-integral inconsistency → verify node-current sign/definition, timestep and floating-node setup
 retention trend does not follow GIDL → activate Run 9.5 alternate-leakage diagnostic
 local sensitivity insufficient → do not promote robust-window wording
 ```
@@ -46,6 +119,4 @@ P2 = 48 nm transistor-level electrostatic/GIDL candidate for cell-level retentio
 51 nm = low-current/background-sensitive boundary reference
 ```
 
-R6.5 closes the MEB search-boundary question. The next technical entry is **Run 7 —
-1T1C / Retention Feasibility & Metric Freeze**. Direct retention claims remain blocked until a defensible
-storage-node metric exists. Refresh and robust-window interpretations are downstream/conditional and are not pre-frozen outcomes.
+R6.5 closes the transistor-level MEB search-boundary question. Run 7 now prepares the **B0-only** cell measurement framework. Only after the R7 exit gate passes may Run 8 vary MEB across 36/41/48 nm (+ optional 49). Direct retention improvement, refresh reduction and a robust process/design window remain unverified until their corresponding evidence exists.

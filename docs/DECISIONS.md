@@ -279,7 +279,6 @@ Decision date: 2026-08-23
 - Run 7 retention feasibility uses B0=36 nm, P1=41 nm, and P2=48 nm.
 - 49 nm is an optional challenger if one additional retention sensitivity point is affordable.
 
-
 Decision date: 2026-08-27
 
 ## D-034 — Post-R6.5 Research Direction Reframing
@@ -321,3 +320,64 @@ Decision date: 2026-08-27
 - Refresh remains a downstream implication after a defensible retention metric is demonstrated.
 - Distributed RWL/RC, PEB, Dual-WF, full 3D BCAT, explicit trap statistics, LER, PBTI, and Monte Carlo remain optional/future branches unless later evidence makes one of them necessary.
 - The immediate mainline remains single-WF and focused on MEB → Cgd → field → GIDL → temperature-dependent leakage balance → 1T1C retention.
+
+Decision date: 2026-08-30
+
+## D-039 — Run 7 Scope and Measurement-Framework Role
+
+- Run 7 is frozen as a **B0-only protocol/measurement-framework stage** using `MEB_Depth=36 nm` and `T=300 K`.
+- Run 7 does not perform an MEB DOE and does not select a retention-effective MEB range.
+- The Run 7 objective is to establish repeatable 2D-to-cell scaling, 1T1C MixedMode mapping, write, floating-SN hold, retention extraction, read charge sharing and numerical checks.
+- Run 8 is the first cell-level MEB comparison: `36/41/48 nm` at 300 K with `49 nm` optional.
+- This decision follows D-037 and supersedes the older Run 6/R6.5 handoff wording wherever that older wording could be read as placing B0/P1/P2 in the Run 7 protocol-freeze matrix itself.
+
+## D-040 — Run 7 2D-to-Cell AreaFactor Strategy
+
+- Sentaurus T-2022.03 documentation is used to define `AreaFactor` as a multiplier for device current/charge associated with the omitted dimension in 1D/2D simulation.
+- The nominal Run 7 candidate is `AreaFactor=0.017`, corresponding to a 17 nm literature-derived saddle-fin-width proxy from the parent BCAT geometry.
+- `0.011/0.017/0.023` are retained as a **one-time R7A sensitivity check** only.
+- `AreaFactor=0.017` is not a production-calibrated electrical width and absolute retention values must be interpreted within that model assumption.
+- After the R7A check, one AreaFactor is frozen and then held identical across R8/R9 so the MEB/temperature comparisons are not confounded by width scaling.
+
+## D-041 — Run 7 1T1C Topology and Capacitance Baseline
+
+- Run 7 maps the existing B0 contacts as `source -> BL`, `drain -> SN`, `gate -> WL`, and `substrate -> reference`.
+- The `drain -> SN` mapping preserves the same drain-side region used in the R3-R6.5 GIDL analysis as the storage-node side of the cell-level study.
+- `Ccell=10 fF` is adopted as the initial **project-internal 1T1C feasibility baseline**, supported by independent DRAM retention / Sentaurus-example precedents.
+- `Ccell=10 fF` is not claimed as an exact production-cell capacitance.
+- `CBL=45 fF` is retained only as a read-feasibility / charge-sharing reference candidate and is not a production-calibrated bitline capacitance.
+
+## D-042 — Run 7 Write, Hold, and Read Guardrail Strategy
+
+- Initial write screening uses `VBL_WRITE=1.2 V` as a candidate, `VWL_ON=1.5/2.0/2.5/3.0 V`, and `Twrite=10 ns` as the first timing candidate.
+- The write-selection objective is the **minimum reasonable stable write condition**, not maximum `VSN` or maximum WL voltage.
+- Because the prior formal CMP DC validation extended to `VG=1.5 V`, use of higher WL values in R7 is treated as a feasibility screen requiring numerical sanity rather than as an already validated operating specification.
+- The primary hold candidate is `BL=0 V`, `VWL_HOLD=-0.7 V`, floating SN, and substrate reference at 0 V. The `-0.7 V` value is a **CMP GIDL-consistent retention-stress condition**, not a production DRAM standby-bias claim.
+- Read validation is limited to BL/SN charge sharing and `DeltaVBL`; a full sense-amplifier model is outside Run 7.
+- Cho et al.'s `0.698 V` read-derived threshold is retained as a literature reference only and is not frozen as a universal CMP/production threshold.
+
+## D-043 — Run 7 Retention Metric and Direct/Integral Paths
+
+- The primary common storage-node window for controlled retention comparison is `VSN=1.0 -> 0.8 V`, named `RT_1p0_0p8` in CMP.
+- A common absolute window is preferred to a per-case `0.8 × VSN_write` threshold so that a write-performance penalty is not normalized away.
+- The direct path is a floating-SN MixedMode transient that records `VSN(t)`.
+- The long-time auxiliary path is a leakage-integral estimate from `Ileak(VSN)`:
+  `RT_1p0_0p8,int = integral(Ccell / |Ileak(VSN)| dVSN)` over 0.8-1.0 V.
+- Direct threshold-crossing time and the leakage-integral estimate remain separate quantities until consistency is demonstrated.
+- The short-time overlap check compares direct `|dVSN/dt|` with `|I|/Ccell`; a large mismatch triggers a timestep/current-definition/floating-node audit rather than downstream interpretation.
+
+## D-044 — Run 7 Physics, Mesh, and BTBT Attribution Continuity
+
+- R7 preserves the existing CMP B0 device-physics chain: Fermi statistics, OldSlotboom, DopingDep/HighFieldSaturation/Enormal mobility, SRH(DopingDep), Auger, and `Band2Band(Model=NonlocalPath)` in the ON branch.
+- Hurkx BTBT/SRH, quantum corrections, or example-specific mobility models from `SF_DRAM` are not imported merely because they appear in the Synopsys application example.
+- `Mesh_Code=1` is used for smoke/write/read feasibility where appropriate; final retention/hold is rechecked with `Mesh_Code=3` to preserve the established drain-side Mesh-GIDL refinement.
+- Project-internal numerical review targets before R7 close-out are approximately `<=1%` for `VSN_write`, `<=5%` for short-hold `DeltaVSN`, `<=10%` for integral retention, and `<=5%` for read `DeltaVBL` between the compared numerical settings.
+- A one-time NonlocalPath ON/OFF retention comparison is required for attribution. The OFF branch is a background reference, not a complete leakage decomposition or calibrated pure-BTBT extraction.
+
+## D-045 — Run 7 Exit Gate and Run 8 Handoff
+
+- R7 cannot close until AreaFactor, topology, final write condition, floating-SN hold, `VSN(t)`, `Ileak(VSN)`, `RT_1p0_0p8`, read `DeltaVBL`, Mesh1/3 behavior, BTBT ON/OFF attribution and final-deck repeatability are all traceable.
+- TDR/PLT/full solver logs remain local by default under D-005; GitHub keeps the source, parameter/evidence manifest, exported CSVs/processed summaries and selected images after execution.
+- When R7 passes, the final AreaFactor, Ccell, terminal mapping, write/hold/read biases, timing, mesh, physics, retention metric and extraction rules are frozen for R8.
+- R8 first changes `MEB_Depth` across `36/41/48 nm` with `49 nm` optional at 300 K.
+- No retention improvement, refresh reduction, usable MEB range or robust process/design window is claimed before the corresponding executed Run evidence exists.
