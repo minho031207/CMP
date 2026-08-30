@@ -16,6 +16,7 @@
 | Run 5B | 5-level correlation | 31 / 33.5 / 36 / 38.5 / 41 nm | Cgd / GIDL / DC guardrail |
 | Run 6 | Temperature robustness | Run 4 parameterized SDE reuse | GIDL ON / BTBT OFF / thermal DC |
 | Run 6.5 | Extended MEB boundary | 36–51 nm extended SDE | 300 K GIDL / Cgd / DC / thermal ON-OFF-DC |
+| **Run 7** | **1T1C / retention feasibility** | **Run 6.5 parameterized SDE reuse; B0=36 nm** | **write / floating-SN hold / retention ON-OFF / read guardrail** |
 
 The raw SWB `pp*.cmd` node expansions remain in the local TCAD archive. GitHub keeps the reusable source/representative command for each reported branch, while the actual SWB split is recorded below.
 
@@ -61,17 +62,15 @@ Run 1 reuses the Run 0 B0 geometry:
 
 - [`code/sdevice/run01/bcat_idvg_r1_lowvd.cmd`](code/sdevice/run01/bcat_idvg_r1_lowvd.cmd)
 
-Retained SWB snapshot:
-
 | Parameter | Values |
 |---|---|
-| `MEB_Depth` | 31 / 36 / 41 nm |
+| `MEB_Depth` | 31 / 36 / 41 nm retained project parameterization |
 | `VD_Target` | 0.05 / 1.0 V |
-| `VG_MaxStep` | 0.010 / 0.005 V |
+| `VG_MaxStep` | 0.010 / 0.005 V retained histories |
 | Temperature | 300 K |
 | BTBT | OFF |
 
-The formal metric definitions are referenced to B0=36 nm; the retained Workbench project was later parameterized across 31/36/41 nm.
+The formal metric definitions are referenced to B0=36 nm.
 
 ### SDevice — Id–Vd output characteristic
 
@@ -125,9 +124,7 @@ The formal metric definitions are referenced to B0=36 nm; the retained Workbench
 - [`code/sdevice/run03/bcat_gidl_r3_precheck.cmd`](code/sdevice/run03/bcat_gidl_r3_precheck.cmd)
 - [`code/sdevice/run03/bcat_gidl_r3_nonlocal.cmd`](code/sdevice/run03/bcat_gidl_r3_nonlocal.cmd)
 
-Initial feasibility matrix:
-
-| Parameter | Values |
+| Parameter | Initial value |
 |---|---|
 | `MEB_Depth` | 36 nm |
 | `Mesh_Code` | 1 |
@@ -140,9 +137,7 @@ Initial feasibility matrix:
 - BTBT ON: [`code/sdevice/run03/bcat_gidl_r3_final_nonlocal_on_executed_snapshot.cmd`](code/sdevice/run03/bcat_gidl_r3_final_nonlocal_on_executed_snapshot.cmd)
 - BTBT OFF: [`code/sdevice/run03/bcat_gidl_r3_final_nonlocal_off_executed_snapshot.cmd`](code/sdevice/run03/bcat_gidl_r3_final_nonlocal_off_executed_snapshot.cmd)
 
-Final SWB matrix:
-
-| Parameter | Value |
+| Parameter | Final value |
 |---|---|
 | `MEB_Depth` | 36 nm |
 | `Mesh_Code` | 3 |
@@ -355,9 +350,7 @@ The formal 300 K DC values are reused from the Run 4/5 DC path.
 
 - [`code/sdevice/run06_5/bcat_dc_r65_300k_guardrail.cmd`](code/sdevice/run06_5/bcat_dc_r65_300k_guardrail.cmd)
 
-The retained SWB DC project contains 33.5/38.5 nm historical cases together with the new 48/49/51 nm cases. R6.5 reporting uses 48/49/51 nm.
-
-| Parameter | R6.5 values |
+| Parameter | R6.5 reporting values |
 |---|---|
 | `MEB_Depth` | 48 / 49 / 51 nm |
 | `Mesh_Code` | 1 |
@@ -370,8 +363,6 @@ The retained SWB DC project contains 33.5/38.5 nm historical cases together with
 
 - [`code/sdevice/run06_5/bcat_gidl_r65_temperature_off_parametric.cmd`](code/sdevice/run06_5/bcat_gidl_r65_temperature_off_parametric.cmd)
 
-Two retained SWB matrices use the same OFF source code:
-
 | Purpose | MEB | Temperature |
 |---|---|---|
 | extended 300 K boundary control | 36 / 41 / 47 / 48 / 49 / 51 nm | 300 K |
@@ -383,11 +374,9 @@ Common settings: `Mesh_Code=3`, `VD_Target1=1.2 V`, `VG_Min1=-0.7 V`, NonlocalPa
 
 - [`code/sdevice/run06_5/bcat_gidl_r65_temperature_on_parametric.cmd`](code/sdevice/run06_5/bcat_gidl_r65_temperature_on_parametric.cmd)
 
-The retained extended R6A Workbench copy contains `31/36/41/48/49 nm × 300/340/380 K`; the R6.5 report uses the new 48/49 nm thermal extension.
-
 | Parameter | Values |
 |---|---|
-| `MEB_Depth` | 31 / 36 / 41 / 48 / 49 nm |
+| `MEB_Depth` | retained project: 31 / 36 / 41 / 48 / 49 nm |
 | `Mesh_Code` | 3 |
 | `Temp_K` | 300 / 340 / 380 K |
 | `VD_Target1` | 1.2 V |
@@ -397,8 +386,6 @@ The retained extended R6A Workbench copy contains `31/36/41/48/49 nm × 300/340/
 ### Thermal DC guardrail
 
 - [`code/sdevice/run06_5/bcat_dc_r65_temperature_guardrail.cmd`](code/sdevice/run06_5/bcat_dc_r65_temperature_guardrail.cmd)
-
-The retained R6C project contains 36/41/48/49 nm. R6.5 reporting uses the 48/49 nm extension.
 
 | Parameter | Values |
 |---|---|
@@ -411,12 +398,90 @@ The retained R6C project contains 36/41/48/49 nm. R6.5 reporting uses the 48/49 
 
 </details>
 
+<details>
+<summary><strong>Run 7 — 1T1C / Retention Feasibility & Metric Freeze</strong></summary>
+
+> Status: **prepared source only; no Run 7 simulation result is recorded yet.**  
+> Run 7 is B0=`MEB_Depth=36 nm`, `T=300 K` only. MEB comparison begins in Run 8.
+
+### SDE provenance
+
+Run 7 creates no new geometry generator.
+
+- Run-specific provenance note: [`code/sde/run07/README.md`](code/sde/run07/README.md)
+- inherited parameterized source: [`code/sde/run06_5/bcat_sde_r65_deeper_meb_boundary.cmd`](code/sde/run06_5/bcat_sde_r65_deeper_meb_boundary.cmd)
+
+Formal R7 SDE use:
+
+| Parameter | Value / role |
+|---|---|
+| `MEB_Depth` | `0.036 um` fixed |
+| `Mesh_Code` | `1` smoke/write/read; `3` final hold/retention check |
+
+### SDevice branch index
+
+- branch/readme: [`code/sdevice/run07/README.md`](code/sdevice/run07/README.md)
+- R7A/R7B AreaFactor + write screening: [`code/sdevice/run07/bcat_1t1c_r7_write_screen.cmd`](code/sdevice/run07/bcat_1t1c_r7_write_screen.cmd)
+- R7C write → floating-SN hold: [`code/sdevice/run07/bcat_1t1c_r7_cell_transient.cmd`](code/sdevice/run07/bcat_1t1c_r7_cell_transient.cmd)
+- R7D `Ileak(VSN)` NonlocalPath ON: [`code/sdevice/run07/bcat_retention_r7_ivsn_integral_on.cmd`](code/sdevice/run07/bcat_retention_r7_ivsn_integral_on.cmd)
+- R7D BTBT-OFF reference: [`code/sdevice/run07/bcat_retention_r7_ivsn_integral_off.cmd`](code/sdevice/run07/bcat_retention_r7_ivsn_integral_off.cmd)
+- R7E BL/SN charge-sharing read: [`code/sdevice/run07/bcat_1t1c_r7_read_guardrail.cmd`](code/sdevice/run07/bcat_1t1c_r7_read_guardrail.cmd)
+- retention integral postprocess: [`code/scripts/extraction/run07_retention_integral.py`](code/scripts/extraction/run07_retention_integral.py)
+
+### Circuit mapping
+
+```text
+source -> BL
+drain  -> SN
+gate   -> WL
+substrate -> reference
+SN -> Ccell -> reference
+```
+
+### Staged SWB matrix
+
+Run 7 is not a full-factorial DOE. Execute the branches sequentially.
+
+| Branch | Fixed | Split / candidate |
+|---|---|---|
+| R7A Scaling | B0, 300 K, Mesh1 | `AreaFactor=0.011/0.017/0.023` |
+| R7B Write | nominal AF, `Ccell=10 fF`, Mesh1 | `VWL_ON=1.5/2.0/2.5/3.0 V`; `VBL_WRITE=1.2 V`; `Twrite=10 ns` initial |
+| R7C Hold | selected write condition | `Mesh_Code=1/3`; staged `HoldTime`; `HoldMaxStep` set per stage |
+| R7D Retention | Mesh3, `VSN=0.8→1.0 V` | NonlocalPath ON / OFF paired decks |
+| R7E Read | `Ccell=10 fF`, `CBL=45 fF`, `VBL_READ=0.5 V` candidates | `VSN_INIT=0.0/0.8/1.0 V` |
+| R7F Repeatability | final nominal protocol | repeat selected final node(s) |
+
+### Parameter-status freeze before execution
+
+| Parameter | Status | Current value / role |
+|---|---|---|
+| `MEB_Depth` | Freeze | `0.036 um` |
+| Temperature | Freeze | `300 K` |
+| Gate WF | Freeze | `4.8 eV` |
+| base physics | Freeze | existing CMP NonlocalPath-compatible B0 physics |
+| `AreaFactor` | Candidate | `0.017`; `0.011/0.023` diagnostic only |
+| `Ccell_F` | Candidate baseline | `1.0e-14 F` |
+| `VBL_WRITE` | Candidate | `1.2 V` |
+| `VWL_ON` | Screening | `1.5/2.0/2.5/3.0 V` |
+| `Twrite` | Initial candidate | `1.0e-8 s` |
+| `VWL_HOLD` | Candidate | `-0.7 V`, GIDL-consistent project stress |
+| `CBL_F` | Read diagnostic | `4.5e-14 F` reference only |
+| `VBL_READ` | Read candidate | `0.5 V` |
+| `VSN_INIT` | Read states | `0.0/0.8/1.0 V` |
+| retention window | Primary candidate | `RT_1p0_0p8`: 1.0 → 0.8 V |
+| Cho threshold | Reference only | `0.698 V`, not CMP production calibration |
+
+No result is added to this section until an executed SWB node, exported data and parameter/evidence record exist.
+
+</details>
+
 ---
 
 ## Recording Rule
 
 - `code/sde/` and `code/sdevice/` store the reusable source or representative executed command.
-- `CMD_HUB.md` records the SWB split used for the reported Run.
+- `CMD_HUB.md` records the SWB split used or prepared for the reported Run.
 - Node-expanded `pp*.cmd`, `.tdr`, `.plt`, full logs, and jobs remain in the local TCAD archive unless a specific provenance issue requires them.
 - If a later Run reuses an earlier source unchanged, the Hub either links the inherited source directly or keeps a Run-specific representative copy when that improves auditability.
-- A Run result is not added to the Hub unless its corresponding source command and parameter condition can be traced to the TCAD archive or an already committed source.
+- A completed Run result is not added to the Hub as evidence unless its source command and parameter condition can be traced to the TCAD archive or an already committed source.
+- Prepared-but-unexecuted commands, such as the initial Run 7 source set, are explicitly labeled as such until TCAD execution evidence exists.
