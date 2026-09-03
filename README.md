@@ -124,10 +124,10 @@ B0는 양산 DRAM cell의 완전한 3D reproduction이 아니라,
 |---|---|
 | **BCAT** | Silicon trench 내부에 gate/word line을 매립한 DRAM cell transistor |
 | **MEB** | Metal Etch-Back. 현재 모델에서는 결과 형상인 gate-top depth로 표현 |
-| **Cgd / Cov** | `ACExtract |c(g,d)|`를 project-internal gate–drain coupling metric으로 사용. calibrated production Cov는 아님 |
+| **Cgd / Cov** | <code>ACExtract &#124;c(g,d)&#124;</code>를 project-internal gate–drain coupling metric으로 사용. calibrated production Cov는 아님 |
 | **Mesh-DC** | DC metric 비교에 선택된 Medium mesh (`Mesh_Code=1`) |
 | **Mesh-GIDL** | drain-side BTBT hotspot을 추가 refinement한 mesh (`Mesh_Code=3`) |
-| **E_wall,max** | `Y=0.116 um`, `X=0.032–0.070 um` fixed wall cut에서의 peak `|ElectricField|` |
+| **E_wall,max** | `Y=0.116 um`, `X=0.032–0.070 um` fixed wall cut에서의 peak <code>&#124;ElectricField&#124;</code> |
 | **GIDL** | NonlocalPath BTBT 기반 project-internal relative leakage metric |
 | **P1** | historical initial screened-window candidate = 41 nm |
 | **P2** | transistor-level electrostatic/GIDL candidate selected for cell-level retention validation = 48 nm |
@@ -192,9 +192,9 @@ Vth / SS / Ion / DIBL extraction rule을 먼저 고정했습니다.
 
 | Metric | Internal definition |
 |---|---|
-| `Vth` | `|Id| = 1e-9 A` semilog interpolation |
-| `SS` | `1e-14 ≤ |Id| ≤ 1e-10 A` 구간 `log10(|Id|)` linear fit |
-| `Ion` | `VG=1.5 V`, `VD=1.0 V`의 `|Id|` |
+| `Vth` | <code>&#124;Id&#124; = 1e-9 A</code> semilog interpolation |
+| `SS` | <code>1e-14 ≤ &#124;Id&#124; ≤ 1e-10 A</code> 구간 <code>log10(&#124;Id&#124;)</code> linear fit |
+| `Ion` | `VG=1.5 V`, `VD=1.0 V`의 <code>&#124;Id&#124;</code> |
 | `DIBL` | `(Vth@0.05V - Vth@1.0V) / 0.95` |
 | DC Ioff | BTBT-off numerical-floor diagnostic only — GIDL로 사용하지 않음 |
 
@@ -289,7 +289,7 @@ metric = |Idrain| @ VG=-0.7 V
 
 Nominal 36 nm:
 
-| Case | `|Idrain| @ VG=-0.7 V` |
+| Case | <code>&#124;Idrain&#124; @ VG=-0.7 V</code> |
 |---|---:|
 | BTBT ON | `1.3777737e-14 A` |
 | BTBT OFF | `4.2880983e-16 A` |
@@ -311,7 +311,7 @@ physics-specific **`Mesh-GIDL = Mesh_Code 3`**를 확보했습니다.
 
 ### GIDL result
 
-| MEB | `|Idrain| @ VG=-0.7 V` | Normalized |
+| MEB | <code>&#124;Idrain&#124; @ VG=-0.7 V</code> | Normalized |
 |---:|---:|---:|
 | 31 nm | `1.9624468e-14 A` | 1.424361 |
 | 36 nm | `1.3777737e-14 A` | 1.000000 |
@@ -357,7 +357,6 @@ BTBT = OFF
 primary = |c(g,d)|
 cross-check = |c(d,g)|
 ```
-
 - 100 kHz / 1 MHz / 10 MHz sensitivity: 사실상 변화 없음
 - Mesh_Code 1 ↔ 2 difference: 약 `0.27%`
 - 따라서 **1 MHz + Mesh_Code 1**을 Run 5 internal Cgd protocol로 선택
@@ -460,7 +459,7 @@ Extended set:
 
 ### 300 K endpoint summary
 
-| MEB | GIDL ON (A) | `|Cgd|` | `E_wall,max` (V/cm) |
+| MEB | GIDL ON (A) | <code>&#124;Cgd&#124;</code> | `E_wall,max` (V/cm) |
 |---:|---:|---:|---:|
 | 36 | `1.3777737e-14` | `1.6829628e-16` | 867936.60 |
 | 41 | `7.7683012e-15` | `1.5230092e-16` | 857194.93 |
