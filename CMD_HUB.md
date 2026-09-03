@@ -1,7 +1,8 @@
 # CMP TCAD CMD / Parameter Hub
 
 > Run별 SDE / SDevice command와 Sentaurus Workbench parameter를 빠르게 확인하기 위한 실행 인덱스입니다.  
-> 연구 결과와 해석은 `README.md` 및 `docs/progress/`에 유지하고, 이 문서는 실제 실행 코드와 SWB split/provenance만 정리합니다.
+> 연구 결과와 해석은 `README.md` 및 `docs/progress/`에 유지하고, 이 문서는 실제 실행 코드와 SWB split/provenance만 정리합니다.  
+> 전체 연구 parameter의 출처·상태·Fixed/Split 근거는 [`docs/research/CMP_MASTER_PARAMETER_TABLE.md`](docs/research/CMP_MASTER_PARAMETER_TABLE.md)를 참고합니다.
 
 ## Run Index
 

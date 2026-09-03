@@ -26,6 +26,7 @@ P2는 global/final/production optimum을 의미하지 않습니다.
 
 - [TCAD CMD / Parameter Hub](CMD_HUB.md)
 - [Current Run Sheet](docs/RUN_SHEET.md)
+- [CMP Master Parameter Table](docs/research/CMP_MASTER_PARAMETER_TABLE.md)
 
 ---
 
