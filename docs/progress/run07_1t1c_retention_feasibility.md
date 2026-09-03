@@ -217,6 +217,80 @@ These are Run 7 convergence targets, not device specifications.
 
 This is staged, not a full factorial DOE.
 
+## Pre-Execution Hypothesis / ERGC
+
+The course workflow requires the expected physical behavior to be written **before** simulation. The table below is the R7 pre-execution record. `Result`, `Gap`, and `Counter Plan` are filled only after an actual SWB node is executed and reviewed.
+
+| Parameter / Test | Status | Expected Result | Physical Reason | Failure / Gap Meaning | Next Action |
+|---|---|---|---|---|---|
+| 1T1C MixedMode connection | Hypothesis | B0 device and `Ccell` connect and transient converges with the intended BL/SN/WL mapping | Existing BCAT device is embedded as the access transistor in the cell circuit | topology, MixedMode syntax, node mapping, or initialization may be wrong | check node mapping -> installed-version MixedMode syntax -> initialization / Set-Unset sequence |
+| AreaFactor sensitivity | Planned | changing `AreaFactor` changes scaled current/charge contribution and may change write/decay dynamics | `AreaFactor` scales the omitted 2D width contribution | excessive sensitivity would weaken the nominal effective-width proxy assumption | compare `0.011/0.017/0.023`; freeze one value only after the one-time check |
+| Write feasibility | Hypothesis | while WL is ON, `VSN` charges in the intended D1 direction | charge is transferred from BL through the access transistor into `Ccell` | insufficient charging can indicate timing/bias limitation or solver/circuit setup error | verify waveform and mapping; adjust `Twrite` first, then re-evaluate screened WL cases |
+| Floating-SN hold | Hypothesis | after write and SN release, `VSN(t)` changes continuously rather than collapsing or oscillating | leakage changes stored capacitor charge according to node-current balance | immediate collapse/oscillation suggests Set-Unset, timestep, floating-node, or mapping problem | audit release sequence, timestep / TurningPoints, node current and mapping |
+| NonlocalPath ON/OFF | Planned | a measurable cell-bias leakage difference may remain at 300 K | R3-R6.5 established a drain-side NonlocalPath-sensitive contribution under transistor-level GIDL bias | small difference would mean the cell-bias condition is less dominated by the prior GIDL component | keep ON/OFF as attribution evidence; do not force a pure-BTBT interpretation |
+| `VSN(t)` waveform | Hypothesis | physically interpretable, continuous storage-node decay or charge evolution | capacitor charge balance gives `I ~ C*dV/dt` | discontinuity, sign reversal, or oscillation can be numerical/setup related | check timestep, current sign convention, floating-node definition and pulse edges |
+| `Ileak(VSN)` | Planned | reproducible leakage curve over `0.8-1.0 V` | the auxiliary retention integral requires current as a function of storage-node voltage | severe non-monotonicity or floor sensitivity can indicate mesh/bias/current-definition limitations | re-check mesh, bias path and terminal-current definition before integration |
+| Direct transient vs `I/C` | Planned | same order and trend in an overlapping short-time region | capacitor charge conservation links `dVSN/dt` and node current | large mismatch indicates sign/current/Ccell/floating-node/time-step inconsistency | audit current sign, `Ccell`, node mapping and timestep before retention interpretation |
+| Mesh_Code 1 vs 3 | Planned | write behavior should remain similar; leakage/hold may show greater sensitivity to Mesh-GIDL refinement | drain-side leakage hotspot is more mesh-sensitive than gross write charging | very large difference means retention-specific mesh convergence is not established | use Mesh1 only for smoke; re-check final hold/retention with Mesh3 |
+
+ERGC recording rule for R7:
+
+```text
+Expectation  = the pre-execution table above
+Results      = only executed waveform / exported data
+Gap Analysis = difference between expectation and actual result
+Counter Plan = one controlled correction or diagnostic before the next run
+```
+
+No row above is a completed result.
+
+## R7-Start Mini Milestone — First-Class Follow-Up
+
+Purpose: show a real post-class project advance without claiming completion of the full Run 7 protocol.
+
+### Scope
+
+```text
+1. B0 = 36 nm / 300 K MixedMode topology and node mapping check
+2. one nominal 1T1C write smoke test
+3. if write is stable, one 100 ns floating-SN hold smoke test
+```
+
+Initial candidate setup for the write smoke test:
+
+```text
+MEB_Depth = 36 nm       Frozen for R7
+Temperature = 300 K     Frozen for R7
+Mesh_Code = 1           smoke-test mesh
+AreaFactor = 0.017      Candidate
+Ccell = 10 fF           Candidate
+VBL_WRITE = 1.2 V       Candidate
+Twrite = 10 ns          Candidate
+VWL_ON = 1.5 / 2.0 / 2.5 / 3.0 V screened range
+```
+
+Execution logic: start from the lowest screened `VWL_ON` and select the **minimum reasonable stable write condition**. If the initial 10 ns duration is insufficient, timing is reviewed before extending the WL voltage range beyond the existing screen.
+
+If the write smoke succeeds, the mini hold uses the existing R7 candidate mapping/hold condition and starts with `100 ns` only. Longer hold windows remain later R7 work.
+
+### Required mini-milestone outputs
+
+- `VBL(t)`
+- `VWL(t)`
+- `VSN(t)`
+- storage-node / device current needed to check the write/hold direction
+- exact node / parameter snapshot used for the accepted smoke run
+
+### Mini-milestone success interpretation
+
+- **Topology success:** intended BL/SN/WL nodes are connected and transient converges.
+- **Write success:** `VSN` responds in the intended charging direction under the selected write pulse without relying on the maximum WL value by default.
+- **Optional 100 ns hold success:** after SN is released, `VSN(t)` remains continuous and numerically interpretable over the short hold window.
+
+This mini milestone does **not** include long-time retention, MEB-dependent retention, 340/380 K cell simulation, full read validation, the final retention integral, refresh reduction, or a robust process/design-window claim.
+
+Presentation rule: only executed items may be labeled `Completed`. Unexecuted retention/R8/R9 items remain `Next`, `Planned`, `Candidate`, or `Hypothesis`.
+
 ## 12. Exit Gate
 
 ### Required
