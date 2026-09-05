@@ -17,7 +17,7 @@
 | Run 5B | 5-level correlation | 31 / 33.5 / 36 / 38.5 / 41 nm | Cgd / GIDL / DC guardrail |
 | Run 6 | Temperature robustness | Run 4 parameterized SDE reuse | GIDL ON / BTBT OFF / thermal DC |
 | Run 6.5 | Extended MEB boundary | 36–51 nm extended SDE | 300 K GIDL / Cgd / DC / thermal ON-OFF-DC |
-| **Run 7** | **1T1C / retention feasibility** | **Run 6.5 parameterized SDE reuse; B0=36 nm** | **write / floating-SN hold / retention ON-OFF / read guardrail** |
+| **Run 7** | **1T1C / retention feasibility** | **Run 6.5 parameterized SDE reuse; B0=36 nm** | **write in progress / floating-SN hold / retention ON-OFF / read guardrail** |
 
 The raw SWB `pp*.cmd` node expansions remain in the local TCAD archive. GitHub keeps the reusable source/representative command for each reported branch, while the actual SWB split is recorded below.
 
@@ -402,7 +402,7 @@ Common settings: `Mesh_Code=3`, `VD_Target1=1.2 V`, `VG_Min1=-0.7 V`, NonlocalPa
 <details>
 <summary><strong>Run 7 — 1T1C / Retention Feasibility & Metric Freeze</strong></summary>
 
-> Status: **prepared source only; no Run 7 simulation result is recorded yet.**  
+> Status: **In Progress — 1T1C MixedMode/write feasibility executed; hold/retention/read pending.**  
 > Run 7 is B0=`MEB_Depth=36 nm`, `T=300 K` only. MEB comparison begins in Run 8.
 
 ### SDE provenance
@@ -446,13 +446,13 @@ Run 7 is not a full-factorial DOE. Execute the branches sequentially.
 | Branch | Fixed | Split / candidate |
 |---|---|---|
 | R7A Scaling | B0, 300 K, Mesh1 | `AreaFactor=0.011/0.017/0.023` |
-| R7B Write | nominal AF, `Ccell=10 fF`, Mesh1 | `VWL_ON=1.5/2.0/2.5/3.0 V`; `VBL_WRITE=1.2 V`; `Twrite=10 ns` initial |
+| R7B Write | `Ccell=10 fF`, Mesh1 | `VWL_ON=1.5/2.0/2.5/3.0 V`; `VBL_WRITE=1.2 V`; `Twrite=10 ns` reviewed, `100 ns` follow-up prepared |
 | R7C Hold | selected write condition | `Mesh_Code=1/3`; staged `HoldTime`; `HoldMaxStep` set per stage |
 | R7D Retention | Mesh3, `VSN=0.8→1.0 V` | NonlocalPath ON / OFF paired decks |
 | R7E Read | `Ccell=10 fF`, `CBL=45 fF`, `VBL_READ=0.5 V` candidates | `VSN_INIT=0.0/0.8/1.0 V` |
 | R7F Repeatability | final nominal protocol | repeat selected final node(s) |
 
-### Parameter-status freeze before execution
+### Parameter status during execution
 
 | Parameter | Status | Current value / role |
 |---|---|---|
@@ -460,11 +460,11 @@ Run 7 is not a full-factorial DOE. Execute the branches sequentially.
 | Temperature | Freeze | `300 K` |
 | Gate WF | Freeze | `4.8 eV` |
 | base physics | Freeze | existing CMP NonlocalPath-compatible B0 physics |
-| `AreaFactor` | Candidate | `0.017`; `0.011/0.023` diagnostic only |
+| `AreaFactor` | In progress | nominal candidate `0.017`; `0.011/0.023` one-time sensitivity; final numeric freeze pending |
 | `Ccell_F` | Candidate baseline | `1.0e-14 F` |
 | `VBL_WRITE` | Candidate | `1.2 V` |
-| `VWL_ON` | Screening | `1.5/2.0/2.5/3.0 V` |
-| `Twrite` | Initial candidate | `1.0e-8 s` |
+| `VWL_ON` | 10 ns screened range | `1.5/2.0/2.5/3.0 V` |
+| `Twrite` | In progress | `1.0e-8 s` reviewed; `1.0e-7 s` follow-up matrix prepared locally |
 | `VWL_HOLD` | Candidate | `-0.7 V`, GIDL-consistent project stress |
 | `CBL_F` | Read diagnostic | `4.5e-14 F` reference only |
 | `VBL_READ` | Read candidate | `0.5 V` |
@@ -472,7 +472,71 @@ Run 7 is not a full-factorial DOE. Execute the branches sequentially.
 | retention window | Primary candidate | `RT_1p0_0p8`: 1.0 → 0.8 V |
 | Cho threshold | Reference only | `0.698 V`, not CMP production calibration |
 
-No result is added to this section until an executed SWB node, exported data and parameter/evidence record exist.
+### Executed write-feasibility snapshot
+
+Visually reviewed 10 ns write nodes:
+
+| AreaFactor | `VWL_ON` | Local result node | Status |
+|---:|---:|---|---|
+| 0.011 | 1.5 V | `n71` | reviewed |
+| 0.011 | 2.0 V | `n153` | reviewed |
+| 0.011 | 2.5 V | `n162` | reviewed |
+| 0.011 | 3.0 V | `n171` | reviewed |
+| 0.017 | 1.5 V | `n134` | reviewed |
+| 0.017 | 2.0 V | `n156` | reviewed |
+| 0.017 | 2.5 V | `n165` | reviewed |
+| 0.017 | 3.0 V | `n174` | reviewed |
+
+Verified qualitative behavior:
+
+- MixedMode transient converges with the intended BL/SN/WL mapping.
+- BL and WL pulses are generated as requested.
+- `VSN(t)` charges smoothly in the intended direction.
+- Increasing `VWL_ON` strengthens the 10 ns charging response in both reviewed AreaFactor blocks.
+- All reviewed 10 ns cases remain below the candidate `VSN≈1.0 V` D1 level; the write condition is therefore not frozen.
+- Exact `VSN_write` extraction and the full 3-level AreaFactor comparison remain pending.
+
+Local follow-up prepared:
+
+```text
+Twrite = 100 ns
+AreaFactor = 0.011 / 0.017 / 0.023
+VWL_ON = 1.5 / 2.0 / 2.5 / 3.0 V
+```
+
+This 12-node follow-up matrix is not treated as analyzed evidence until completion/export is checked.
+
+Detailed evidence/provenance:
+
+- [`docs/evidence/run07_write_feasibility_interim_20260903.md`](docs/evidence/run07_write_feasibility_interim_20260903.md)
+- [`docs/progress/run07_1t1c_retention_feasibility.md`](docs/progress/run07_1t1c_retention_feasibility.md)
+
+### Output prefix / SVisual note
+
+The write deck uses:
+
+```text
+NewCurrentPrefix="R7_WRITE_"
+```
+
+so transient system waveforms are stored as:
+
+```text
+R7_WRITE_n<node>_sys_des.plt
+```
+
+The unprefixed `n<node>_sys_des.plt` can contain only the initial `t=0` coupled records. Use the prefixed system plot for write-transient review/export.
+
+### Remaining Run 7 work
+
+- finish/export 100 ns write matrix;
+- freeze nominal AreaFactor and write condition;
+- execute first floating-SN hold;
+- Mesh1/3 hold/retention comparison;
+- `Ileak(VSN)` and `RT_1p0_0p8,int`;
+- NonlocalPath ON/OFF cell attribution;
+- read charge-sharing guardrail;
+- final repeatability close-out.
 
 </details>
 
@@ -485,4 +549,4 @@ No result is added to this section until an executed SWB node, exported data and
 - Node-expanded `pp*.cmd`, `.tdr`, `.plt`, full logs, and jobs remain in the local TCAD archive unless a specific provenance issue requires them.
 - If a later Run reuses an earlier source unchanged, the Hub either links the inherited source directly or keeps a Run-specific representative copy when that improves auditability.
 - A completed Run result is not added to the Hub as evidence unless its source command and parameter condition can be traced to the TCAD archive or an already committed source.
-- Prepared-but-unexecuted commands, such as the initial Run 7 source set, are explicitly labeled as such until TCAD execution evidence exists.
+- Prepared-but-unexecuted Run 7 decks remain labeled as planned until actual SWB execution evidence exists; executed write-feasibility nodes are now recorded separately from the still-unexecuted hold/retention/read branches.
