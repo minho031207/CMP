@@ -2,13 +2,29 @@
 
 ## 1. Status
 
-**Protocol v1 frozen for execution — simulation not started.**
+**In Progress — 1T1C MixedMode connection and initial 10 ns write screening executed; hold/retention/read close-out pending.**
 
-No Run 7 retention result, read/write improvement, or MEB-dependent cell conclusion exists yet.
+Current verified scope:
+
+```text
+B0 = 36 nm
+T = 300 K
+Mesh_Code = 1 write-feasibility path
+1T1C MixedMode connection
+BL/WL pulse generation
+storage-node charging response
+10 ns VWL write screen for reviewed AreaFactor blocks
+```
+
+No direct retention time, read-margin result, MEB-dependent cell conclusion, refresh reduction, or robust design-window conclusion exists yet.
+
+Detailed executed-node provenance is recorded in:
+
+- [`docs/evidence/run07_write_feasibility_interim_20260903.md`](../evidence/run07_write_feasibility_interim_20260903.md)
 
 ## 2. Objective
 
-Run 7 builds and validates the cell-level measurement framework required for the post-R6.5 mainline. It uses only the nominal B0 geometry:
+Run 7 builds and validates the cell-level measurement framework required after Run 6.5. It uses only the nominal B0 geometry:
 
 ```text
 MEB_Depth = 36 nm
@@ -16,9 +32,9 @@ Temperature = 300 K
 single-WF = 4.8 eV
 ```
 
-Run 7 does **not** compare 36/41/48/49 nm. MEB translation begins in Run 8 after this protocol passes.
+Run 7 does **not** compare 36/41/48/49 nm. MEB translation begins in Run 8 only after the Run 7 protocol passes.
 
-The required chain is:
+Required chain:
 
 ```text
 2D B0 current/charge scaling
@@ -36,36 +52,67 @@ The required chain is:
 
 | Source | Directly verified contribution | CMP use |
 |---|---|---|
-| Bang et al. 2025 | Sentaurus MixedMode 1T1C precedent; BL-source / WL-gate / drain-capacitor topology in Fig. 3; storage-node/WL/BL transient in Fig. 4 | topology and method precedent |
-| Synopsys T-2022.03 `Memory/SF_DRAM` | `Device`/`System`, `Capacitor_pset`, `Vsource_pset`, `Set/Unset`, 10 fF example, static `I(VSC)` retention integration, 45 fF BL-cap reference | implementation syntax / numerical precedent |
+| Bang et al. 2025 | Sentaurus MixedMode 1T1C precedent; BL-source / WL-gate / drain-capacitor topology | topology/method precedent |
+| Synopsys T-2022.03 `Memory/SF_DRAM` | `Device`/`System`, `Capacitor_pset`, `Vsource_pset`, `Set/Unset`, 10 fF example, retention integration, BL-cap reference | implementation/numerical precedent |
 | Sentaurus Training / SDevice User Guide | 2D width normalization, `AreaFactor`, MixedMode solver, transient/TurningPoints | implementation rule |
-| Cho et al. 2026 | 2D BCAT; 3.0/-0.2 V WL, 0.5 V BL, 10 ns write, 300 ms hold, charge-sharing read criterion 0.698 V | read/write/hold methodology; values are reference-only unless explicitly adopted |
-| Liu et al. 2024 Part I | leakage-component framework; 10 fF; common data-loss window `VSC=1.0 -> 0.8 V`; temperature/distribution limitation | primary retention-window precedent and scope boundary |
-| Liu et al. 2024 Part II | SC-WL overlap / field / retention sensitivity; PBTI/RDF; time-zero vs long-term vs read/write tradeoff | design-warning / later reliability context; PBTI not added to R7 |
+| Cho et al. 2026 | 2D BCAT write/hold/read methodology; 10 ns write; charge-sharing criterion | methodology/reference values only |
+| Liu et al. 2024 Part I | leakage-component framework; 10 fF; `VSC=1.0 -> 0.8 V` criterion | retention-window precedent/scope boundary |
+| Liu et al. 2024 Part II | structural-field/retention sensitivity; PBTI/read-write tradeoff | later reliability context; PBTI excluded from R7 |
 
-The external examples do not calibrate CMP B0 to a production DRAM cell. Numerical values adopted in R7 are explicitly labeled project-internal feasibility values.
+External examples do not calibrate CMP B0 to a production DRAM cell. Adopted values remain project-internal feasibility values.
 
-## 4. R7A — 2D-to-Cell Scaling
+## 4. Source Code and Geometry Reuse
 
-Sentaurus 2D terminal current/charge requires an omitted-width scaling when it is embedded in a physical circuit. The R7 nominal candidate is:
+### SDE
+
+Run 7 reuses the final parameterized Run 6.5 SDE source:
+
+- [`code/sde/run06_5/bcat_sde_r65_deeper_meb_boundary.cmd`](../../code/sde/run06_5/bcat_sde_r65_deeper_meb_boundary.cmd)
+
+R7 B0 condition:
+
+```text
+MEB_Depth = 0.036 um
+Mesh_Code = 1 for write smoke/screen
+```
+
+### SDevice — write screen
+
+- [`code/sdevice/run07/bcat_1t1c_r7_write_screen.cmd`](../../code/sdevice/run07/bcat_1t1c_r7_write_screen.cmd)
+
+### SDevice — next hold stage
+
+- [`code/sdevice/run07/bcat_1t1c_r7_cell_transient.cmd`](../../code/sdevice/run07/bcat_1t1c_r7_cell_transient.cmd)
+
+Prepared later-stage decks remain unexecuted/unfinished as evidence until their corresponding nodes are run and reviewed.
+
+## 5. R7A — 2D-to-Cell Scaling
+
+Nominal candidate:
 
 ```text
 AreaFactor = 0.017
 ```
 
-This is a **literature-derived effective-width proxy** from the 17 nm nominal saddle-fin width of the parent BCAT geometry; it is not a calibrated production effective width.
+This is a literature-derived effective-width proxy from the 17 nm nominal saddle-fin width of the parent BCAT geometry; it is not a calibrated production effective width.
 
 One-time sensitivity:
 
 ```text
-0.011 / 0.017 / 0.023
+AreaFactor = 0.011 / 0.017 / 0.023
 ```
 
-After R7A, one nominal `AreaFactor` is frozen and reused without change in R8/R9.
+Current status:
 
-## 5. R7B — Circuit Mapping and Write Screen
+- `0.011` 10 ns write waveforms reviewed across `VWL_ON=1.5/2.0/2.5/3.0 V`.
+- `0.017` 10 ns write waveforms reviewed across `VWL_ON=1.5/2.0/2.5/3.0 V`.
+- `0.023` and exact numeric cross-AreaFactor extraction remain pending for final scaling freeze.
 
-### 5.1 Mapping
+No final quantitative AreaFactor sensitivity percentage is claimed yet.
+
+## 6. R7B — Circuit Mapping and Write Screen
+
+### Mapping
 
 ```text
 source -> BL
@@ -77,27 +124,70 @@ SN -> Ccell -> reference
 
 This preserves the established CMP drain-side GIDL location as the storage-node side.
 
-### 5.2 Cell-capacitance baseline
+### Cell baseline
 
 ```text
 Ccell = 10 fF
 ```
 
-Role: project-internal 1T1C feasibility baseline supported by independent DRAM retention / Sentaurus examples. It is not claimed as exact production capacitance.
+Role: project-internal 1T1C feasibility baseline; not an exact production-cell capacitance claim.
 
-### 5.3 Initial write screen
+### Initial write screen
 
 ```text
-VBL_WRITE = 1.2 V candidate
+VBL_WRITE = 1.2 V
 VWL_ON = 1.5 / 2.0 / 2.5 / 3.0 V
-Twrite = 10 ns initial candidate
+VWL_HOLD = -0.7 V
+Twrite = 10 ns
 ```
 
-The selection target is the **minimum reasonable stable write condition**, not the largest storage-node voltage. If 10 ns does not reach the chosen D1 level, duration is expanded on selected WL cases before increasing voltage beyond the screened range.
+Selection target: the **minimum reasonable stable write condition**, not the maximum storage-node voltage.
 
-## 6. R7C — Floating Storage-Node Hold
+### Executed 10 ns result
 
-Primary candidate hold condition:
+**Verified:**
+
+- MixedMode circuit solves and transient advances normally.
+- BL and WL pulses are applied as intended.
+- `VSN(t)` increases smoothly in the intended charging direction.
+- For both reviewed `AreaFactor=0.011` and `0.017` blocks, increasing `VWL_ON` produces stronger storage-node charging.
+- All visually reviewed 10 ns cases remain below the candidate `VSN≈1.0 V` D1 level.
+
+Therefore the 10 ns screen is a **write-feasibility result**, not a frozen final write condition.
+
+The controlled next variable is write duration before extending WL above the screened 3.0 V range.
+
+### 100 ns matrix prepared locally
+
+A local follow-up SWB copy was configured as:
+
+```text
+Twrite = 100 ns
+AreaFactor = 0.011 / 0.017 / 0.023
+VWL_ON = 1.5 / 2.0 / 2.5 / 3.0 V
+```
+
+These 12 nodes are **not yet accepted as analyzed evidence** in this document. Their completion and `VSN_write` values must be verified/exported when TCAD access resumes.
+
+## 7. Output-Provenance Note
+
+The write-screen deck uses:
+
+```text
+NewCurrentPrefix="R7_WRITE_"
+```
+
+Therefore transient system waveforms are read from:
+
+```text
+R7_WRITE_n<node>_sys_des.plt
+```
+
+The unprefixed `n<node>_sys_des.plt` may contain only the initial `t=0` coupled operating-point records created before the prefix is activated. This was directly audited during the first write node.
+
+## 8. R7C — Floating Storage-Node Hold
+
+Primary candidate hold condition remains:
 
 ```text
 BL -> 0 V after write
@@ -106,30 +196,28 @@ SN -> floating
 substrate -> 0 V
 ```
 
-`VWL=-0.7 V` is a **CMP GIDL-consistent retention-stress condition** that preserves continuity with R3-R6.5. It is not a claim about a production DRAM standby WL voltage.
+`VWL=-0.7 V` is a CMP GIDL-consistent retention-stress condition, not a production standby-voltage claim.
 
-Direct transient is staged from short to longer windows only after convergence:
+Planned direct transient staging:
 
 ```text
 100 ns -> 1 us -> 10 us -> extend only if stable/useful
 ```
 
-Required exports include `VSN(t)`, `VBL(t)`, `VWL(t)`, storage-node/BL device currents and the parameter manifest.
+**Current status: not yet executed/accepted.**
 
-## 7. R7D — Retention Metric and BTBT Attribution
+The first hold run should use the selected nominal write condition after the 100 ns write matrix is analyzed.
 
-### 7.1 Primary common window
+## 9. R7D — Retention Metric and BTBT Attribution
 
-The primary cross-case retention window is:
+Primary common voltage window remains:
 
 ```text
 VSN: 1.0 V -> 0.8 V
-metric name: RT_1p0_0p8
+metric: RT_1p0_0p8
 ```
 
-A common absolute window is preferred over `0.8 × VSN_write` because case-dependent write degradation must not be normalized away.
-
-### 7.2 Two calculation paths
+Two paths remain planned:
 
 **Direct path**
 
@@ -137,43 +225,43 @@ A common absolute window is preferred over `0.8 × VSN_write` because case-depen
 write -> floating hold -> VSN(t)
 ```
 
-**Integral path**
+**Leakage-integral path**
 
 ```text
 Ileak(VSN), VSN=0.8..1.0 V
 RT_1p0_0p8,int = integral(Ccell / |Ileak(VSN)| dVSN)
 ```
 
-The two outputs are kept distinct. The integral value is called a **leakage-integral retention estimate** until its consistency with direct transient is demonstrated.
-
-### 7.3 Attribution
-
-The final B0 retention branch is run with:
+Final B0 attribution remains planned as:
 
 ```text
 NonlocalPath ON
+vs
 NonlocalPath OFF
 ```
 
-The OFF branch is a project background reference only, not a complete physical leakage decomposition and not calibrated pure BTBT subtraction.
+The OFF branch is a project background reference, not a complete physical leakage decomposition.
 
-## 8. R7E — Read Guardrail
+**Current status: not executed.**
 
-Full sense-amplifier modeling is outside Run 7. The minimal guardrail is charge sharing:
+## 10. R7E — Read Guardrail
+
+Minimal planned guardrail:
 
 ```text
 CBL = 45 fF candidate/reference
 VBL,pre = 0.5 V candidate
 VSN,init = 0.0 / 0.8 / 1.0 V
-WL -> selected read-on level
-measure DeltaVBL
+measure DeltaVBL after charge sharing
 ```
 
-Cho et al.'s `0.698 V` is retained as a literature-derived reference, not a CMP production pass/fail voltage. R7 requires reproducible D0/D1 polarity and a positive D1-direction margin for the project guardrail states; it does not freeze a production sense-amplifier minimum mV requirement.
+Cho et al.'s `0.698 V` remains literature reference only, not a calibrated CMP production threshold.
 
-## 9. Physics Continuity
+**Current status: not executed.**
 
-The main R7 device physics remains the established CMP chain:
+## 11. Physics Continuity
+
+Main R7 device physics remains the established CMP chain:
 
 ```text
 Fermi
@@ -181,19 +269,19 @@ EffectiveIntrinsicDensity(OldSlotboom)
 Mobility(DopingDep HighFieldSaturation Enormal)
 SRH(DopingDep)
 Auger
-Band2Band(Model=NonlocalPath) for the ON branch
+Band2Band(Model=NonlocalPath) for ON branch
 ```
 
-Hurkx BTBT/SRH, quantum corrections and example-specific mobility from external Sentaurus decks are **not** imported merely because they appear in `SF_DRAM`.
+Hurkx BTBT/SRH, quantum corrections and example-specific external physics are not imported merely because they appear in the Synopsys examples.
 
-## 10. Numerical Strategy
+## 12. Numerical Strategy
 
 - `Mesh_Code=1`: write/read smoke and fast feasibility work.
-- `Mesh_Code=3`: final retention/hold verification with the established drain-side Mesh-GIDL refinement.
-- Transient uses BE + Blocked/ParDiSo as the first installed-version configuration and uses `TurningPoints` around pulse edges.
-- If a solver syntax/availability issue appears, an installed T-2022.03 documented fallback is used and recorded before interpretation.
+- `Mesh_Code=3`: final hold/retention verification with Mesh-GIDL refinement.
+- Transient: BE + Blocked/ParDiSo first configuration.
+- `TurningPoints` are used around pulse edges.
 
-Project-internal comparison targets before close-out:
+Project-internal close-out targets remain:
 
 | Quantity | Target numerical difference |
 |---|---:|
@@ -202,101 +290,40 @@ Project-internal comparison targets before close-out:
 | `RT_1p0_0p8,int` | `<=10%` |
 | read `DeltaVBL` | `<=5%` |
 
-These are Run 7 convergence targets, not device specifications.
+These are convergence-review targets, not device specifications.
 
-## 11. SWB Execution Sequence
+## 13. ERGC — Current Snapshot
 
-| Branch | Main split | Expected baseline nodes |
-|---|---|---:|
-| R7A Scaling | `AreaFactor=0.011/0.017/0.023` | 3 |
-| R7B Write | `VWL_ON=1.5/2.0/2.5/3.0 V` | 4 |
-| R7C Hold | selected write; `Mesh_Code=1/3` | 2 |
-| R7D Retention | Mesh3; `BTBT=ON/OFF` | 2 |
-| R7E Read | `VSN_INIT=0/0.8/1.0 V` | 3 |
-| R7F Repeatability | final nominal repeat | 1 |
+| Parameter / Test | Current status | Result / Gap | Counter plan |
+|---|---|---|---|
+| 1T1C MixedMode connection | **Completed for initial feasibility** | transient converges with intended mapping | keep mapping fixed |
+| BL/WL pulse | **Completed for initial feasibility** | requested pulses verified | keep pulse definition |
+| `VSN(t)` write response | **Completed for initial feasibility** | smooth positive charging; no obvious collapse/oscillation | numeric export later |
+| `VWL_ON` dependence | **Qualitatively supported** | stronger WL produces stronger 10 ns charging | extract exact `VSN_write` values |
+| AreaFactor sensitivity | **In progress** | `0.011` and `0.017` reviewed qualitatively | finish/extract 3-level comparison before freeze |
+| 10 ns write target | **Gap identified** | reviewed cases remain below candidate 1.0 V D1 level | evaluate 100 ns matrix; do not extend WL >3 V by default |
+| Floating-SN hold | Planned | no accepted result yet | first 100 ns hold after write selection |
+| `Ileak(VSN)` / retention | Planned | no result | later R7 |
+| Read guardrail | Planned | no result | later R7 |
+| Mesh1 vs Mesh3 | Planned | no result | later R7 |
+| NonlocalPath ON/OFF cell attribution | Planned | no result | later R7 |
 
-This is staged, not a full factorial DOE.
+## 14. R7-Start Mini Milestone Interpretation
 
-## Pre-Execution Hypothesis / ERGC
+The project has advanced beyond the original “simulation not started” state.
 
-The course workflow requires the expected physical behavior to be written **before** simulation. The table below is the R7 pre-execution record. `Result`, `Gap`, and `Counter Plan` are filled only after an actual SWB node is executed and reviewed.
+Presentation-safe statement at this checkpoint:
 
-| Parameter / Test | Status | Expected Result | Physical Reason | Failure / Gap Meaning | Next Action |
-|---|---|---|---|---|---|
-| 1T1C MixedMode connection | Hypothesis | B0 device and `Ccell` connect and transient converges with the intended BL/SN/WL mapping | Existing BCAT device is embedded as the access transistor in the cell circuit | topology, MixedMode syntax, node mapping, or initialization may be wrong | check node mapping -> installed-version MixedMode syntax -> initialization / Set-Unset sequence |
-| AreaFactor sensitivity | Planned | changing `AreaFactor` changes scaled current/charge contribution and may change write/decay dynamics | `AreaFactor` scales the omitted 2D width contribution | excessive sensitivity would weaken the nominal effective-width proxy assumption | compare `0.011/0.017/0.023`; freeze one value only after the one-time check |
-| Write feasibility | Hypothesis | while WL is ON, `VSN` charges in the intended D1 direction | charge is transferred from BL through the access transistor into `Ccell` | insufficient charging can indicate timing/bias limitation or solver/circuit setup error | verify waveform and mapping; adjust `Twrite` first, then re-evaluate screened WL cases |
-| Floating-SN hold | Hypothesis | after write and SN release, `VSN(t)` changes continuously rather than collapsing or oscillating | leakage changes stored capacitor charge according to node-current balance | immediate collapse/oscillation suggests Set-Unset, timestep, floating-node, or mapping problem | audit release sequence, timestep / TurningPoints, node current and mapping |
-| NonlocalPath ON/OFF | Planned | a measurable cell-bias leakage difference may remain at 300 K | R3-R6.5 established a drain-side NonlocalPath-sensitive contribution under transistor-level GIDL bias | small difference would mean the cell-bias condition is less dominated by the prior GIDL component | keep ON/OFF as attribution evidence; do not force a pure-BTBT interpretation |
-| `VSN(t)` waveform | Hypothesis | physically interpretable, continuous storage-node decay or charge evolution | capacitor charge balance gives `I ~ C*dV/dt` | discontinuity, sign reversal, or oscillation can be numerical/setup related | check timestep, current sign convention, floating-node definition and pulse edges |
-| `Ileak(VSN)` | Planned | reproducible leakage curve over `0.8-1.0 V` | the auxiliary retention integral requires current as a function of storage-node voltage | severe non-monotonicity or floor sensitivity can indicate mesh/bias/current-definition limitations | re-check mesh, bias path and terminal-current definition before integration |
-| Direct transient vs `I/C` | Planned | same order and trend in an overlapping short-time region | capacitor charge conservation links `dVSN/dt` and node current | large mismatch indicates sign/current/Ccell/floating-node/time-step inconsistency | audit current sign, `Ccell`, node mapping and timestep before retention interpretation |
-| Mesh_Code 1 vs 3 | Planned | write behavior should remain similar; leakage/hold may show greater sensitivity to Mesh-GIDL refinement | drain-side leakage hotspot is more mesh-sensitive than gross write charging | very large difference means retention-specific mesh convergence is not established | use Mesh1 only for smoke; re-check final hold/retention with Mesh3 |
+> **B0 1T1C MixedMode topology and write-response feasibility were verified, and a controlled WL / AreaFactor / write-duration screening path was established. Floating-SN hold and retention-metric validation remain in progress.**
 
-ERGC recording rule for R7:
+Do **not** label full Run 7 as completed.
 
-```text
-Expectation  = the pre-execution table above
-Results      = only executed waveform / exported data
-Gap Analysis = difference between expectation and actual result
-Counter Plan = one controlled correction or diagnostic before the next run
-```
+## 15. Exit Gate
 
-No row above is a completed result.
+### Required before Run 8
 
-## R7-Start Mini Milestone — First-Class Follow-Up
-
-Purpose: show a real post-class project advance without claiming completion of the full Run 7 protocol.
-
-### Scope
-
-```text
-1. B0 = 36 nm / 300 K MixedMode topology and node mapping check
-2. one nominal 1T1C write smoke test
-3. if write is stable, one 100 ns floating-SN hold smoke test
-```
-
-Initial candidate setup for the write smoke test:
-
-```text
-MEB_Depth = 36 nm       Frozen for R7
-Temperature = 300 K     Frozen for R7
-Mesh_Code = 1           smoke-test mesh
-AreaFactor = 0.017      Candidate
-Ccell = 10 fF           Candidate
-VBL_WRITE = 1.2 V       Candidate
-Twrite = 10 ns          Candidate
-VWL_ON = 1.5 / 2.0 / 2.5 / 3.0 V screened range
-```
-
-Execution logic: start from the lowest screened `VWL_ON` and select the **minimum reasonable stable write condition**. If the initial 10 ns duration is insufficient, timing is reviewed before extending the WL voltage range beyond the existing screen.
-
-If the write smoke succeeds, the mini hold uses the existing R7 candidate mapping/hold condition and starts with `100 ns` only. Longer hold windows remain later R7 work.
-
-### Required mini-milestone outputs
-
-- `VBL(t)`
-- `VWL(t)`
-- `VSN(t)`
-- storage-node / device current needed to check the write/hold direction
-- exact node / parameter snapshot used for the accepted smoke run
-
-### Mini-milestone success interpretation
-
-- **Topology success:** intended BL/SN/WL nodes are connected and transient converges.
-- **Write success:** `VSN` responds in the intended charging direction under the selected write pulse without relying on the maximum WL value by default.
-- **Optional 100 ns hold success:** after SN is released, `VSN(t)` remains continuous and numerically interpretable over the short hold window.
-
-This mini milestone does **not** include long-time retention, MEB-dependent retention, 340/380 K cell simulation, full read validation, the final retention integral, refresh reduction, or a robust process/design-window claim.
-
-Presentation rule: only executed items may be labeled `Completed`. Unexecuted retention/R8/R9 items remain `Next`, `Planned`, `Candidate`, or `Hypothesis`.
-
-## 12. Exit Gate
-
-### Required
-
-- [ ] AreaFactor nominal value frozen after sensitivity check.
-- [ ] B0 1T1C MixedMode converges.
+- [ ] AreaFactor nominal value frozen after complete sensitivity extraction.
+- [x] B0 1T1C MixedMode converges.
 - [ ] Write condition reaches the chosen D1 level reproducibly.
 - [ ] SN floating hold and `VSN(t)` are valid.
 - [ ] `Ileak(VSN)` exists over 0.8–1.0 V.
@@ -317,13 +344,9 @@ Presentation rule: only executed items may be labeled `Completed`. Unexecuted re
 - [ ] `VWL_HOLD=-0.2 V` sensitivity if interpretation needs a literature-like standby point.
 - [ ] CBL sensitivity if read margin is unexpectedly fragile.
 
-## 13. Results
+## 16. R8 Handoff
 
-**Not run yet.** No quantitative Run 7 result is recorded in this document until the executed SWB nodes, exported CSVs and solver provenance are available.
-
-## 14. R8 Handoff
-
-After Run 7 passes, the protocol parameters listed in the final freeze table are reused without change. Run 8 first varies:
+After Run 7 passes, frozen protocol parameters are reused and Run 8 first varies:
 
 ```text
 MEB_Depth = 36 / 41 / 48 nm
@@ -331,4 +354,15 @@ MEB_Depth = 36 / 41 / 48 nm
 Temperature = 300 K
 ```
 
-The first scientific cell-level comparison will then test GIDL ranking against `RT_1p0_0p8`, direct charge loss, write `VSN` and read `DeltaVBL`.
+The first cell-level scientific comparison will then test the prior transistor-level GIDL ranking against retention/charge-loss, write `VSN` and read `DeltaVBL`.
+
+## 17. Resume Point
+
+When laboratory TCAD access resumes:
+
+1. confirm which 100 ns write nodes completed;
+2. export exact `VSN_write` values for the 10 ns and 100 ns matrices;
+3. choose the minimum reasonable stable write condition at nominal `AreaFactor=0.017`;
+4. finish/freeze the AreaFactor sensitivity decision;
+5. run `100 ns` floating-SN hold with `bcat_1t1c_r7_cell_transient.cmd`;
+6. proceed to Mesh3, retention integral, BTBT ON/OFF and read guardrail only after the write/hold path is stable.
