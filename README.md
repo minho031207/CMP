@@ -1,15 +1,16 @@
-# CMP: MEB-Induced GIDL Suppression and 1T1C Retention in 20 nm-Class BCAT DRAM
+# CMP: GIDL–Retention Translation and Temperature-Dependent MEB Design Range in 20 nm-Class BCAT DRAM
 
 > **Project status:** Run 0–6.5 completed  
-> **Current step:** Run 7 — Retention feasibility preparation  
+> **Current step:** Run 7 — 1T1C write feasibility / retention protocol in progress  
 > **Tool:** Synopsys Sentaurus TCAD T-2022.03  
 > **Baseline model:** B0 — 20 nm-Class Simplified 2D BCAT
 
 **Final research topic**  
-**20 nm급 BCAT DRAM에서 MEB 기반 GIDL 저감의 온도 의존적 1T1C Retention 전달 특성 분석**  
-**Temperature-Dependent Translation of MEB-Induced GIDL Suppression into 1T1C Retention in a 20 nm-Class BCAT DRAM**
+**20 nm급 BCAT DRAM에서 MEB 깊이에 따른 GIDL–Retention 전달 특성 및 온도 의존적 유효 설계 범위 도출**  
+**Temperature-Dependent Effective MEB Design Range Based on GIDL-to-Retention Translation in 20 nm-Class BCAT DRAM**
 
-`MEB → Cgd → Electric Field → GIDL → Temperature → 1T1C Retention`
+`MEB Depth → Cgd → Electric Field → GIDL → 1T1C Retention → Effective MEB Design Range`  
+`× 300 / 340 / 380 K`
 
 현재까지 B0 baseline 구축, DC metric freeze, mesh convergence, NonlocalPath BTBT/GIDL 검증,
 formal MEB screening, 5-level MEB–Cgd–field–GIDL correlation, 300/340/380 K elevated-temperature robustness,
@@ -21,6 +22,7 @@ formal MEB screening, 5-level MEB–Cgd–field–GIDL correlation, 300/340/380 
 - **51 nm**: low-current/background-sensitive boundary reference
 
 P2는 global/final/production optimum을 의미하지 않습니다.
+최종 목표는 단일 minimum point를 고르는 것이 아니라, **GIDL suppression이 1T1C retention으로 전달되고 temperature 및 cell-performance guardrail을 함께 만족하는 유효 MEB depth range를 도출하는 것**입니다.
 
 ## Execution Reference
 
@@ -36,15 +38,16 @@ CMP(Chips Master Program)는 첨단분야 혁신융합대학사업단과 숭실�
 실무 중심 장기 프로젝트 프로그램입니다.
 
 - **Activity period:** 2026.04–2027.01
-- **Main area:** DRAM cell transistor / BCAT / TCAD / GIDL / retention
+- **Main area:** DRAM cell transistor / BCAT / TCAD / GIDL / retention / MEB design range
 - **Goal:** MEB 변화가 gate–drain coupling, drain-side field 및 GIDL에 미치는 영향을 transistor level에서 정량화하고,
-  그 leakage suppression이 실제 1T1C storage-node retention으로 얼마나 전달되는지와 elevated temperature에서 그 전달 효과가 어떻게 달라지는지를 검증
+  그 leakage suppression이 실제 1T1C storage-node retention으로 얼마나 전달되는지와 elevated temperature에서 그 전달 효과가 어떻게 달라지는지를 검증한 뒤,
+  retention·temperature·cell-performance guardrail을 함께 만족하는 **유효 MEB 설계 범위**를 도출
 - **Current focus:** B0=36 nm, P1=41 nm, P2=48 nm를 이용해 1T1C write/hold/read 및 storage-node retention protocol을 동결하고,
   transistor-level GIDL suppression과 cell-level retention improvement의 temperature-dependent translation을 검증
 
 초기에는 HBM4·Hybrid Bonding 대응 DRAM 관점에서 프로젝트를 시작했지만,
 소자 단위에서 더 명확한 물리적 인과관계와 검증 가능한 변수를 확보하기 위해
-연구 범위를 **20 nm급 BCAT DRAM의 GIDL 저감 설계**로 구체화했습니다.
+연구 범위를 **20 nm급 BCAT DRAM의 MEB-dependent GIDL–Retention 전달 특성과 유효 설계 범위 도출**로 구체화했습니다.
 
 - [주제 재발표 자료 PDF](<CMP_소자공정_송민호(재발표).pdf>)
 
@@ -54,14 +57,15 @@ CMP(Chips Master Program)는 첨단분야 혁신융합대학사업단과 숭실�
 
 핵심 질문은 다음과 같습니다.
 
-> **MEB-induced gate–drain coupling 및 drain-side field 감소가 GIDL을 얼마나 억제하며,
+> **MEB depth 증가에 따른 gate–drain coupling 및 drain-side field 감소가 GIDL을 얼마나 억제하며,
 > 이 transistor-level leakage benefit이 실제 1T1C storage-node retention으로 얼마나 전달되는가?
-> 또한 elevated temperature에서 background leakage contribution이 증가할 때 이 translation은 어떻게 변화하는가?**
+> 또한 300/340/380 K에서 그 전달 효과와 cell-performance guardrail을 함께 고려했을 때,
+> 최종적으로 사용할 수 있는 유효 MEB depth range는 어디인가?**
 
 현재 연구 flow:
 
 ```text
-MEB
+MEB depth
  ↓
 project-internal gate–drain coupling / Cgd
  ↓
@@ -69,17 +73,18 @@ drain-side electric field
  ↓
 NonlocalPath BTBT / GIDL
  ↓
-temperature-dependent leakage balance
- ↓
 1T1C write / hold / read
  ↓
-storage-node charge loss
+storage-node charge loss / retention
  ↓
-retention
+temperature-dependent comparison
+ ↓
+effective MEB design range
 ```
 
 Run 6.5까지는 **MEB → Cgd → drain-side field → GIDL → temperature-dependent transistor-level behavior**를 정량화했습니다.
-R7 이후에는 이 transistor-level leakage benefit이 실제 DRAM cell retention으로 얼마나 전달되는지를 검증합니다.
+R7 이후에는 이 transistor-level leakage benefit이 실제 DRAM cell retention으로 얼마나 전달되는지를 검증하고,
+최종적으로 retention·temperature·cell-performance를 함께 만족하는 MEB 범위를 평가합니다.
 
 ```text
 Conditional extensions after retention validation:
@@ -90,6 +95,7 @@ retention result
 ```
 
 Refresh 및 variation-aware robust-window 해석은 retention/variation evidence가 확보된 뒤에만 확장합니다.
+유효 MEB design range와 variation-aware robust process window는 구분합니다.
 
 ---
 
@@ -148,11 +154,11 @@ B0는 양산 DRAM cell의 완전한 3D reproduction이 아니라,
 | **Run 5B** | 5-level correlation | MEB–Cgd–field–GIDL 단조 경향 + P1=41 nm | Completed |
 | **Run 6** | Temperature robustness | 300 / 340 / 380 K GIDL + background + DC/field 검증 | Completed |
 | **Run 6.5** | Extended MEB boundary closure | 43/45/47/48/49/51 nm 확장, P2=48 nm 선정 | Completed |
-| **Run 7** | 1T1C / retention feasibility | BL/SN mapping, capacitor, write-hold-read, VSN(t), metric freeze | **Next** |
+| **Run 7** | 1T1C / retention feasibility | MixedMode/write feasibility verified; hold/retention/read metric freeze pending | **In Progress** |
 | **Run 8** | MEB-to-cell retention translation | B0/P1/P2 at 300 K; optional 49 challenger | Planned |
 | **Run 9** | Temperature-dependent retention translation | minimum 36/48 × 300/380 K; preferred expanded matrix | Planned |
 | **Run 9.5** | Alternate leakage diagnostic | GIJL-like / junction / background path if needed | Conditional |
-| **Run 10** | Local MEB sensitivity / optional robustness extension | 47/48/49 or small MEB variation | Optional |
+| **Run 10** | Local MEB sensitivity / optional robustness extension | 47/48/49 or small MEB variation; usable-range sensitivity | Optional |
 
 전체 기준과 exit gate는 [Current Run Sheet](docs/RUN_SHEET.md)에서 관리합니다.
 
@@ -538,6 +544,7 @@ low-current/background-sensitive boundary reference
 - 48/49 nm high-temperature GIDL/OFF/DC/field check
 - 41/48/51 nm geometry / mesh / ElectricField / Band2BandGeneration spatial evidence
 - P2=48 nm retention-handoff candidate selection
+- Run 7 B0 MixedMode topology / BL-WL pulse / 10 ns storage-node charging feasibility
 
 ### Supported Interpretation
 
@@ -560,22 +567,24 @@ R6.5 extended range에서는 Cgd와 Ewall을 useful electrostatic indicator로 �
 - direct retention time / stored-charge decay
 - refresh burden reduction
 - Dual-WF superiority
-- variation-aware final design window
+- **final temperature-dependent effective MEB design range**
+- variation-aware robust process window
 - global/final/production optimum
 
 ---
 
-## 8. Next Step — R7+ Cell-Level Translation
+## 8. Next Step — R7+ Cell-Level Translation and MEB Range Derivation
 
 Run 7에서는 먼저 **B0=36 nm, T=300 K**를 이용해 1T1C / retention simulation protocol을 동결합니다.
+현재 MixedMode 연결, BL/WL pulse, storage-node charging까지 확인했고, write-condition freeze와 floating hold/retention/read는 진행 중입니다.
 
 ```text
 Run 7 — 1T1C / Retention Feasibility & Metric Freeze
 B0 = 36 nm, T = 300 K
 → BL/SN mapping
 → capacitor representation
-→ WL pulse
-→ write / hold / read
+→ WL pulse / write-condition freeze
+→ floating hold / read
 → transient timestep / retention-specific mesh check
 → VSN(t), charge-loss metric, retention criterion
 ```
@@ -590,10 +599,15 @@ Run 8 — MEB-to-Cell Retention Translation
 Run 9 — Temperature-Dependent Retention Translation
 minimum: 36 / 48 nm × 300 / 380 K
 preferred: 36 / 41 / 48 / 49 nm × 300 / 340 / 380 K
+
+Final synthesis
+GIDL-sensitive leakage + Retention + Temperature + Cell-performance guardrail
+→ Effective MEB Design Range
 ```
 
 핵심 질문은 **R0–R6.5에서 확인한 GIDL suppression이 실제 storage-node retention improvement로 이어지는지,
 그리고 elevated temperature에서 그 translation이 어떻게 달라지는지**입니다.
+그 결과를 바탕으로 단일 minimum point가 아니라 **cell-level benefit과 guardrail을 함께 만족하는 유효 MEB depth range**를 최종적으로 제안합니다.
 
 Run 9.5의 alternate-leakage diagnostic과 Run 10의 local sensitivity/robustness extension은 결과에 따라 조건부로 수행합니다.
 Run 6.5까지의 leakage 결과만으로 retention, refresh reduction, robust process window를 주장하지 않습니다.
@@ -658,6 +672,7 @@ GitHub에는 source code, conditions, CSV, processed summary, selected evidence�
 - `P1=41 nm`는 historical initial screened-window candidate입니다.
 - `P2=48 nm`는 cell-level retention validation을 위한 transistor-level electrostatic/GIDL candidate이며 global/final/production/robust optimum이 아닙니다.
 - 51 nm terminal endpoint는 optimum ranking에서 low confidence입니다.
+- 최종 유효 MEB 설계 범위는 R7–R9 cell-level retention/temperature evidence 이후에만 동결합니다.
 
 상세 기준은 [Model Scope](docs/MODEL_SCOPE.md)와 [Decisions](docs/DECISIONS.md)를 참고합니다.
 
